@@ -1,0 +1,13 @@
+- name: COMP90024-A2-Playbook_Team-42
+  hosts: localhost
+  vars:
+    ansible_python_interpreter: /usr/local/bin/python3
+  vars_files:
+    - varaibles/variables-a2.yaml
+  gather_facts: true
+
+  roles:
+    - role: common
+
+# https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html 25/4
+
