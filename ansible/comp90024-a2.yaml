@@ -3,7 +3,7 @@
   vars:
     ansible_python_interpreter: /usr/local/bin/python3
   vars_files:
-    - varaibles/variables-a2.yaml
+    - variables/variables-a2.yaml
   gather_facts: true
 
   roles:
