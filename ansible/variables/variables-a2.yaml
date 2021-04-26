@@ -6,7 +6,15 @@ couchdb_instances:
   - name: couchdb-a2-1
   - name: couchdb-a2-2
 
-#Instance
+# Harvester Instance
+harvester_instance:
+  - name: harvester-s2-1
+
+# Web front end Instance
+web_front_end_instance:
+  - name: web-fe-a2-1
+
+# Instance details (image/key pair/falvour/network)
 instance_image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
 instance_key_name: COMP90024-KP
 instance_flavor: uom.mse.1c4g

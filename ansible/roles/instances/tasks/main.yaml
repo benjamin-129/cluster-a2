@@ -7,7 +7,7 @@
     flavor: '{{ instance_flavor }}'
     availability_zone: '{{ availability_zone }}'
     nics: 
-      - net-name: qh2-uom
+      - net-name: '{{ instance_network }}'
     auto_floating_ip: yes
     wait: yes
     timeout: 600
