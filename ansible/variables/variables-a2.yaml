@@ -1,0 +1,13 @@
+# Common vars
+availability_zone: melbourne-qh2-uom
+
+# CouchDB Instances
+couchdb_instances:
+  - name: couchdb-a2-1
+  - name: couchdb-a2-2
+
+#Instance
+instance_image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
+instance_key_name: COMP90024-KP
+instance_flavor: uom.mse.1c4g
+instance_network: qh2_uom
