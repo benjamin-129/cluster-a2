@@ -16,6 +16,11 @@ web_front_end_instance:
 
 # Instance details (image/key pair/falvour/network)
 instance_image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
+
+# Instance flavours
+instance_flavor_1c4g: uom.mse.1c4g
+instance_flavor_2c9g: uom.mse.2c9g
+
+# Other instance variables
 instance_key_name: COMP90024-KP
-instance_flavor: uom.mse.1c4g
 instance_network: qh2_uom
