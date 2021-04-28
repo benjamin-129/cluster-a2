@@ -7,7 +7,7 @@
     flavor: '{{ instance_flavor_1c4g }}'
     availability_zone: '{{ availability_zone }}'
     nics: 
-      - net-name: qh2_uom
+      - net-name: qh2-uom
     auto_floating_ip: yes
     wait: yes
     timeout: 600
@@ -24,7 +24,7 @@
     flavor: '{{ instance_flavor_2c9g }}'
     availability_zone: '{{ availability_zone }}'
     nics: 
-      - net-name: qh2_uom
+      - net-name: qh2-uom
     auto_floating_ip: yes
     wait: yes
     timeout: 600
@@ -41,7 +41,7 @@
     flavor: '{{ instance_flavor_2c9g }}'
     availability_zone: '{{ availability_zone }}'
     nics: 
-      - net-name: qh2_uom
+      - net-name: qh2-uom
     auto_floating_ip: yes
     wait: yes
     timeout: 600

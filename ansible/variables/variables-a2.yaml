@@ -23,4 +23,4 @@ instance_flavor_2c9g: uom.mse.2c9g
 
 # Other instance variables
 instance_key_name: COMP90024-KP
-instance_network: qh2_uom
+instance_network: qh2-uom
