@@ -1,5 +1,5 @@
 import pycouchdb
-import credsd
+import creds
 
 # Try couchdb again.,
 
