@@ -8,6 +8,7 @@
     availability_zone: '{{ availability_zone }}'
     nics: 
       - net-name: qh2-uom
+    security_groups: '{{ sg_names }}'
     auto_floating_ip: yes
     wait: yes
     timeout: 600
@@ -25,6 +26,7 @@
     availability_zone: '{{ availability_zone }}'
     nics: 
       - net-name: qh2-uom
+    security_groups: '{{ sg_names }}'
     auto_floating_ip: yes
     wait: yes
     timeout: 600
@@ -42,6 +44,7 @@
     availability_zone: '{{ availability_zone }}'
     nics: 
       - net-name: qh2-uom
+    security_groups: '{{ sg_names }}'
     auto_floating_ip: yes
     wait: yes
     timeout: 600
