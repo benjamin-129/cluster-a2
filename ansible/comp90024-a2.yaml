@@ -1,0 +1,16 @@
+- name: COMP90024-A2-Playbook_Team-42
+  hosts: localhost
+  vars:
+    ansible_python_interpreter: /usr/local/bin/python3
+  vars_files:
+    - variables/variables-a2.yaml
+    - variables/security-groups.yaml
+  gather_facts: true
+
+  roles:
+    - role: common
+    - role: security-groups
+    - role: instances
+
+# https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html 25/4
+# https://docs.ansible.com/ansible/2.4/os_server_module.html 25/4
