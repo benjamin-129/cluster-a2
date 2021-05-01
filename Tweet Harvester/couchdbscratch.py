@@ -1,5 +1,6 @@
 import pycouchdb
 import creds
+import couchdb
 
 # Try couchdb again.,
 
@@ -9,15 +10,27 @@ user = creds.dbuser
 password = creds.dbpassword
 
 
-server = pycouchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
+# server = pycouchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
 
-db = None
+server = couchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
+
+
+dbname = 'tweets'
+
+if dbname in server:
+    db = server[dbname]
+else:
+    db = server.create(dbname)
+
+
+
 # Make new DB if its not already there
-try:
-    db = server.database("tweets")
-except:
-    server.create("tweets")
-    db = server.database("tweets")
+# dbname = 'tweets'
+# try:
+#     db = server.database(dbname)
+# except:
+#     server.create(dbname)
+#     db = server.database(dbname)
 
 
 
@@ -27,11 +40,11 @@ except:
 # Update Document
 
 # Query DB
-map_func = "function(doc) { emit(doc.name, 1); }"
+# map_func = "function(doc) { emit(doc.name, 1); }"
 
 # print(list(db.all()))
 
-list(db.query(map_func))
+# list(db.query(map_func))
 
 
 
