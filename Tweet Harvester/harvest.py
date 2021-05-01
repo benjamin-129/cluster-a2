@@ -1,17 +1,17 @@
 import tweepy
-import creds
+import credentials
 import pickle
 import couchdb
 
 
 # variables from git ignored creds.py file
-user = creds.dbuser
-password = creds.dbpassword
+user = credentials.dbuser
+password = credentials.dbpassword
 COUCH_ADDRESS = "localhost"
 
 # key and secret variables from git ignored creds.py file
-consumer_key = creds.consumer_key
-consumer_secret = creds.consumer_secret
+consumer_key = credentials.consumer_key
+consumer_secret = credentials.consumer_secret
 
 # Twitter auth
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -45,7 +45,7 @@ latest_id = None
 
 for tweet in tweepy.Cursor(api.search, geocode='-37.8,144.99,1km').items(10):
     if tweet.id not in db_tweet_dict.keys():
-        doc_id, doc_rev = db.save({'SA2' : '206071139', 'tweet_id': tweet.id, 'text': tweet.text})
+        doc_id, doc_rev = db.save({'SA2': '206071139', 'tweet_id': tweet.id, 'text': tweet.text})
         db_tweet_dict[tweet.id] = doc_id
 
 

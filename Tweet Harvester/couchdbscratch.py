@@ -1,13 +1,13 @@
 import pycouchdb
-import creds
+import credentials
 import couchdb
 
 # Try couchdb again.,
 
 COUCH_ADDRESS = "localhost"
 # variables from git ignored creds.py file
-user = creds.dbuser
-password = creds.dbpassword
+user = credentials.dbuser
+password = credentials.dbpassword
 
 
 # server = pycouchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
