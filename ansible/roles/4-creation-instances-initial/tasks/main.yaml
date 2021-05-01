@@ -9,6 +9,7 @@
     nics: 
       - net-name: qh2-uom
     security_groups: '{{ sg_initial }}'
+    volumes: 'couchdb1_vol_1'
     auto_floating_ip: yes
     wait: yes
     timeout: 600
@@ -34,6 +35,7 @@
     nics: 
       - net-name: qh2-uom
     security_groups: '{{ sg_initial }}'
+    volumes: 'couchdb2_vol_1'
     auto_floating_ip: yes
     wait: yes
     timeout: 600

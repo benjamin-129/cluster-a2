@@ -25,3 +25,12 @@ instance_flavor_2c9g: uom.mse.2c9g
 # Other instance variables
 instance_key_name: COMP90024-KP
 instance_network: qh2-uom
+
+# Volumes
+couchdb1_volumes:
+  - name: couchdb1_vol_1
+    size: 15
+
+couchdb2_volumes:
+  - name: couchdb2_vol_1
+    size: 15
