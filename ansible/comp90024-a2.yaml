@@ -11,6 +11,30 @@
     - role: common
     - role: security-groups
     - role: instances
+    - role: security-groups2
+    - role: instances2
 
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html 25/4
 # https://docs.ansible.com/ansible/2.4/os_server_module.html 25/4
+# https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=http 1/5
+# https://docs.couchdb.org/en/stable/setup/cluster.html 1/5
+# https://www.tutorialspoint.com/yaml/yaml_comments.htm 1/5
+
+
+# 1) Common 
+# 1-common-tasks
+# 
+# 2) Create SSH from anywhere SG
+# 2-security-groups-initial
+# 
+# 2.5) Volumes?
+# 
+# 3) Create instances (all 4) with SSH SG. Save IP as facts.
+# 3-instance-creation
+# 
+# 4) Create SG rules for each VM
+# 4-security-groups-additional
+# 
+# 5) Apply additional rules to VMs
+# 5-additional-security-group-appl
+

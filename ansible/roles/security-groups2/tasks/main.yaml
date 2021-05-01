@@ -4,12 +4,12 @@
     name: '{{ item.name }}'
     description: '{{ item.description }}'
     state: present
-  loop: '{{ security_groups }}'
+  loop: '{{ security_groups_couchdb }}'
 
 - name: Create a list of security group names
   set_fact:
-    sg_names: '{{ sg_names|default([]) + [ item.name ] }}'
-  loop: '{{ security_groups }}'
+    couch_sg: '{{ sg_names|default([]) + [ item.name ] }}'
+  loop: '{{ security_groups_couchdb }}'
 
 
 # Create security group rules
@@ -21,11 +21,7 @@
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ item.remote_ip_prefix }}'
     state: present
-  loop: '{{ security_groups }}'
-
-- name: Show images
-  debug:
-    msg: "Fact from previous was : {{ juma }}"
+  loop: '{{ security_groups_couchdb }}'
 
 - debug:
-    msg: "Security group(s) {{ sg_names }} have been created."
+    msg: "Security group(s) {{ couch_sg }} have been created."
