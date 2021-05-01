@@ -1,0 +1,33 @@
+- debug:
+    msg: " CouchDB instance 1 has IP {{ couchdb_instance_1_ip }}, {{ couchdb_instance_2_ip }}, {{ twitter_harvester_ip }} {{ web_front_end_ip }}"
+
+# Create a security group
+- name: Create a security group
+  os_security_group:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    state: present
+  loop: '{{ security_group_http_harv_couch }}'
+
+# Create security group rules
+- name: Create security group rules
+  os_security_group_rule:
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
+    state: present
+  loop: '{{ security_group_http_harv_couch }}'
+
+- name: Create a list of security group names
+  set_fact:
+    harvester_sg: '{{ sg_initial|default([]) + [ item.name ] }}'
+  loop: '{{ security_group_http_harv_couch }}'
+
+- debug:
+    msg: "Security group(s) {{ harvester_sg }} have been created."
+
+
+

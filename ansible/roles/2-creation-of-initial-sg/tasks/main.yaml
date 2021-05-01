@@ -6,11 +6,6 @@
     state: present
   loop: '{{ security_groups }}'
 
-- name: Create a list of security group names
-  set_fact:
-    sg_initial: '{{ sg_initial|default([]) + [ item.name ] }}'
-  loop: '{{ security_groups }}'
-
 # Create security group rules
 - name: Create security group rules
   os_security_group_rule:
@@ -22,9 +17,10 @@
     state: present
   loop: '{{ security_groups }}'
 
-- name: Show images
-  debug:
-    msg: "Fact from previous was : {{ juma }}"
+- name: Create a list of security group names
+  set_fact:
+    sg_initial: '{{ sg_initial|default([]) + [ item.name ] }}'
+  loop: '{{ security_groups }}'
 
 - debug:
     msg: "Security group(s) {{ sg_initial }} have been created."

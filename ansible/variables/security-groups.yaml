@@ -14,10 +14,10 @@ security_groups:
     remote_ip_prefix: 0.0.0.0/0
 
 # CouchDB Security Group
-security_groups_couchdb: 
+security_group_http_harv_couch: 
   - name: CouchDB access
-    description: "Allow CouchDB access from anywhere"
+    description: "Egress HTTP traffic to Couch Instances"
+    direction: egress
     protocol: tcp
-    port_range_min: 5984
-    port_range_max: 5984
-    remote_ip_prefix: 0.0.0.0/0
+    port_range_min: 80
+    port_range_max: 80

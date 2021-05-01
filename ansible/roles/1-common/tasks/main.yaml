@@ -9,7 +9,3 @@
     name: ['openstacksdk==0.52']
     state: latest
 # pip install openstacksdk
-
-- name: Setting a fact
-  set_fact:
-    juma: 'James Sammut'
