@@ -2,8 +2,9 @@
 availability_zone: melbourne-qh2-uom
 
 # CouchDB Instances
-couchdb_instances:
+couchdb_instance_1:
   - name: couchdb-a2-1
+couchdb_instance_2:
   - name: couchdb-a2-2
 
 # Harvester Instance

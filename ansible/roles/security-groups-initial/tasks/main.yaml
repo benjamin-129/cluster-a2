@@ -8,9 +8,8 @@
 
 - name: Create a list of security group names
   set_fact:
-    sg_names: '{{ sg_names|default([]) + [ item.name ] }}'
+    sg_initial: '{{ sg_initial|default([]) + [ item.name ] }}'
   loop: '{{ security_groups }}'
-
 
 # Create security group rules
 - name: Create security group rules
@@ -28,4 +27,7 @@
     msg: "Fact from previous was : {{ juma }}"
 
 - debug:
-    msg: "Security group(s) {{ sg_names }} have been created."
+    msg: "Security group(s) {{ sg_initial }} have been created."
+
+- debug:
+    msg: "{{ sg_initial[1] }}"

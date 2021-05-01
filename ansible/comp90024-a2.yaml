@@ -9,10 +9,10 @@
 
   roles:
     - role: common
-    - role: security-groups
-    - role: instances
-    - role: security-groups2
-    - role: instances2
+    - role: security-groups-initial
+    - role: instance-creation-initial
+#    - role: security-groups2
+#    - role: instances2
 
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html 25/4
 # https://docs.ansible.com/ansible/2.4/os_server_module.html 25/4
