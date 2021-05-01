@@ -1,45 +1,33 @@
 - debug:
     msg: " CouchDB instance 1 has IP {{ couchdb_instance_1_ip }}, {{ couchdb_instance_2_ip }}, {{ twitter_harvester_ip }} {{ web_front_end_ip }}"
 
-# Create a security group
-- name: Create a security group
+- name: Setting couchdb_instance_1_ip fact
+  set_fact:
+    couchdb_inst_ips: ['{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}']
+
+# Creating Webserver HTTP egress SG
+- name: Create "Webserver HTTP Egress to CouchDBs" Security Group
   os_security_group:
-    name: '{{ item.name }}'
-    description: '{{ item.description }}'
+    name: 'Webserver HTTP Egress to CouchDBs'
+    description: 'Allowing egress HTTP traffic (80) to Couch DB Instances'
     state: present
-  loop: '{{ security_group_http_harv_couch }}'
 
-# Create security group rules
-- name: Create Security Group rule - Harvester -> CDB1 HTTP Egress (80)
+# Attach HTTP Port rules to SG
+- name: Attach Security Group rules (HTTP ports) for "Webserver HTTP Egress to CouchDBs"
   os_security_group_rule:
-    security_group: '{{ item.name }}'
-    protocol: '{{ item.protocol }}'
-    direction: '{{ item.direction }}'
-    port_range_min: '{{ item.port_range_min }}'
-    port_range_max: '{{ item.port_range_max }}'
-    remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
+    security_group: 'Webserver HTTP Egress to CouchDBs'
+    protocol: 'tcp'
+    direction: 'egress'
+    port_range_min: '80'
+    port_range_max: '80'
+    remote_ip_prefix: '{{ item }}/32'
     state: present
-  loop: '{{ security_group_http_harv_couch }}'
-
-# Attach 
-- name: Create Security Group rule - Harvester -> CDB2 HTTP Egress (80)
-  os_security_group_rule:
-    security_group: '{{ item.name }}'
-    protocol: '{{ item.protocol }}'
-    direction: '{{ item.direction }}'
-    port_range_min: '{{ item.port_range_min }}'
-    port_range_max: '{{ item.port_range_max }}'
-    remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
-    state: present
-  loop: '{{ security_group_http_harv_couch }}'
+  loop: '{{ couchdb_inst_ips }}'
 
 - name: Create a list of security group names
   set_fact:
-    harvester_sg: '{{ sg_initial|default([]) + [ item.name ] }}'
-  loop: '{{ security_group_http_harv_couch }}'
+    harvester_sg: ["SSH access from all", "Webserver HTTP Egress to CouchDBs"]
 
 - debug:
     msg: "Security group(s) {{ harvester_sg }} have been created."
-
-
 

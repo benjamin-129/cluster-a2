@@ -1,0 +1,84 @@
+- debug:
+    msg: " CouchDB instance 1 has IP {{ couchdb_instance_1_ip }}, {{ couchdb_instance_2_ip }}, {{ twitter_harvester_ip }} {{ web_front_end_ip }}"
+
+# Create CouchDB 1 Ingress Security Groups
+- name: Create "CDB1 CouchDB Ingress from CDB2" Security Group
+  os_security_group:
+    name: 'CDB1 CouchDB Ingress from CDB2'
+    description: 'Allowing traffic on CouchDB Ports from CDB2'
+    state: present
+
+- name: Create "CDB1 HTTP Ingress from Harvester" Security Group
+  os_security_group:
+    name: 'CDB1 HTTP Ingress from Harvester'
+    description: 'Allowing traffic on HTTP Port from Harvester'
+    state: present
+
+# Attach CouchDB Port rules to SG
+- name: Attach Security Group rules (CouchDB ports) for "CDB1 CouchDB Ingress from CDB2"
+  os_security_group_rule:
+    security_group: 'CDB1 CouchDB Ingress from CDB2'
+    protocol: 'tcp'
+    direction: 'ingress'
+    port_range_min: '{{ item }}'
+    port_range_max: '{{ item }}'
+    remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
+    state: present
+  loop: '{{ couchdb_ports }}'
+
+- name: Attach Security Group rules (HTTP port) for "CDB1 HTTP Ingress from Harvester"
+  os_security_group_rule:
+    security_group: 'CDB1 HTTP Ingress from Harvester'
+    protocol: 'tcp'
+    direction: 'ingress'
+    port_range_min: '80'
+    port_range_max: '80'
+    remote_ip_prefix: '{{ twitter_harvester_ip }}/32'
+    state: present
+
+# Create CouchDB 1 Egress Security Groups
+- name: Create "CDB1 CouchDB Egress to CDB2" Security Group
+  os_security_group:
+    name: 'CDB1 CouchDB Egress to CDB2'
+    description: 'Allowing traffic on CouchDB Ports to CDB2'
+    state: present
+
+- name: Create "CDB1 HTTP Egress to Webserver" Security Group
+  os_security_group:
+    name: 'CDB1 HTTP Egress to Webserver'
+    description: 'Allowing traffic on HTTP Port to Webserver'
+    state: present
+
+# Attach CouchDB Port rules to SG
+- name: Attach Security Group rules (CouchDB ports) for "CDB1 CouchDB Egress to CDB2"
+  os_security_group_rule:
+    security_group: 'CDB1 CouchDB Egress to CDB2'
+    protocol: 'tcp'
+    direction: 'egress'
+    port_range_min: '{{ item }}'
+    port_range_max: '{{ item }}'
+    remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
+    state: present
+  loop: '{{ couchdb_ports }}'
+
+- name: Attach Security Group rules (HTTP ports) for "CDB1 HTTP Egress to Webserver"
+  os_security_group_rule:
+    security_group: 'CDB1 HTTP Egress to Webserver'
+    protocol: 'tcp'
+    direction: 'egress'
+    port_range_min: '80'
+    port_range_max: '80'
+    remote_ip_prefix: '{{ web_front_end_ip }}/32'  
+
+# Setting additional rules list
+- name: Setting additional CouchDB1 instance rules list
+  set_fact:
+    couchdb1_additional_sg_rules: ["SSH access from all", 
+     "CDB1 CouchDB Ingress from CDB2",
+     "CDB1 HTTP Ingress from Harvester",
+     "CDB1 CouchDB Egress to CDB2",
+     "CDB1 HTTP Egress to Webserver"]
+
+- debug:
+    msg: "Security group(s) {{ couchdb1_additional_sg_rules }} have been created."
+

@@ -14,9 +14,9 @@
     - role: 2-creation-of-initial-sg
     - role: 3-creation-instances-initial
     - role: 4-creation-of-additional-harvester-sg
-    - role: 5-creation-of-additional-couchdb-sg
-
-#    - role: 5-application-sg-specific
+    - role: 5-creation-of-additional-couchdb1-sg
+    - role: 6-creation-of-additional-couchdb2-sg
+#  - role: 10-application-sg-specific
 
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html 25/4
 # https://docs.ansible.com/ansible/2.4/os_server_module.html 25/4
