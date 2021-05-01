@@ -98,5 +98,3 @@
   loop: '{{ os_instance.results }}'  
   when: item.openstack is defined
 
-- debug:
-    msg: " CouchDB instance 1 has IP {{ couchdb_instance_1_ip }}, {{ couchdb_instance_2_ip }}, {{ twitter_harvester_ip }} {{ web_front_end_ip }}"
