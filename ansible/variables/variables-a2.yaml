@@ -9,7 +9,7 @@ couchdb_instance_2:
 
 # Harvester Instance
 harvester_instance:
-  - name: harvester-s2-1
+  - name: harvester-a2-1
 
 # Web front end Instance
 web_front_end_instance:
