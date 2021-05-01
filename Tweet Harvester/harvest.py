@@ -1,30 +1,31 @@
-import os
 import tweepy
-import pandas as pd
 import creds
 import pickle
 import couchdb
 
-COUCH_ADDRESS = "localhost"
+
 # variables from git ignored creds.py file
 user = creds.dbuser
 password = creds.dbpassword
+COUCH_ADDRESS = "localhost"
 
 # key and secret variables from git ignored creds.py file
 consumer_key = creds.consumer_key
 consumer_secret = creds.consumer_secret
 
+# Twitter auth
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-
 api = tweepy.API(auth)
 
-# Load coord wealth dict. {SA2 Code: {Price, Coordinates}}
+# Import coord wealth dict. {SA2 Code: {Median Price, Coordinates}}
 # e.g. use wealth_dict[206041123] for north melbourne
 wealth_dict = pickle.load(open("wealth_dict_file.pkl", "rb"))
 
 
+# Connect to Couch DB Server
 server = couchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
 
+# Create tweets DB if it doesnt exist
 dbname = 'tweets'
 
 if dbname in server:
@@ -34,6 +35,7 @@ else:
 
 
 # couchdbid : tweet_id
+# Save dict if tweets that have already been saved
 db_tweet_dict = {}
 
 # Example Query
