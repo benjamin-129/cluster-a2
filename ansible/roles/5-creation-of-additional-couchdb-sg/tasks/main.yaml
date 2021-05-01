@@ -1,0 +1,32 @@
+- debug:
+    msg: " CouchDB instance 1 has IP {{ couchdb_instance_1_ip }}, {{ couchdb_instance_2_ip }}, {{ twitter_harvester_ip }} {{ web_front_end_ip }}"
+
+# Create a security group
+- name: Create CDB1 CouchDB Ingress from CDB2 SEcurity Group
+  os_security_group:
+    name: 'CDB1 CouchDB Ingress from CDB2'
+    description: 'Allowing traffic from CouchDB Ports from CDB2'
+    state: present
+
+# Attach CouchDB Port rules to SG
+- name: Attach Security Group rules (CouchDB ports) for "CDB1 CouchDB Ingress from CDB2"
+  os_security_group_rule:
+    security_group: 'CDB1 CouchDB Ingress from CDB2'
+    protocol: 'tcp'
+    direction: 'ingress'
+    port_range_min: '{{ item }}'
+    port_range_max: '{{ item }}'
+    remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
+    state: present
+  loop: '{{ couchdb_ports }}'
+
+# Attach CouchDB Port rules to SG
+- name: Attach Security Group rules (HTTP) for "CDB1 CouchDB Ingress from CDB2"
+  os_security_group_rule:
+    security_group: 'CDB1 CouchDB Ingress from CDB2'
+    protocol: 'tcp'
+    direction: 'ingress'
+    port_range_min: '80'
+    port_range_max: '80'
+    remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
+    state: present

@@ -10,7 +10,7 @@
   loop: '{{ security_group_http_harv_couch }}'
 
 # Create security group rules
-- name: Create security group rules
+- name: Create Security Group rule - Harvester -> CDB1 HTTP Egress (80)
   os_security_group_rule:
     security_group: '{{ item.name }}'
     protocol: '{{ item.protocol }}'
@@ -18,6 +18,18 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
+    state: present
+  loop: '{{ security_group_http_harv_couch }}'
+
+# Attach 
+- name: Create Security Group rule - Harvester -> CDB2 HTTP Egress (80)
+  os_security_group_rule:
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
     state: present
   loop: '{{ security_group_http_harv_couch }}'
 

@@ -4,16 +4,18 @@
     ansible_python_interpreter: /usr/local/bin/python3
   vars_files:
     - variables/variables-a2.yaml
-    - variables/security-groups.yaml
+    - variables/security-groups/initial-sg.yaml
+    - variables/security-groups/harvester-sg.yaml
+    - variables/security-groups/couchdb-sg.yaml
   gather_facts: true
 
   roles:
     - role: 1-common
     - role: 2-creation-of-initial-sg
     - role: 3-creation-instances-initial
-    - role: 4-creation-of-addn-harvester-sg
-    - role: 5-creation-of-addn-couch-sg
-    
+    - role: 4-creation-of-additional-harvester-sg
+    - role: 5-creation-of-additional-couchdb-sg
+
 #    - role: 5-application-sg-specific
 
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html 25/4
