@@ -1,5 +1,5 @@
-# Create CouchDB instances on MRC
-- name: Create CouchDB instances
+# Update CouchDB Instance 1 on MRC
+- name: Update CouchDB instances (additional SGs)
   os_server:
     name: '{{ item.name }}'
     image: '{{ instance_image }}'
@@ -8,16 +8,36 @@
     availability_zone: '{{ availability_zone }}'
     nics: 
       - net-name: qh2-uom
-    security_groups: '{{ sg_names }}'
+    security_groups: '{{ couchdb1_sg }}'
+    volumes: 'couchdb1_vol_1'
     auto_floating_ip: yes
     wait: yes
     timeout: 600
     state: present
-  loop: '{{ couchdb_instances }}'
+  loop: '{{ couchdb_instance_1 }}'
   register: os_instance
 
-# Create Twitter Harvester instance
-- name: Create Twitter Harvester Instance
+# Update CouchDB Instance 2 on MRC
+- name: Update CouchDB instances (additional SGs)
+  os_server:
+    name: '{{ item.name }}'
+    image: '{{ instance_image }}'
+    key_name: '{{ instance_key_name }}'
+    flavor: '{{ instance_flavor_1c4g }}'
+    availability_zone: '{{ availability_zone }}'
+    nics: 
+      - net-name: qh2-uom
+    security_groups: '{{ couchdb2_sg }}'
+    volumes: 'couchdb2_vol_1'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  loop: '{{ couchdb_instance_2 }}'
+  register: os_instance
+
+# Update Twitter Harvester instance
+- name: Update Twitter Harvester Instance (additional SGs)
   os_server:
     name: '{{ item.name }}'
     image: '{{ instance_image }}'
@@ -26,7 +46,7 @@
     availability_zone: '{{ availability_zone }}'
     nics: 
       - net-name: qh2-uom
-    security_groups: '{{ sg_names }}'
+    security_groups: '{{ harvester_sg }}'
     auto_floating_ip: yes
     wait: yes
     timeout: 600
@@ -34,8 +54,8 @@
   loop: '{{ harvester_instance }}'
   register: os_instance
 
-# Create Web Front End Instance
-- name: Create Web Front-End Instance
+# Update Web Front End Instance
+- name: Update Web Front-End Instance (additional SGs)
   os_server:
     name: '{{ item.name }}'
     image: '{{ instance_image }}'
@@ -44,17 +64,11 @@
     availability_zone: '{{ availability_zone }}'
     nics: 
       - net-name: qh2-uom
-    security_groups: '{{ sg_names }}'
+    security_groups: '{{ webserver_sg }}'
     auto_floating_ip: yes
     wait: yes
     timeout: 600
     state: present
   loop: '{{ web_front_end_instance }}'
   register: os_instance 
-
-- debug:
-    msg: "Instance {{ item.openstack.name }} has been created. IP address is {{ item.openstack.public_v4 }}"
-  loop: '{{ os_instance.results }}'
-  when: item.openstack is defined
-
 

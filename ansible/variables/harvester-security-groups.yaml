@@ -1,0 +1,8 @@
+# Harvester Security Groups
+security_group_http_harv_couch: 
+  - name: CouchDB access
+    description: "Egress HTTP traffic to Couch Instances"
+    direction: egress
+    protocol: tcp
+    port_range_min: 80
+    port_range_max: 80
