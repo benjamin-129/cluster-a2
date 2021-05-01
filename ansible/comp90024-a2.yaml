@@ -25,7 +25,8 @@
 # https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=http 1/5
 # https://docs.couchdb.org/en/stable/setup/cluster.html 1/5
 # https://www.tutorialspoint.com/yaml/yaml_comments.htm 1/5
-# https://docs.ansible.com/ansible/2.5/modules/os_security_group_rule_module.html 2/5
+# https://docs.ansible.com/ansible/2.5/modules/os_security_group_rule_module.html 1/5
+# https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#iterating-over-a-simple-list 1/5
 
 # 1) Common 
 # 1-common-tasks
