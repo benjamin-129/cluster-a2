@@ -73,12 +73,12 @@
 # Setting additional rules list
 - name: Setting additional CouchDB2 instance rules list
   set_fact:
-    couchdb2_additional_sg_rules: ["SSH access from all", 
+    couchdb2_sg: ["SSH access from all", 
      "CDB2 CouchDB Ingress from CDB1",
      "CDB2 HTTP Ingress from Harvester",
      "CDB2 CouchDB Egress to CDB1",
      "CDB2 HTTP Egress to Webserver"]
 
 - debug:
-    msg: "Security group(s) {{ couchdb2_additional_sg_rules }} have been created."
+    msg: "Security group(s) {{ couchdb2_sg }} have been created."
 

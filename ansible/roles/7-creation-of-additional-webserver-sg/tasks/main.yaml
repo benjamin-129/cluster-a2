@@ -5,19 +5,19 @@
   set_fact:
     couchdb_inst_ips: ['{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}']
 
-# Creating Webserver HTTP egress SG
-- name: Create "Harvester HTTP Egress to CouchDBs" Security Group
+# Creating Webserver HTTP ingress SG
+- name: Create "Webserver HTTP Ingress from CouchDB Instances" Security Group
   os_security_group:
-    name: 'Harvester HTTP Egress to CouchDBs'
-    description: 'Allowing Harvester egress HTTP traffic (80) to Couch DB Instances'
+    name: 'Webserver HTTP Ingress from CouchDB Instances'
+    description: 'Allowing ingress HTTP traffic (80) from Couch DB Instances'
     state: present
 
 # Attach HTTP Port rules to SG
-- name: Attach Security Group rules (HTTP ports) for "Harvester HTTP Egress to CouchDBs"
+- name: Attach Security Group rules (HTTP ports) for "Webserver HTTP Ingress from CouchDB Instances"
   os_security_group_rule:
-    security_group: 'Harvester HTTP Egress to CouchDBs'
+    security_group: 'Webserver HTTP Ingress from CouchDB Instances'
     protocol: 'tcp'
-    direction: 'egress'
+    direction: 'ingress'
     port_range_min: '80'
     port_range_max: '80'
     remote_ip_prefix: '{{ item }}/32'
@@ -26,8 +26,8 @@
 
 - name: Create a list of security group names
   set_fact:
-    harvester_sg: ["SSH access from all", "Harvester HTTP Egress to CouchDBs"]
+    webserver_sg: ["SSH access from all", "Webserver HTTP Ingress from CouchDB Instances"]
 
 - debug:
-    msg: "Security group(s) {{ harvester_sg }} have been created."
+    msg: "Security group(s) {{ webserver_sg }} have been created."
 
