@@ -9,7 +9,7 @@
 - name: Create "Webserver HTTP/HTTPS Ingress from CouchDB Instances" Security Group
   os_security_group:
     name: 'Webserver HTTP/HTTPS Ingress from CouchDB Instances'
-    description: 'Allowing ingress HTTP traffic (80) from Couch DB Instances'
+    description: 'Allowing ingress HTTP and HTTPS traffic (80) from Couch DB Instances'
     state: present
 
 # Attach HTTP Port rules to SG

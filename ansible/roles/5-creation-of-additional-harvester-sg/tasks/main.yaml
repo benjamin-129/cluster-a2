@@ -9,7 +9,7 @@
 - name: Create "Harvester HTTP/HTTPS Egress to CouchDBs" Security Group
   os_security_group:
     name: 'Harvester HTTP/HTTPS Egress to CouchDBs'
-    description: 'Allowing Harvester egress HTTP traffic (80) to Couch DB Instances'
+    description: 'Allowing Harvester egress HTTP smd HTTPS traffic (80/443) to Couch DB Instances'
     state: present
 
 # Attach HTTP Port rules to SG
