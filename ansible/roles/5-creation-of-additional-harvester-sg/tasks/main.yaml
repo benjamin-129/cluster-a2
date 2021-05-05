@@ -38,7 +38,7 @@
 
 - name: Create a list of security group names
   set_fact:
-    harvester_sg: ["SSH access from all", "Harvester HTTP Egress to CouchDBs"]
+    harvester_sg: ["SSH access from all", "Harvester HTTP/HTTPS Egress to CouchDBs"]
 
 - debug:
     msg: "Security group(s) {{ harvester_sg }} have been created."
