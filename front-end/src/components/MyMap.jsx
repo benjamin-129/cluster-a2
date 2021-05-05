@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import "./MyMap.css";
 
 class MyMap extends Component {
-  state = { color: "#ffff00" };
+  state = {};
 
   colors = ["green", "blue", "yellow", "orange", "grey"];
 
@@ -53,8 +53,7 @@ class MyMap extends Component {
   render() {
     return (
       <div>
-        <h1 style={{ textAlign: "center" }}>Tweet Analysis</h1>
-        <Map style={{ height: "80vh" }} zoom={4} center={[-20, 150]}>
+        <Map style={{ height: "100vh" }} zoom={4} center={[-25, 130]}>
           <GeoJSON
             style={this.countryStyle}
             data={mapData.features}
