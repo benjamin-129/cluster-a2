@@ -35,9 +35,40 @@
     state: present
   loop: '{{ couchdb_inst_ips }}'
 
+# Creating Webserver HTTP/S ingress from Internet SG
+- name: Create "Webserver HTTP/HTTPS Ingress from Internet" Security Group
+  os_security_group:
+    name: 'Webserver HTTP/HTTPS Ingress from Internet'
+    description: 'Allowing Webserver ingress HTTP smd HTTPS traffic (80/443) from Internet'
+    state: present
+
+# Attach HTTP Port rules to SG
+- name: Attach Security Group rules (HTTP ports) for "Webserver HTTP/HTTPS Ingress from Internet"
+  os_security_group_rule:
+    security_group: 'Webserver HTTP/HTTPS Ingress from Internet'
+    protocol: 'tcp'
+    direction: 'ingress'
+    port_range_min: '80'
+    port_range_max: '80'
+    remote_ip_prefix: '0.0.0.0/0'
+    state: present
+
+# Attach HTTPS Port rules to SG
+- name: Attach Security Group rules (HTTPS ports) for "Webserver HTTP/HTTPS Ingress from Internet"
+  os_security_group_rule:
+    security_group: 'Webserver HTTP/HTTPS Ingress from Internet'
+    protocol: 'tcp'
+    direction: 'ingress'
+    port_range_min: '443'
+    port_range_max: '443'
+    remote_ip_prefix: '0.0.0.0/0'
+    state: present
+
 - name: Create a list of security group names
   set_fact:
-    webserver_sg: ["SSH access from all", "Webserver HTTP/HTTPS Ingress from CouchDB Instances"]
+    webserver_sg: ["SSH access from all", 
+    "Webserver HTTP/HTTPS Ingress from CouchDB Instances",
+    "Webserver HTTP/HTTPS Ingress from Internet"]
 
 - debug:
     msg: "Security group(s) {{ webserver_sg }} have been created."
