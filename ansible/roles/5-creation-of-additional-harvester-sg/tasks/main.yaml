@@ -65,6 +65,25 @@
     remote_ip_prefix: '0.0.0.0/0'
     state: present
 
+# Creating Harvester Couch port (5984) egress to CouchDB Instances
+- name: Create "Harvester CouchDB Egress to CouchDBs" Security Group
+  os_security_group:
+    name: 'Harvester CouchDB Egress to CouchDBs'
+    description: 'Allowing Harvester egress CouchDB port main port (5984) to CouchDB instances'
+    state: present
+
+# Attach HTTPS Port rules to SG
+- name: Attach Security Group rules (CouchDB port) for "Harvester CouchDB Egress to CouchDBs'
+  os_security_group_rule:
+    security_group: 'Harvester CouchDB Egress to CouchDBs'
+    protocol: 'tcp'
+    direction: 'egress'
+    port_range_min: '5984'
+    port_range_max: '5984'
+    remote_ip_prefix: '{{ item }}/32'
+    state: present
+  loop: '{{ couchdb_inst_ips }}'
+
 # Creating Harvester HTTP egress to internet SG
 - name: Create "Harvester HTTP/HTTPS Egress to Internet" Security Group
   os_security_group:
@@ -98,8 +117,9 @@
   set_fact:
     harvester_sg: ["SSH access from all", 
     "Harvester HTTP/HTTPS Egress to CouchDBs", 
-    "Harvester HTTP/HTTPS Ingress from Internet" , 
-    "Harvester HTTP/HTTPS Egress to Internet"]
+    "Harvester HTTP/HTTPS Ingress from Internet", 
+    "Harvester HTTP/HTTPS Egress to Internet",
+    "Harvester CouchDB Egress to CouchDBs"]
 
 - debug:
     msg: "Security group(s) {{ harvester_sg }} have been created."
