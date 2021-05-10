@@ -2,10 +2,17 @@ import tweepy
 import pickle
 import couchdb
 import time
+import argparse
 
+parser = argparse.ArgumentParser(description='Harvester Node Number')
+parser.add_argument('h_number', type=int, help='an integer for the accumulator')
+parser.add_argument('couch_address', type=str, help='CouchDB IP Address')
+
+args = parser.parse_args()
 
 # 0 , 1 ,2
-HARVESTER_NUMBER = 0
+HARVESTER_NUMBER = args.h_number
+print("Running Tweet Harvester: Harvester Number:", HARVESTER_NUMBER)
 
 
 # SA4 Coordinates & Sq Km
@@ -13,7 +20,7 @@ sa4_coord = pickle.load(open('sa4_coord.pkl', 'rb'))
 
 user = 'admin'
 password = 'password1'
-COUCH_ADDRESS = "localhost"
+COUCH_ADDRESS = args.couch_address
 
 
 consumer_key = 'by51unN9bsgHAfk6vzaTCPUin'
@@ -32,7 +39,6 @@ j_consumer_key = 'jEdM6llEjogsvqNhpQLDbY31V'
 j_consumer_secret = 'fauV1Aon98J3a0unebvJioYcx3Hts5oMov8mjSQ4u7IYQy4X9h'
 
 
-
 if HARVESTER_NUMBER == 0:
     # Twitter auth
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -45,8 +51,6 @@ if HARVESTER_NUMBER == 2:
     auth = tweepy.OAuthHandler(j_consumer_key, j_consumer_secret)
     api = tweepy.API(auth)
 
-
-
 # Connect to Couch DB Server
 server = couchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
 
@@ -58,12 +62,8 @@ if dbname in server:
 else:
     db = server.create(dbname)
 
-
-
 # Store oldest tweet harvested for each SA4 query
 tweet_sa4_min = {}
-
-# db['123456'] = {'hello': '123'}
 
 def push_tweets(sa4, api, min_id=None):
     processed_coord = sa4_coord[sa4]['processed_coord']
@@ -79,7 +79,6 @@ def push_tweets(sa4, api, min_id=None):
     for tweet in tweets:
         doc_id = str(tweet.id)
         id_list.append(tweet.id)
-        # id_list.append(doc_id)
         text = tweet.text
         user = tweet.user._json['id_str']
 
@@ -91,8 +90,6 @@ def push_tweets(sa4, api, min_id=None):
         code_to_process.remove(sa4)
     else:
         tweet_sa4_min[sa4] = min(id_list)
-
-
 
 h0_keys = [key for key in list(sa4_coord.keys()) if key[0] in ['1', '7', '8']]
 h1_keys = [key for key in list(sa4_coord.keys()) if key[0] in ['2', '4', '6']]
@@ -108,80 +105,16 @@ elif HARVESTER_NUMBER==2:
 else:
     code_to_process = sa4_coord.keys()
 
-
+# Run Loop
 while (True):
     for sa4 in code_to_process:
-        print(sa4)
         try:
             push_tweets(sa4, api, tweet_sa4_min[sa4])
         except KeyError:
             push_tweets(sa4, api)
         except tweepy.TweepError:
+            print("Pull Limit Reached, Sleeping for 15 Minutes")
             time.sleep(900)
-
-
-
-    # If there has been a search done before and min id is stored.
-    # try:
-    #     min_id = tweet_sa4_min[sa4]
-    #     tweets = tweepy.Cursor(api_b.search, geocode=processed_coord, max_id = min_id-1, lang='en').items(10)
-    #     id_list = []
-    #     for tweet in tweets:
-    #         doc_id = tweet.id
-    #         id_list.append(doc_id)
-    #         text = tweet.text
-    #         user = tweet.user._json['id_str']
-    #
-    #         if doc_id not in db:
-    #             db[doc_id] = {text, user, sa4, coord, processed_coord}
-    #
-    #     tweet_sa4_min[sa4] = min(id_list)
-    #
-    # # First search
-    # except KeyError:
-    #     tweets = tweepy.Cursor(api_b.search, geocode=processed_coord, lang='en').items(10)
-    #     print(len([tweet for tweet in tweets]))
-    #
-    #     if len([tweet for tweet in tweets]) > 0:
-    #
-    #         id_list = []
-    #         for tweet in tweets:
-    #             print(tweet.id)
-    #             doc_id = tweet.id
-    #             id_list.append(doc_id)
-    #             text = tweet.text
-    #             user = tweet.user._json['id_str']
-    #
-    #             if doc_id not in db:
-    #                 db[doc_id] = {text, user, sa4, coord, processed_coord}
-    #
-    #         tweet_sa4_min[sa4] = min(id_list)
-    #
-    #     else:
-    #         sa4_active.remove(sa4)
-
-
-    # except RateLimitError:
-
-
-
-# tweets = tweepy.Cursor(api_b.search, geocode=sa4_coord['117']['processed_coord'], lang='en').items(5)
-# #
-#
-# print(len([tweet for tweet in tweets]))
-# for tweet in tweets:
-#     print(tweet.text)
-#     print(tweet.id)
-#     print(tweet.user._json['id_str'])
-
-# print(sa4_coord['117']['processed_coord'][0])
-
-
-# print(sa4_active)
-
-# Assume are is a circle.
-
-# print(sa4_coord)
 
 
 
