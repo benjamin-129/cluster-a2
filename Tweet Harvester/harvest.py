@@ -1,27 +1,24 @@
 import tweepy
-import credentials
 import pickle
 import couchdb
+import json
+import math
+from urllib3.exceptions import ProtocolError
 
 
-# variables from git ignored creds.py file
-user = credentials.dbuser
-password = credentials.dbpassword
+user = 'admin'
+password = 'password1'
 COUCH_ADDRESS = "localhost"
 
-# key and secret variables from git ignored creds.py file
-consumer_key = credentials.consumer_key
-consumer_secret = credentials.consumer_secret
+consumer_key = 'by51unN9bsgHAfk6vzaTCPUin'
+consumer_secret = 'a1mBXkR09cPPOv2d3mIqr0W3AmIllA9g1L8aLAqRxS7RvIEHsm'
+access_token ='1382216004235784195-MDQ0DqGEfGl9noXYHYpYMVb1qWu71O'
+access_secret = '9D0Igfa4vUOLVWAoxUM64n1lAoh5lqwLG9MkKgqlh297C'
+bearer_token = 'AAAAAAAAAAAAAAAAAAAAAL5YOgEAAAAAO6tFFpBipXLx3PgFwFkrn%2B0KfKU%3D445Qb1W8n7EsrXvZ6pIsfJDNQJx6h0rmJzAboi6P7Jx2QKpdN7'
 
 # Twitter auth
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 api = tweepy.API(auth)
-
-# Import coord wealth dict. {SA2 Code: {Median Price, Coordinates}}
-# e.g. use wealth_dict[206041123] for north melbourne
-# NSW starts w 1, VIC starts w 2, QLD starts w 3
-wealth_dict = pickle.load(open("wealth_dict_file.pkl", "rb"))
-
 
 # Connect to Couch DB Server
 server = couchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
@@ -35,10 +32,79 @@ else:
     db = server.create(dbname)
 
 
-# couchdbid : tweet_id
-# Save dict if tweets that have already been saved
-db_tweet_dict = {}
-db_tweet_l = []
+
+# Bounding Boxes
+
+bounding_box = [113.338953078, -43.6345972634, 153.569469029, -10.6681857235]
+
+num_harvester = 1
+
+harvester_code = 0
+
+def create_sub_bbox(bounding_box, num):
+    sub_bbox = []
+    interval = math.floor((bounding_box[2] - bounding_box[0])/num*100000000)/100000000
+    for i in range(num):
+        sub_bbox.append([bounding_box[0]+interval*i, bounding_box[1], bounding_box[0]+interval*(i+1), bounding_box[3]])
+
+    sub_bbox[num-1][2]=bounding_box[2]
+
+    return sub_bbox
+
+##sub_bbox = create_sub_bbox([140.946597, -39.138210, 147.698657, -35.936027], num_harvester)
+sub_bbox = create_sub_bbox([138.494335, -35.009266, 138.78049, -34.785160], num_harvester)
+
+
+
+class MyStreamListener(tweepy.StreamListener):
+
+    def on_status(self, status):
+        print(status.text)
+
+    def on_data(self, data):
+        tweet = json.loads(data)
+        doc_id = tweet["id_str"]
+        if doc_id not in db:
+            db[doc_id] = {"tweet": tweet}
+        print("new tweet: "+doc_id)
+
+myStreamListener = MyStreamListener()
+# myStream = tweepy.Stream(auth=api.auth, listener=myStreamListener)
+# myStream = tweepy.Stream(auth=api.auth)
+
+
+
+class tweet_harvester(tweepy.Stream):
+
+    def on_status(self, status):
+        print(status.id)
+    # def on_status(self, status):
+    #     print(status.text)
+    #
+    # def on_data(self, data):
+    #     tweet = json.loads(data)
+    #     doc_id = tweet["id_str"]
+    #     if doc_id not in db:
+    #         db[doc_id] = {"tweet": tweet}
+    #     print("new tweet: " + doc_id)
+
+
+
+# tweet_stream = tweepy.Stream(consumer_key, consumer_secret, access_token, access_secret)
+
+tweet_stream = tweepy.Stream(auth=api.auth, listener=myStreamListener)
+tweet_stream.sample()
+
+# while True:
+#     try:
+#         # myStream.filter(locations=sub_bbox[harvester_code])
+#         tweet_stream.filter(locations=bounding_box)
+#     except ProtocolError:
+#         continue
+
+# print(create_sub_bbox(bounding_box, 3))
+
+
 
 # 1km radius as 0.01 is 1km
 # 450 requests per 15 minutes
