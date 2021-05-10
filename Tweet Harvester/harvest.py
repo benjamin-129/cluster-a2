@@ -1,14 +1,20 @@
 import tweepy
 import pickle
 import couchdb
-import json
-import math
-from urllib3.exceptions import ProtocolError
+import time
 
+
+# 0 , 1 ,2
+HARVESTER_NUMBER = 0
+
+
+# SA4 Coordinates & Sq Km
+sa4_coord = pickle.load(open('sa4_coord.pkl', 'rb'))
 
 user = 'admin'
 password = 'password1'
 COUCH_ADDRESS = "localhost"
+
 
 consumer_key = 'by51unN9bsgHAfk6vzaTCPUin'
 consumer_secret = 'a1mBXkR09cPPOv2d3mIqr0W3AmIllA9g1L8aLAqRxS7RvIEHsm'
@@ -16,9 +22,30 @@ access_token ='1382216004235784195-MDQ0DqGEfGl9noXYHYpYMVb1qWu71O'
 access_secret = '9D0Igfa4vUOLVWAoxUM64n1lAoh5lqwLG9MkKgqlh297C'
 bearer_token = 'AAAAAAAAAAAAAAAAAAAAAL5YOgEAAAAAO6tFFpBipXLx3PgFwFkrn%2B0KfKU%3D445Qb1W8n7EsrXvZ6pIsfJDNQJx6h0rmJzAboi6P7Jx2QKpdN7'
 
-# Twitter auth
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-api = tweepy.API(auth)
+m_consumer_key = 'HPweML7H0Qi7DY1LWSa9ocDFr'
+m_consumer_secret = 'vE0s5DgfOs3EZX3shaxvNFW2GkLC9RSZRY3j9JjSD4KNe9oSSj'
+m_access_token = '1388352109737693187-2NfhtuMlv3x9JBBH5NMJQ5TODIWfEo'
+m_access_secret = 'p08FPkJ1Aw97v8OZ0kuYiQl8bRwHdRZNkYBvxGAn7Ckx3'
+m_bearer_token = 'AAAAAAAAAAAAAAAAAAAAADOkPQEAAAAA3AGNL7PTXJu%2FXhMmoWdmVLtqciE%3Ddv63JSsAjIfimfYAy5vaBhqgRJLf3eOlUSziZgKHuQTZJJxchh'
+
+j_consumer_key = 'jEdM6llEjogsvqNhpQLDbY31V'
+j_consumer_secret = 'fauV1Aon98J3a0unebvJioYcx3Hts5oMov8mjSQ4u7IYQy4X9h'
+
+
+
+if HARVESTER_NUMBER == 0:
+    # Twitter auth
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    api = tweepy.API(auth)
+if HARVESTER_NUMBER == 1:
+    auth = tweepy.OAuthHandler(m_consumer_key, m_consumer_secret)
+    api = tweepy.API(auth)
+
+if HARVESTER_NUMBER == 2:
+    auth = tweepy.OAuthHandler(j_consumer_key, j_consumer_secret)
+    api = tweepy.API(auth)
+
+
 
 # Connect to Couch DB Server
 server = couchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
@@ -33,154 +60,130 @@ else:
 
 
 
-# Bounding Boxes
+# Store oldest tweet harvested for each SA4 query
+tweet_sa4_min = {}
 
-bounding_box = [113.338953078, -43.6345972634, 153.569469029, -10.6681857235]
+# db['123456'] = {'hello': '123'}
 
-num_harvester = 1
+def push_tweets(sa4, api, min_id=None):
+    processed_coord = sa4_coord[sa4]['processed_coord']
+    coord = sa4_coord[sa4]['coord']
 
-harvester_code = 0
+    if min_id is not None:
+        str_id = str(min_id)
+        tweets = tweepy.Cursor(api.search, geocode=processed_coord, max_id=str_id, lang='en').items(10)
+    else:
+        tweets = tweepy.Cursor(api.search, geocode=processed_coord, lang='en').items(10)
 
-def create_sub_bbox(bounding_box, num):
-    sub_bbox = []
-    interval = math.floor((bounding_box[2] - bounding_box[0])/num*100000000)/100000000
-    for i in range(num):
-        sub_bbox.append([bounding_box[0]+interval*i, bounding_box[1], bounding_box[0]+interval*(i+1), bounding_box[3]])
+    id_list = []
+    for tweet in tweets:
+        doc_id = str(tweet.id)
+        id_list.append(tweet.id)
+        # id_list.append(doc_id)
+        text = tweet.text
+        user = tweet.user._json['id_str']
 
-    sub_bbox[num-1][2]=bounding_box[2]
-
-    return sub_bbox
-
-##sub_bbox = create_sub_bbox([140.946597, -39.138210, 147.698657, -35.936027], num_harvester)
-sub_bbox = create_sub_bbox([138.494335, -35.009266, 138.78049, -34.785160], num_harvester)
-
-
-
-class MyStreamListener(tweepy.StreamListener):
-
-    def on_status(self, status):
-        print(status.text)
-
-    def on_data(self, data):
-        tweet = json.loads(data)
-        doc_id = tweet["id_str"]
         if doc_id not in db:
-            db[doc_id] = {"tweet": tweet}
-        print("new tweet: "+doc_id)
+            db[doc_id] = {'text': text, 'user': user, 'sa4': sa4, 'coord': coord,
+                          'processed_coord': processed_coord}
 
-myStreamListener = MyStreamListener()
-# myStream = tweepy.Stream(auth=api.auth, listener=myStreamListener)
-# myStream = tweepy.Stream(auth=api.auth)
+    if not id_list:
+        code_to_process.remove(sa4)
+    else:
+        tweet_sa4_min[sa4] = min(id_list)
 
 
 
-class tweet_harvester(tweepy.Stream):
+h0_keys = [key for key in list(sa4_coord.keys()) if key[0] in ['1', '7', '8']]
+h1_keys = [key for key in list(sa4_coord.keys()) if key[0] in ['2', '4', '6']]
+h2_keys = [key for key in list(sa4_coord.keys()) if key[0] in ['3', '5']]
 
-    def on_status(self, status):
-        print(status.id)
-    # def on_status(self, status):
-    #     print(status.text)
+
+if HARVESTER_NUMBER==0:
+    code_to_process = h0_keys
+elif HARVESTER_NUMBER==1:
+    code_to_process = h1_keys
+elif HARVESTER_NUMBER==2:
+    code_to_process = h2_keys
+else:
+    code_to_process = sa4_coord.keys()
+
+
+while (True):
+    for sa4 in code_to_process:
+        print(sa4)
+        try:
+            push_tweets(sa4, api, tweet_sa4_min[sa4])
+        except KeyError:
+            push_tweets(sa4, api)
+        except tweepy.TweepError:
+            time.sleep(900)
+
+
+
+    # If there has been a search done before and min id is stored.
+    # try:
+    #     min_id = tweet_sa4_min[sa4]
+    #     tweets = tweepy.Cursor(api_b.search, geocode=processed_coord, max_id = min_id-1, lang='en').items(10)
+    #     id_list = []
+    #     for tweet in tweets:
+    #         doc_id = tweet.id
+    #         id_list.append(doc_id)
+    #         text = tweet.text
+    #         user = tweet.user._json['id_str']
     #
-    # def on_data(self, data):
-    #     tweet = json.loads(data)
-    #     doc_id = tweet["id_str"]
-    #     if doc_id not in db:
-    #         db[doc_id] = {"tweet": tweet}
-    #     print("new tweet: " + doc_id)
+    #         if doc_id not in db:
+    #             db[doc_id] = {text, user, sa4, coord, processed_coord}
+    #
+    #     tweet_sa4_min[sa4] = min(id_list)
+    #
+    # # First search
+    # except KeyError:
+    #     tweets = tweepy.Cursor(api_b.search, geocode=processed_coord, lang='en').items(10)
+    #     print(len([tweet for tweet in tweets]))
+    #
+    #     if len([tweet for tweet in tweets]) > 0:
+    #
+    #         id_list = []
+    #         for tweet in tweets:
+    #             print(tweet.id)
+    #             doc_id = tweet.id
+    #             id_list.append(doc_id)
+    #             text = tweet.text
+    #             user = tweet.user._json['id_str']
+    #
+    #             if doc_id not in db:
+    #                 db[doc_id] = {text, user, sa4, coord, processed_coord}
+    #
+    #         tweet_sa4_min[sa4] = min(id_list)
+    #
+    #     else:
+    #         sa4_active.remove(sa4)
+
+
+    # except RateLimitError:
 
 
 
-# tweet_stream = tweepy.Stream(consumer_key, consumer_secret, access_token, access_secret)
-
-tweet_stream = tweepy.Stream(auth=api.auth, listener=myStreamListener)
-tweet_stream.sample()
-
-# while True:
-#     try:
-#         # myStream.filter(locations=sub_bbox[harvester_code])
-#         tweet_stream.filter(locations=bounding_box)
-#     except ProtocolError:
-#         continue
-
-# print(create_sub_bbox(bounding_box, 3))
-
-
-
-# 1km radius as 0.01 is 1km
-# 450 requests per 15 minutes
-
-
-# Change to find min?
-# def find_max_id(SA2code):
-#     mango = {'selector': {'SA2': SA2code, 'tweet_id': {"$gte": 0}},
-#              'fields': ['tweet_id', 'text'],
-#              'limit': 1
-#              }
+# tweets = tweepy.Cursor(api_b.search, geocode=sa4_coord['117']['processed_coord'], lang='en').items(5)
+# #
 #
-#     for row in db.find(mango):
-#         return row['tweet_id']
-#
-# def tweet_input(SA2code, geo, latest_id):
-#     x = str(geo[0])
-#     y = str(geo[1])
-#     gcode = x + ',' + y + ",1km"
-#
-#     if latest_id is None:
-#         for tweet in tweepy.Cursor(api.search, geocode=gcode).items(10):
-#             if tweet.id not in db_tweet_l:
-#                 doc_id, doc_rev = db.save({'SA2': SA2code, 'tweet_id': tweet.id, 'text': tweet.text})
-#                 # db_tweet_dict[tweet.id] = doc_id
-#                 db_tweet_l.append(tweet.id)
-#
-#     else:
-#         for tweet in tweepy.Cursor(api.search, since_id=latest_id, geocode=gcode).items(10):
-#             if tweet.id not in db_tweet_l:
-#                 doc_id, doc_rev = db.save({'SA2': SA2code, 'tweet_id': tweet.id, 'text': tweet.text})
-#                 # db_tweet_dict[tweet.id] = doc_id
-#                 db_tweet_l.append(tweet.id)
-#
-#
-# counter = 0
-# while len(db_tweet_l) < 30:
-#
-#     print(len(db_tweet_l))
-#     if len(db_tweet_l) == 0:
-#         print('hi')
-#         if counter == 1:
-#             break
-#         else:
-#             tweet_i = None
-#             counter +=1
-#     else:
-#         print('easd')
-#         tweet_i = find_max_id('206071139')
-#         print(tweet_i)
-#     tweet_input('206071139', [-37.8, 144.99], tweet_i)
+# print(len([tweet for tweet in tweets]))
+# for tweet in tweets:
+#     print(tweet.text)
+#     print(tweet.id)
+#     print(tweet.user._json['id_str'])
+
+# print(sa4_coord['117']['processed_coord'][0])
 
 
+# print(sa4_active)
+
+# Assume are is a circle.
+
+# print(sa4_coord)
 
 
-
-
-
-# db.index('fields': 'tweet_id')
-# Mango query to get SA2
-
-        # print(row['tweet_id'])
-
-
-# SA2_query = '206071139'
-# mango = {'selector': {'SA2': SA2_query, 'tweet_id': {"$gte": 0}},
-#          'fields': ['tweet_id', 'text'],
-#          # 'sort': ['tweet_id'],
-#          'limit' : 1
-#          }
-#
-#
-# for row in db.find(mango):
-#     print(row['tweet_id'])
-
-# print(wealth_dict)
 
 
 
