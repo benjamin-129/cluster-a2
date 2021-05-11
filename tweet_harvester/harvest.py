@@ -3,6 +3,7 @@ import pickle
 import couchdb
 import time
 import argparse
+import datetime
 
 parser = argparse.ArgumentParser(description='Harvester Node Number')
 parser.add_argument('h_number', type=int, help='an integer for the accumulator')
@@ -71,7 +72,7 @@ def push_tweets(sa4, api, min_id=None):
 
     if min_id is not None:
         str_id = str(min_id)
-        tweets = tweepy.Cursor(api.search, geocode=processed_coord, max_id=str_id, lang='en').items(10)
+        tweets = tweepy.Cursor(api.search, geocode=processed_coord, max_id=str_id, lang='en').items(50)
     else:
         tweets = tweepy.Cursor(api.search, geocode=processed_coord, lang='en').items(10)
 
@@ -107,6 +108,7 @@ else:
 
 # Run Loop
 while (True):
+    print("Harvester:", HARVESTER_NUMBER, datetime.datetime.now())
     for sa4 in code_to_process:
         try:
             push_tweets(sa4, api, tweet_sa4_min[sa4])
