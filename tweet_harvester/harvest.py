@@ -19,7 +19,7 @@ print("Running Tweet Harvester: Harvester Number:", HARVESTER_NUMBER)
 sa4_coord = pickle.load(open('sa4_coord.pkl', 'rb'))
 
 user = 'admin'
-password = 'password1'
+password = 'password'
 COUCH_ADDRESS = args.couch_address
 
 
