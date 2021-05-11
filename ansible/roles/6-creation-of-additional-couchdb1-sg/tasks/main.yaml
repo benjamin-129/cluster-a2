@@ -118,7 +118,66 @@
     direction: 'egress'
     port_range_min: '5984'
     port_range_max: '5984'
-    remote_ip_prefix: '{{ web_front_end_ip }}/32'  
+    remote_ip_prefix: '{{ web_front_end_ip }}/32' 
+
+- name: Attach Security Group rules (CouchDB port) for "CDB1 CouchDB Egress to Webserver"
+  os_security_group_rule:
+    security_group: 'CDB1 CouchDB Egress to Webserver'
+    protocol: 'tcp'
+    direction: 'ingress'
+    port_range_min: '5984'
+    port_range_max: '5984'
+    remote_ip_prefix: '0.0.0.0/0' 
+
+- name: Attach Security Group rules (HTTP ports) for "Harvester HTTP/HTTPS Ingress from Internet"
+  os_security_group_rule:
+    security_group: 'CDB1 CouchDB Egress to Webserver'
+    protocol: 'tcp'
+    direction: 'egress'
+    port_range_min: '5984'
+    port_range_max: '5984'
+    remote_ip_prefix: '0.0.0.0/0'
+
+- name: Attach Security Group rules (HTTP ports) for "Harvester HTTP/HTTPS Ingress from Internet"
+  os_security_group_rule:
+    security_group: 'CDB1 CouchDB Egress to Webserver'
+    protocol: 'tcp'
+    direction: 'egress'
+    port_range_min: '80'
+    port_range_max: '80'
+    remote_ip_prefix: '0.0.0.0/0'
+    state: present
+
+# Attach HTTPS Port rules to SG
+- name: Attach Security Group rules (HTTPS ports) for "Harvester HTTP/HTTPS Ingress from Internet"
+  os_security_group_rule:
+    security_group: 'CDB1 CouchDB Egress to Webserver'
+    protocol: 'tcp'
+    direction: 'egress'
+    port_range_min: '443'
+    port_range_max: '443'
+    remote_ip_prefix: '0.0.0.0/0'
+    state: present
+
+- name: Attach Security Group rules (HTTPS ports) for "Harvester HTTP/HTTPS Ingress from Internet"
+  os_security_group_rule:
+    security_group: 'CDB1 CouchDB Egress to Webserver'
+    protocol: 'tcp'
+    direction: 'ingress'
+    port_range_min: '80'
+    port_range_max: '80'
+    remote_ip_prefix: '0.0.0.0/0'
+    state: present
+
+- name: Attach Security Group rules (HTTPS ports) for "Harvester HTTP/HTTPS Ingress from Internet"
+  os_security_group_rule:
+    security_group: 'CDB1 CouchDB Egress to Webserver'
+    protocol: 'tcp'
+    direction: 'ingress'
+    port_range_min: '443'
+    port_range_max: '443'
+    remote_ip_prefix: '0.0.0.0/0'
+    state: present
 
 # Setting additional rules list
 - name: Setting additional CouchDB1 instance rules list
