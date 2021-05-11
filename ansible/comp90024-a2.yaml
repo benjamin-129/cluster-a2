@@ -1,7 +1,8 @@
 - name: COMP90024-A2-Playbook_Team-42
   hosts: localhost
   vars:
-    ansible_python_interpreter: /usr/local/bin/python3
+    # ansible_python_interpreter: /usr/local/bin/python3
+    ansible_python_interpreter: /usr/bin/python3
   vars_files:
     - variables/variables-a2.yaml
     - variables/security-groups/initial-sg.yaml
