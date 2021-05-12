@@ -1,33 +1,20 @@
-/**
- * Component for the navigation menu that displays when a user is not logged in.
- * Has restricted nav options compared to UserMenu component for when user is logged in.
- */
+import React, { Component } from "react";
 
- import React, { useState } from "react";
- import {
-   Navbar,
-   NavbarBrand,
- } from "reactstrap";
- import { NavLink as ReactLink } from "react-router-dom";
- 
- function Menu() {
-   // Set states to toggle the navbar
-   // Adapted from reactstrap docs
-  
- 
-   return (
-    <div className='container'>
-      <Navbar color="dark" light expand="md">
-        <NavbarBrand href="/">
-            <div className='nav'>
-            COMP 90024 Twitter Analysis
-            </div>
-            </NavbarBrand>
-      </Navbar>
-    </div>
-  );
+class Menu extends React.Component {
+  render() {
+    const mystyle = {
+      color: "white",
+      backgroundColor: "#2C2C46",
+      padding: "10px",
+      fontSize:"20px",
+      fontFamily: "Arial"
+    };
+    return (
+      <div>
+      <h1 style={mystyle}>COMP90024 Twitter Analysis</h1>
+      </div>
+    );
+  }
 }
- 
- 
- export default Menu;
- 
+
+export default Menu
