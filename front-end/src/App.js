@@ -1,9 +1,17 @@
 import React from "react";
 import MyMap from "./components/MyMap";
+import Menu from "./components/Menu";
 
-
-function App() {
-  return  <MyMap />;
+class App extends React.Component {
+  render() {
+ 
+    return (
+      <div>
+      <Menu />
+     <MyMap />
+     </div>
+    );
+  }
 }
 
-export default App;
+export default App

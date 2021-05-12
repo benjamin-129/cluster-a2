@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { Map, GeoJSON } from "react-leaflet";
-import mapData from "../data/output.json";
+import infoData from "../data/output.json";
 import "leaflet/dist/leaflet.css";
 import "./MyMap.css";
-import Menu from "./Menu"
+
 
 class MyMap extends Component {
-  state = {};
+  state = { color: "red" };
+
 
   componentDidMount() {
-    console.log(mapData);
+    console.log(infoData);
   }
 
   countryStyle = {
@@ -23,34 +24,42 @@ class MyMap extends Component {
     console.log("Clicked");
   };
 
-  onEachCountry = (state, layer) => {
+  onEachState= (state, layer) => {
 
-      const stateName = state.properties.STE_NAME16;
-      layer.bindPopup(stateName);
+      const stateName = state.properties.SA4_NAME16;
+      const unEmp= state.properties.SA4_UNEMP;
+      layer.bindPopup("SA4_Name: "+stateName + " \n" + "Unemployment rate: "+unEmp);
 
+    layer.on({
+      click: this.changeCountryColor,
+    });
     
   }
 
-  colorChange = (event) => {
-    this.setState({ color: event.target.value });
+  changeCountryColor = (event) => {
+    event.target.setStyle({
+      fillColor: this.state.color,
+      fillOpacity: 0.2,
+    });
   };
 
   render() {
     return (
       <div>
-        <Menu />
-        <Map style={{ height: "100vh" }} zoom={5} center={[-25, 130]}>
+      
+        <Map style={{ height: "100vh" }} zoom={4} center={[-25, 130]}>
           <GeoJSON
             style={this.countryStyle}
-            data={mapData}
-            onEachFeature={this.onEachCountry}
+            data={infoData}
+            onEachFeature={this.onEachState}
+         
           />
         </Map>
         <input
           type="color"
           value={this.state.color}
           onChange={this.colorChange}
-        />
+        /> 
       </div>
     );
   }
