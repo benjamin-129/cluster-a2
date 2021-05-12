@@ -2,14 +2,12 @@
 availability_zone: melbourne-qh2-uom
 
 # CouchDB Instances
+couchdb_instance_0:
+  - name: couchdb-a2-0
 couchdb_instance_1:
   - name: couchdb-a2-1
 couchdb_instance_2:
   - name: couchdb-a2-2
-
-# Harvester Instance
-harvester_instance:
-  - name: harvester-a2-1
 
 # Web front end Instance
 web_front_end_instance:
@@ -27,6 +25,10 @@ instance_key_name: benKP
 instance_network: qh2-uom
 
 # Volumes
+couchdb0_volumes:
+  - name: couchdb0_vol_1
+    size: 15
+    
 couchdb1_volumes:
   - name: couchdb1_vol_1
     size: 15

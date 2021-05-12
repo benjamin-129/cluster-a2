@@ -1,3 +1,29 @@
+# Create CouchDB Instance 0 on MRC
+- name: Create CouchDB instances
+  os_server:
+    name: '{{ item.name }}'
+    image: '{{ instance_image }}'
+    key_name: '{{ instance_key_name }}'
+    flavor: '{{ instance_flavor_1c4g }}'
+    availability_zone: '{{ availability_zone }}'
+    nics: 
+      - net-name: qh2-uom
+    security_groups: '{{ sg_initial }}'
+    volumes: 'couchdb0_vol_1'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  loop: '{{ couchdb_instance_0 }}'
+  register: os_instance
+
+# Settig CouchDB instance 0 fact
+- name: Setting couchdb_instance_0_ip fact
+  set_fact:
+    couchdb_instance_0_ip: "{{ item.openstack.public_v4 }}"
+  loop: '{{ os_instance.results }}'  
+  when: item.openstack is defined
+
 # Create CouchDB Instance 1 on MRC
 - name: Create CouchDB instances
   os_server:
@@ -50,31 +76,6 @@
   loop: '{{ os_instance.results }}'  
   when: item.openstack is defined
 
-# Create Twitter Harvester instance
-- name: Create Twitter Harvester Instance
-  os_server:
-    name: '{{ item.name }}'
-    image: '{{ instance_image }}'
-    key_name: '{{ instance_key_name }}'
-    flavor: '{{ instance_flavor_2c9g }}'
-    availability_zone: '{{ availability_zone }}'
-    nics: 
-      - net-name: qh2-uom
-    security_groups: '{{ sg_initial }}'
-    auto_floating_ip: yes
-    wait: yes
-    timeout: 600
-    state: present
-  loop: '{{ harvester_instance }}'
-  register: os_instance
-
-# Settig Twitter Harvester IP fact
-- name: Setting couchdb_instance_1_ip fact
-  set_fact:
-    twitter_harvester_ip: "{{ item.openstack.public_v4 }}"
-  loop: '{{ os_instance.results }}'  
-  when: item.openstack is defined
-
 # Create Web Front End Instance
 - name: Create Web Front-End Instance
   os_server:
@@ -93,8 +94,8 @@
   loop: '{{ web_front_end_instance }}'
   register: os_instance 
 
-# Settig Twitter Harvester IP fact
-- name: Setting couchdb_instance_1_ip fact
+# Settig Web front end ip IP fact
+- name: Setting web front end ip fact
   set_fact:
     web_front_end_ip: "{{ item.openstack.public_v4 }}"
   loop: '{{ os_instance.results }}'  

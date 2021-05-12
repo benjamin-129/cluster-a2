@@ -1,3 +1,22 @@
+# Update CouchDB Instance 0 on MRC
+- name: Update CouchDB instances (additional SGs)
+  os_server:
+    name: '{{ item.name }}'
+    image: '{{ instance_image }}'
+    key_name: '{{ instance_key_name }}'
+    flavor: '{{ instance_flavor_1c4g }}'
+    availability_zone: '{{ availability_zone }}'
+    nics: 
+      - net-name: qh2-uom
+    security_groups: '{{ couchdb0_sg }}'
+    volumes: 'couchdb0_vol_1'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  loop: '{{ couchdb_instance_0 }}'
+  register: os_instance
+
 # Update CouchDB Instance 1 on MRC
 - name: Update CouchDB instances (additional SGs)
   os_server:
@@ -36,23 +55,23 @@
   loop: '{{ couchdb_instance_2 }}'
   register: os_instance
 
-# Update Twitter Harvester instance
-- name: Update Twitter Harvester Instance (additional SGs)
-  os_server:
-    name: '{{ item.name }}'
-    image: '{{ instance_image }}'
-    key_name: '{{ instance_key_name }}'
-    flavor: '{{ instance_flavor_2c9g }}'
-    availability_zone: '{{ availability_zone }}'
-    nics: 
-      - net-name: qh2-uom
-    security_groups: '{{ harvester_sg }}'
-    auto_floating_ip: yes
-    wait: yes
-    timeout: 600
-    state: present
-  loop: '{{ harvester_instance }}'
-  register: os_instance
+# # Update Twitter Harvester instance
+# - name: Update Twitter Harvester Instance (additional SGs)
+#   os_server:
+#     name: '{{ item.name }}'
+#     image: '{{ instance_image }}'
+#     key_name: '{{ instance_key_name }}'
+#     flavor: '{{ instance_flavor_2c9g }}'
+#     availability_zone: '{{ availability_zone }}'
+#     nics: 
+#       - net-name: qh2-uom
+#     security_groups: '{{ harvester_sg }}'
+#     auto_floating_ip: yes
+#     wait: yes
+#     timeout: 600
+#     state: present
+#   loop: '{{ harvester_instance }}'
+#   register: os_instance
 
 # Update Web Front End Instance
 - name: Update Web Front-End Instance (additional SGs)
