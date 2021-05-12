@@ -2,3 +2,4 @@ CouchDB==1.2
 geojson==2.5.0
 pickleshare==0.7.5
 tweepy==3.10.0
+afinn==0.1

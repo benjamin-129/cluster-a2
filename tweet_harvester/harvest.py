@@ -4,6 +4,7 @@ import couchdb
 import time
 import argparse
 import datetime
+from afinn import Afinn
 
 parser = argparse.ArgumentParser(description='Harvester Node Number')
 parser.add_argument('h_number', type=int, help='an integer for the accumulator')
@@ -14,7 +15,6 @@ args = parser.parse_args()
 # 0 , 1 ,2
 HARVESTER_NUMBER = args.h_number
 print("Running Tweet Harvester: Harvester Number:", HARVESTER_NUMBER)
-
 
 # SA4 Coordinates & Sq Km
 sa4_coord = pickle.load(open('sa4_coord.pkl', 'rb'))
@@ -63,6 +63,9 @@ if dbname in server:
 else:
     db = server.create(dbname)
 
+
+afn = Afinn()
+
 # Store oldest tweet harvested for each SA4 query
 tweet_sa4_min = {}
 
@@ -74,23 +77,25 @@ def push_tweets(sa4, api, min_id=None):
         str_id = str(min_id)
         tweets = tweepy.Cursor(api.search, geocode=processed_coord, max_id=str_id, lang='en').items(50)
     else:
-        tweets = tweepy.Cursor(api.search, geocode=processed_coord, lang='en').items(10)
+        tweets = tweepy.Cursor(api.search, geocode=processed_coord, lang='en').items(50)
 
     id_list = []
     for tweet in tweets:
         doc_id = str(tweet.id)
         id_list.append(tweet.id)
         text = tweet.text
+        score = afn.score(text)
         user = tweet.user._json['id_str']
 
         if doc_id not in db:
-            db[doc_id] = {'text': text, 'user': user, 'sa4': sa4, 'coord': coord,
+            db[doc_id] = {'text': text, 'sent_score': score, 'user': user, 'sa4': sa4, 'coord': coord,
                           'processed_coord': processed_coord}
 
     if not id_list:
         code_to_process.remove(sa4)
     else:
         tweet_sa4_min[sa4] = min(id_list)
+
 
 h0_keys = [key for key in list(sa4_coord.keys()) if key[0] in ['1', '7', '8']]
 h1_keys = [key for key in list(sa4_coord.keys()) if key[0] in ['2', '4', '6']]
@@ -107,8 +112,10 @@ else:
     code_to_process = sa4_coord.keys()
 
 # Run Loop
+run_count = 0
 while (True):
-    print("Harvester:", HARVESTER_NUMBER, datetime.datetime.now())
+    run_count+=1
+    print("Harvester:", HARVESTER_NUMBER, "run:", run_count, datetime.datetime.now())
     for sa4 in code_to_process:
         try:
             push_tweets(sa4, api, tweet_sa4_min[sa4])
