@@ -1,9 +1,9 @@
 - debug:
-    msg: " CouchDB instance 1 has IP {{ couchdb_instance_1_ip }}, {{ couchdb_instance_2_ip }}, {{ twitter_harvester_ip }} {{ web_front_end_ip }}"
+    msg: " CouchDB instance 0 has IP {{ couchdb_instance_0_ip }}, {{ couchdb_instance_1_ip }}, {{ couchdb_instance_2_ip }}, {{ web_front_end_ip }}" 
 
-- name: Setting couchdb_instance_1_ip fact
+- name: Setting couchdb_instance_0_ip fact
   set_fact:
-    couchdb_inst_ips: ['{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}']
+    couchdb_inst_ips: ['{{ couchdb_instance_0_ip }}','{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}']
 
 # Creating Webserver HTTP ingress SG
 - name: Create "Webserver HTTP/HTTPS Ingress from CouchDB Instances" Security Group

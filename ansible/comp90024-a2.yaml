@@ -6,7 +6,6 @@
   vars_files:
     - variables/variables-a2.yaml
     - variables/security-groups/initial-sg.yaml
-    - variables/security-groups/harvester-sg.yaml
     - variables/security-groups/couchdb-sg.yaml
   gather_facts: true
 
@@ -15,11 +14,12 @@
     - role: 2-creation-of-initial-sg
     - role: 3-creation-of-volumes
     - role: 4-creation-instances-initial
-    - role: 5-creation-of-additional-harvester-sg
-    - role: 6-creation-of-additional-couchdb1-sg
-    - role: 7-creation-of-additional-couchdb2-sg
-    - role: 8-creation-of-additional-webserver-sg
-    - role: 9-application-of-additional-sg
+    - role: test
+    # - role: 5-creation-of-additional-couchdb0-sg
+    # - role: 6-creation-of-additional-couchdb1-sg
+    # - role: 7-creation-of-additional-couchdb2-sg
+    # - role: 8-creation-of-additional-webserver-sg
+    # - role: 9-application-of-additional-sg
 
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html 25/4
 # https://docs.ansible.com/ansible/2.4/os_server_module.html 25/4
