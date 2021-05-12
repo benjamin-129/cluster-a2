@@ -82,12 +82,31 @@
     state: present
   loop: '{{ couchdb_inst_ips }}'
 
+# Creating Webserver CouchDB egress to CouchDB instances SG
+- name: Create "Webserver CouchDB egress to CouchDB Instances" Security Group
+  os_security_group:
+    name: 'Webserver CouchDB Egress to CouchDB Instances'
+    description: 'Allowing Webserver ingress (port 5984) traffic to CouchDB instances'
+    state: present
+
+- name: Attach Security Group rules (CouchDB port) for "Webserver CouchDB Egress to CouchDB Instances"
+  os_security_group_rule:
+    security_group: 'Webserver CouchDB Egress to CouchDB Instances'
+    protocol: 'tcp'
+    direction: 'egress'
+    port_range_min: '5984'
+    port_range_max: '5984'
+    remote_ip_prefix: '{{ item }}/32'
+    state: present
+  loop: '{{ couchdb_inst_ips }}'
+
 - name: Create a list of security group names
   set_fact:
     webserver_sg: ["SSH access from all", 
     "Webserver HTTP/HTTPS Ingress from CouchDB Instances",
     "Webserver HTTP/HTTPS Ingress from Internet",
-    "Webserver CouchDB Ingress from CouchDB Instances"]
+    "Webserver CouchDB Ingress from CouchDB Instances",
+    "Webserver CouchDB Egress to CouchDB Instances"]
 
 - debug:
     msg: "Security group(s) {{ webserver_sg }} have been created."
