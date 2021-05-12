@@ -122,7 +122,7 @@
     port_range_max: '5984'
     remote_ip_prefix: '{{ web_front_end_ip }}/32' 
 
-  - name: Attach Security Group rules (CouchDB port) for "CDB0 CouchDB Ingress from Webserver"
+- name: Attach Security Group rules (CouchDB port) for "CDB0 CouchDB Ingress from Webserver"
   os_security_group_rule:
     security_group: 'CDB0 CouchDB Ingress from Webserver'
     protocol: 'tcp'
@@ -142,7 +142,7 @@
      "CDB0 CouchDB Egress to CDB2",
      "CDB0 HTTP/HTTPS Egress to Webserver",
      "CDB0 CouchDB Egress to Webserver",
-     "CDB0 CouchDB Ingress to Webserver"]
+     "CDB0 CouchDB Ingress from Webserver"]
 
 - debug:
     msg: "Security group(s) {{ couchdb0_sg }} have been created."

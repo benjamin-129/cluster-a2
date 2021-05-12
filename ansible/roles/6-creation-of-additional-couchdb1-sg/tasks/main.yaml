@@ -133,6 +133,7 @@
 
 
 
+
 # Setting additional rules list
 - name: Setting additional CouchDB1 instance rules list
   set_fact:
@@ -143,7 +144,7 @@
      "CDB1 CouchDB Egress to CDB2",
      "CDB1 HTTP/HTTPS Egress to Webserver",
      "CDB1 CouchDB Egress to Webserver",
-     "CDB1 CouchDB Ingress to Webserver"]
+     "CDB1 CouchDB Ingress from Webserver"]
 
 - debug:
     msg: "Security group(s) {{ couchdb1_sg }} have been created."

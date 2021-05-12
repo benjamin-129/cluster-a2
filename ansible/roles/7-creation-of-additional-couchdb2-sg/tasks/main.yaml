@@ -132,7 +132,6 @@
     remote_ip_prefix: '0.0.0.0/0' 
 
 
-
 # Setting additional rules list
 - name: Setting additional CouchDB2 instance rules list
   set_fact:
@@ -143,7 +142,7 @@
      "CDB2 CouchDB Egress to CDB1",
      "CDB2 HTTP/HTTPS Egress to Webserver",
      "CDB2 CouchDB Egress to Webserver",
-     "CDB2 CouchDB Ingress to Webserver"]
+     "CDB2 CouchDB Ingress from Webserver"]
 
 - debug:
     msg: "Security group(s) {{ couchdb2_sg }} have been created."

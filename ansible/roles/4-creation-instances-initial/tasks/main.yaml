@@ -76,31 +76,6 @@
   loop: '{{ os_instance.results }}'  
   when: item.openstack is defined
 
-# Create Twitter Harvester instance
-# - name: Create Twitter Harvester Instance
-#   os_server:
-#     name: '{{ item.name }}'
-#     image: '{{ instance_image }}'
-#     key_name: '{{ instance_key_name }}'
-#     flavor: '{{ instance_flavor_2c9g }}'
-#     availability_zone: '{{ availability_zone }}'
-#     nics: 
-#       - net-name: qh2-uom
-#     security_groups: '{{ sg_initial }}'
-#     auto_floating_ip: yes
-#     wait: yes
-#     timeout: 600
-#     state: present
-#   loop: '{{ harvester_instance }}'
-#   register: os_instance
-
-# # Settig Twitter Harvester IP fact
-# - name: Setting couchdb_instance_1_ip fact
-#   set_fact:
-#     twitter_harvester_ip: "{{ item.openstack.public_v4 }}"
-#   loop: '{{ os_instance.results }}'  
-#   when: item.openstack is defined
-
 # Create Web Front End Instance
 - name: Create Web Front-End Instance
   os_server:
