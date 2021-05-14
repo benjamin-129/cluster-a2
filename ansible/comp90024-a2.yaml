@@ -1,7 +1,6 @@
 - name: COMP90024-A2-Playbook_Team-42
   hosts: localhost
   vars:
-    # ansible_python_interpreter: /usr/local/bin/python3
     ansible_python_interpreter: /usr/bin/python3
   vars_files:
     - variables/variables-a2.yaml
@@ -19,29 +18,8 @@
     - role: 7-creation-of-additional-couchdb2-sg
     - role: 8-creation-of-additional-webserver-sg
     - role: 9-application-of-additional-sg
+    # - role: 10-couchdb-setup
+    # - role: 11-ws-setup
 
-# https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html 25/4
-# https://docs.ansible.com/ansible/2.4/os_server_module.html 25/4
-# https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=http 1/5
-# https://docs.couchdb.org/en/stable/setup/cluster.html 1/5
-# https://www.tutorialspoint.com/yaml/yaml_comments.htm 1/5
-# https://docs.ansible.com/ansible/2.5/modules/os_security_group_rule_module.html 1/5
-# https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#iterating-over-a-simple-list 1/5
 
-# 1) Common 
-# 1-common-tasks
-# 
-# 2) Create SSH from anywhere SG
-# 2-security-groups-initial
-# 
-# 2.5) Volumes?
-# 
-# 3) Create instances (all 4) with SSH SG. Save IP as facts.
-# 3-instance-creation
-# 
-# 4) Create SG rules for each VM
-# 4-security-groups-additional
-# 
-# 5) Apply additional rules to VMs
-# 5-additional-security-group-appl
-
+# Add couch cluster setup

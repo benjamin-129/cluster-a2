@@ -1,18 +1,37 @@
 # cluster-a2
 
+Updated Instructions:
+
+#### MAKE SURE ALL ROLES IN PLAYBOOK ARE UNHASHED ##########
+
+Go to ansible directory, make sure benKP.pem is in same directory.
+
+In Bash:
+
+openrc.sh -> enter your password
+ansible-playbook comp90024-a2.yaml --private-key benKP.pem
+
+
+
+
+
+
+
+<!-- 
+
 Setup Instructions (Windows & WSL):
 
 Using WSL:
 -------------------------------------------------
 Run Ansible Playbook:
 source openrc.sh
-ansible-playbook comp90024-a2.yaml
+ansible-playbook comp90024-a2.yaml -->
 
 
 
-Using Powershell, ssh into Couchdb instances (x3)
--------------------------------------------------
-Setup Volume Mount:
+<!-- Using Powershell, ssh into Couchdb instances (x3) -->
+<!-- ------------------------------------------------- -->
+<!-- Setup Volume Mount:
 sudo mkfs -t ext4 /dev/vdb
 
 Mount Volume:
@@ -62,4 +81,4 @@ screen
 Run Harvest:
 python3 harvest.py 0 localhost
 python3 harvest.py 1 localhost
-python3 harvest.py 2 localhost
+python3 harvest.py 2 localhost -->
