@@ -1,44 +1,36 @@
 import json
 import pandas as pd
-import couchdb
+
+def merge_data(get_unemployment,geo_data):
+    output={"type": "FeatureCollection", "features":[]}
+    for row in geo_data['features']:
+        for line in get_unemployment:
+            if int(line['sa4_code'])==int(row['properties']['SA4_CODE16']):
+                row['properties']["SA4_UNEMP"]=str(line['sa4_unemp'])
+            else:
+                row['properties']["SA4_UNEMP"]='No Record'
+   
+    with open('output.json', 'w') as outfile:
+        json.dump(geo_data, outfile)
+
+# Code flow starts here        
+if __name__ == "__main__":
+
+    #Specify files needed to run the code
+    unemployment_file=  './data/SA4_unemployment.json'
+    geo_file = './data/SA4_geojson.json'
+
+    unemployment_data = json.load(open(unemployment_file, 'r'))
+    geo_data=json.load(open(geo_file, 'r'))
+    get_unemployment = [{
+            'sa4_unemp': feature['properties']['unemployed_tot_000'],
+            'sa4_name': feature['properties']['sa4_name'],
+            'sa4_code': feature['properties']['sa4_code'],
+            }for feature in  unemployment_data['features']] 
 
 
-user = 'admin'
-password = 'password'
-COUCH_ADDRESS = 'localhost'
+    merge_data(get_unemployment,geo_data)
 
-# Connect to Couch DB Server
-# server = couchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
-
-server = couchdb.Server("http://{}:{}@{}:15984/".format(user, password, COUCH_ADDRESS))
-
-db = server['tweets']
-
-tweet_counts = {}
-sent_sum = {}
-
-# Store Tweet Counts
-for code in db.view('Results/TweetCount', group='true'):
-    tweet_counts[code.key] = code.value
-
-# Store Tweet Counts
-for code in db.view('Results/SentimentSum', group='true'):
-    sent_sum[code.key] = code.value
-
-#
-# def merge_file(aurin_file,geo_file):
-#     aurin_data=open(aurin_file)
-#     for row in aurin_data:
-#         print(row)
-#
-# # Code flow starts here
-# if __name__ == "__main__":
-#
-#     #Specify files needed to run the code
-#     aurin_file=  './data/Aurin_data.json'
-#     geo_file = './data/SA4_AUST.json'
-#
-#     merge_file(aurin_file, geo_file)
 
 
 

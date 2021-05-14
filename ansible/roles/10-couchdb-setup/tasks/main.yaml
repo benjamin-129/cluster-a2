@@ -27,13 +27,6 @@
     - sudo docker build -t cdb .
     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
 
-
-    # Set up Cluster TBD
-
-
-
-
-
     # Clone Repo
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
 
@@ -111,7 +104,6 @@
       \nENV COUCHDB_PASSWORD=password
       \nENV NODENAME='{{ couchdb_instance_2_ip }}'" > Dockerfile
 
-
     # Build and Start Docker Instance
     - sudo docker build -t cdb .
     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
@@ -131,6 +123,12 @@
   delegate_to: '{{ couchdb_instance_2_ip }}'
 
 
+- name: Setup Couch DB Cluster
+  shell: "{{ item }}"
+  with_items:
+
+      # Set up Cluster TBD with couchdb_instance_0 as main
+      # use ip 1 and ip2 
 
 - name: Start Harvesters couch0
   shell: "{{ item }}"
