@@ -9,6 +9,7 @@
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
     - cd cluster-a2/front-end
     - sudo apt install npm
+    - sudo npm install
     - sudo npm start
 
   delegate_to: '{{ web_front_end_ip }}'

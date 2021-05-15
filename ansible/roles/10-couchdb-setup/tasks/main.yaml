@@ -123,19 +123,30 @@
   delegate_to: '{{ couchdb_instance_2_ip }}'
 
 
-- name: Setup Couch DB Cluster
-  shell: "{{ item }}"
-  with_items:
 
-      # Set up Cluster TBD with couchdb_instance_0 as main
-      # use ip 1 and ip2 
+
+
+
+
+  
+# - name: Setup Couch DB Cluster
+#   shell: "{{ item }}"
+#   with_items:
+
+#       # Set up Cluster TBD with couchdb_instance_0 as main
+#       # use ip 1 and ip2 
+
+
+
+
+
 
 - name: Start Harvesters couch0
   shell: "{{ item }}"
   with_items:
     - screen -q
-    - python3 harvest.py 0 localhost
-    - screen -d
+    - python3 harvest.py 0 localhost &
+    # - screen -d
 
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
@@ -143,18 +154,16 @@
   shell: "{{ item }}"
   with_items:
     - screen -q
-    - python3 harvest.py 1 localhost
-    - screen -d
-
+    - python3 harvest.py 1 localhost &
+    # - screen -d
   delegate_to: '{{ couchdb_instance_1_ip }}'
 
 - name: Start Harvesters couch2
   shell: "{{ item }}"
   with_items:
     - screen -q
-    - python3 harvest.py 2 localhost
-    - screen -d
-
+    - python3 harvest.py 2 localhost &
+    # - screen -d
   delegate_to: '{{ couchdb_instance_2_ip }}'
   
 
