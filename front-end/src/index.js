@@ -3,6 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.min.css';
+/* The following line can be included in a src/App.scss */
+
+
+
+/* The following line can be included in your src/index.js or App.js file */
+
+
 
 ReactDOM.render(
   <React.StrictMode>

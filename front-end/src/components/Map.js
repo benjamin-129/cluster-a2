@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import ReactMapGL, { Marker, NavigationControl } from "react-map-gl";
 
 import Tooltip from "./Tooltip";
+import Chart from "./Chart"
+import Menubar from "./Menubar"
 
 const TOKEN =
   "pk.eyJ1Ijoiam9udGF5eXciLCJhIjoiY2s4aXcwbnA0MGFqYjNscDZicm9haXA3cCJ9.rI3D6Y4ZETQnYukX9RCOow";
@@ -12,7 +14,7 @@ const initialState = {
   viewport: {
     width: "100%",
     height: "100%",
-    latitude: -30,
+    latitude: -25,
     longitude: 130,
     zoom: 3,
   },
@@ -51,7 +53,7 @@ class Map extends Component {
         d.size = 15;
       }
       switch (query) {
-        case "sentiment_score":
+        case "sa4_name":
           d.color = colors[0];
           break;
         case "unemployed_rate":
@@ -83,6 +85,7 @@ class Map extends Component {
     const { fields } = this.props;
 
     return (
+   
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken={TOKEN}
@@ -90,10 +93,9 @@ class Map extends Component {
         onViewportChange={(viewport) => this.setState({ viewport })}
       >
         {map_data.map((country, index) => {
+          console.log(country.coordinates[1])
           const latitude = Number(country.coordinates[1]);
           const longitude = Number(country.coordinates[0]);
-          console.log(country.coordinates[1])
-
           return (
             <Marker key={index} longitude={longitude} latitude={latitude}>
               <div
@@ -104,7 +106,7 @@ class Map extends Component {
                   width:"12px"
                   
                 }}
-                // onClick={() => this.setState({ tooltip: country })}
+                 onClick={() => this.setState({ tooltip: country })}
               />
             </Marker>
           );
@@ -117,12 +119,9 @@ class Map extends Component {
             handleCloseTooltip={this.handleCloseTooltip}
           />
         )}
+         <Menubar />
 
-        <div className="map-nav">
-          <NavigationControl
-            onViewportChange={(viewport) => this.setState({ viewport })}
-          />
-        </div>
+      
       </ReactMapGL>
     );
   }

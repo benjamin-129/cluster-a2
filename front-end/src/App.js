@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-
-import Legend from "./components/Legend.js";
 import Map from "./components/Map";
+
+
 
 import "./App.css";
 
@@ -15,7 +15,7 @@ const initialState = {
   ],
   countries_data: [],
   data_loaded: false,
-  fields: ["sentiment_score", "unemployed_rate", "weekly_household_income","average_monthly_morgage"],
+  fields: ["sentiment_score", "tweet_counts","median_house_price","unemployed_rate", "weekly_household_income","average_monthly_morgage","media_personal_income"],
   query: "sentiment_score",
 };
 class App extends Component {
@@ -29,10 +29,10 @@ class App extends Component {
     try {
       const response = await axios({
         method: "get",
-        url: "http://localhost:15984/front_end/test_3/output_123.json",
+        url: "http://localhost:15984/front_end/output/out_data_0_100.json",
       });
       const countries_data = this.processData(response.data);
-
+      console.log(countries_data)
       this.setState({
         countries_data,
         data_loaded: true,
@@ -47,14 +47,16 @@ class App extends Component {
 
     for (const d of data) {
       let obj = {
-       sentiment_score: d.sentiment_score,
-        tweet_counts: d.tweet_counts,
-        weekly_household_income: d.equivalised_total_household_income_census_median_weekly,
-        average_monthly_morgage: d.rent_mortgage_payments_census_average_monthly_household_payment,
-        unemployed_rate: d.unemployed_rate,
+        sa4_name:d.sa4_name_2016,
+        sentiment_score: d.sentiment_score[0],
+        tweet_counts: d.tweet_counts[0],
+        unemployed_rate: d.unemployed_rate[0],
+        median_house_price: d.median_house_price[0],
+        weekly_household_income: d.equivalised_total_household_income_census_median_weekly[0],
+        average_monthly_morgage: d.rent_mortgage_payments_census_average_monthly_household_payment[0],
+        media_personal_income:d.median_aud[0],
         coordinates:d.centroid
       };
-
       processed.push(obj);
     }
 
@@ -72,12 +74,6 @@ class App extends Component {
 
     return data_loaded ? (
       <div className="root">
-        <Legend
-          colors={colors}
-          fields={fields}
-          query={query}
-          handleSelectLegend={this.handleSetQuery}
-        />
 
         <Map
           colors={colors}
