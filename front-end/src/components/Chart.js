@@ -3,40 +3,34 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 
 const data = [
   {
-    subject: 'sentimental score',
-    A: 120,
-    B: 110,
-    fullMark: 150,
+    subject: 'SENTIMENTAL SCORE',
+    A: 56,
+    fullMark: 100,
   },
   {
-    subject: 'Unemployment rate',
-    A: 98,
-    B: 130,
-    fullMark: 150,
+    subject: 'UNEMPLOY RATE',
+    A: 65,  
+    fullMark: 100,
   },
   {
-    subject: 'House Price',
+    subject: 'HOUSE PRICE',
     A: 86,
-    B: 130,
-    fullMark: 150,
+    fullMark: 100,
   },
   {
-    subject: 'Personal Income',
-    A: 99,
-    B: 100,
-    fullMark: 150,
+    subject: 'PERSONAL INCOME',
+    A: 54,
+    fullMark: 100,
   },
   {
-    subject: 'Household income',
-    A: 85,
-    B: 90,
-    fullMark: 150,
+    subject: 'HOUSEHOLD INCOME',
+    A: 67,
+    fullMark: 100,
   },
   {
-    subject: 'Number of Tweet',
-    A: 65,
-    B: 85,
-    fullMark: 150,
+    subject: 'NUM OF TWEET',
+    A: 76,
+    fullMark: 100,
   },
 ];
 
@@ -49,7 +43,7 @@ export default class Chart extends PureComponent {
 
 
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data} fill="#ffffff" fontSize="12px" >
+        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data} fill="#ffffff" fontSize="8px" fillOpacity={0.8}>
           <PolarGrid />
         
           <PolarAngleAxis dataKey="subject" fill="#ffffff" />
