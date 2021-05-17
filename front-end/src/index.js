@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Menubar from "./components/Menubar"
 /* The following line can be included in a src/App.scss */
 
 
@@ -14,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
+  <Menubar/>
     <App />
   </React.StrictMode>,
   document.getElementById('root')

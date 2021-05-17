@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import ReactMapGL, { Marker, NavigationControl } from "react-map-gl";
 
 import Tooltip from "./Tooltip";
-import Chart from "./Chart"
-import Menubar from "./Menubar"
+
+
 
 const TOKEN =
   "pk.eyJ1Ijoiam9udGF5eXciLCJhIjoiY2s4aXcwbnA0MGFqYjNscDZicm9haXA3cCJ9.rI3D6Y4ZETQnYukX9RCOow";
@@ -56,15 +56,7 @@ class Map extends Component {
         case "sa4_name":
           d.color = colors[0];
           break;
-        case "unemployed_rate":
-          d.color = colors[1];
-          break;
-        case "weekly_household_income":
-          d.color = colors[2];
-          break;
-        case "average_monthly_morgage":
-          d.color = colors[3];
-          break;
+       
         default:
           d.color = colors[0];
       }
@@ -82,7 +74,7 @@ class Map extends Component {
 
   render() {
     const { map_data, tooltip, viewport } = this.state;
-    const { fields } = this.props;
+    const { fields,chartfields } = this.props;
 
     return (
    
@@ -93,7 +85,7 @@ class Map extends Component {
         onViewportChange={(viewport) => this.setState({ viewport })}
       >
         {map_data.map((country, index) => {
-          console.log(country.coordinates[1])
+      
           const latitude = Number(country.coordinates[1]);
           const longitude = Number(country.coordinates[0]);
           return (
@@ -103,7 +95,8 @@ class Map extends Component {
                 style={{
                   backgroundColor: country.color,
                   height:"12px",
-                  width:"12px"
+                  width:"12px",
+                  size:country.size
                   
                 }}
                  onClick={() => this.setState({ tooltip: country })}
@@ -116,12 +109,12 @@ class Map extends Component {
           <Tooltip
             details={tooltip}
             fields={fields}
+            chartfields={chartfields}
             handleCloseTooltip={this.handleCloseTooltip}
           />
         )}
-         <Menubar />
 
-      
+   
       </ReactMapGL>
     );
   }
