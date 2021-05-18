@@ -3,6 +3,8 @@ import ReactMapGL, { Marker, NavigationControl } from "react-map-gl";
 
 import Tooltip from "./Tooltip";
 
+
+
 const TOKEN =
   "pk.eyJ1Ijoiam9udGF5eXciLCJhIjoiY2s4aXcwbnA0MGFqYjNscDZicm9haXA3cCJ9.rI3D6Y4ZETQnYukX9RCOow";
 
@@ -12,7 +14,7 @@ const initialState = {
   viewport: {
     width: "100%",
     height: "100%",
-    latitude: -30,
+    latitude: -25,
     longitude: 130,
     zoom: 3,
   },
@@ -51,18 +53,10 @@ class Map extends Component {
         d.size = 15;
       }
       switch (query) {
-        case "sentiment_score":
+        case "sa4_name":
           d.color = colors[0];
           break;
-        case "unemployed_rate":
-          d.color = colors[1];
-          break;
-        case "weekly_household_income":
-          d.color = colors[2];
-          break;
-        case "average_monthly_morgage":
-          d.color = colors[3];
-          break;
+       
         default:
           d.color = colors[0];
       }
@@ -80,9 +74,10 @@ class Map extends Component {
 
   render() {
     const { map_data, tooltip, viewport } = this.state;
-    const { fields } = this.props;
+    const { fields,chartfields } = this.props;
 
     return (
+   
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken={TOKEN}
@@ -90,10 +85,9 @@ class Map extends Component {
         onViewportChange={(viewport) => this.setState({ viewport })}
       >
         {map_data.map((country, index) => {
+      
           const latitude = Number(country.coordinates[1]);
           const longitude = Number(country.coordinates[0]);
-          console.log(country.coordinates[1])
-
           return (
             <Marker key={index} longitude={longitude} latitude={latitude}>
               <div
@@ -101,10 +95,11 @@ class Map extends Component {
                 style={{
                   backgroundColor: country.color,
                   height:"12px",
-                  width:"12px"
+                  width:"12px",
+                  size:country.size
                   
                 }}
-                // onClick={() => this.setState({ tooltip: country })}
+                 onClick={() => this.setState({ tooltip: country })}
               />
             </Marker>
           );
@@ -114,15 +109,12 @@ class Map extends Component {
           <Tooltip
             details={tooltip}
             fields={fields}
+            chartfields={chartfields}
             handleCloseTooltip={this.handleCloseTooltip}
           />
         )}
 
-        <div className="map-nav">
-          <NavigationControl
-            onViewportChange={(viewport) => this.setState({ viewport })}
-          />
-        </div>
+   
       </ReactMapGL>
     );
   }
