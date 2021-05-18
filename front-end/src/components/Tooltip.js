@@ -2,12 +2,17 @@ import React, { Component } from "react";
 import { Popup } from "react-map-gl";
 import Chart from "./Chart"
 class Tooltip extends Component {
+
+
+  
+
   render() {
     const { details, fields, handleCloseTooltip,  chartfields} = this.props;
+
  
 
     const regex = /\B(?=(\d{3})+(?!\d))/g;
-    console.log(details)
+
 
     return (
       <div>
@@ -19,15 +24,16 @@ class Tooltip extends Component {
         closeButton={true}
         onClose={() => handleCloseTooltip()}
       >
+
+      <Chart
+             details={details}
+             />
        
         <div className="map-tooltip">
           <div className="map-tooltip-field">
             <div className="map-tooltip-header">{details.sa4_name}</div>
           </div>
-            <Chart
-             details={details}
-            chartfields={chartfields} 
-             />
+           
           <div className="margin" />
 
           {fields.map((field, index) => (
@@ -40,7 +46,6 @@ class Tooltip extends Component {
             </div>
           ))}
         </div>
-            
       
       </Popup>
       </div>
