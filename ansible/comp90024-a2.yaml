@@ -9,17 +9,18 @@
   gather_facts: true
 
   roles:
-    - role: 1-common
-    - role: 2-creation-of-initial-sg
-    - role: 3-creation-of-volumes
-    - role: 4-creation-instances-initial
-    - role: 5-creation-of-additional-couchdb0-sg
-    - role: 6-creation-of-additional-couchdb1-sg
-    - role: 7-creation-of-additional-couchdb2-sg
-    - role: 8-creation-of-additional-webserver-sg
-    - role: 9-application-of-additional-sg
+    # - role: 1-common
+    # - role: 2-creation-of-initial-sg
+    # - role: 3-creation-of-volumes
+    # - role: 4-creation-instances-initial
+    # - role: 5-creation-of-additional-couchdb0-sg
+    # - role: 6-creation-of-additional-couchdb1-sg
+    # - role: 7-creation-of-additional-couchdb2-sg
+    # - role: 8-creation-of-additional-webserver-sg
+    # - role: 9-application-of-additional-sg
     # - role: 10-couchdb-setup
     # - role: 11-ws-setup
+    - role: 12-test
 
 
 # Add couch cluster setup

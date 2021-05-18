@@ -1,0 +1,58 @@
+# - name: Run setup for couchdb_0
+#   remote_user: ubuntu
+#   shell: "{{ item }}"
+#   with_items:
+
+#     # Setup Volume Mount:
+#     - sudo mkfs -t ext4 /dev/vdb
+
+#     # Mount Volume:
+#     - sudo mkdir /couchdb
+#     - sudo mount /dev/vdb /couchdb
+
+#     # Build Dockerfile
+#     - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+#     - sudo echo "EXPOSE 5984" >> Dockerfile
+#     - sudo echo "EXPOSE 4369" >> Dockerfile
+#     - sudo echo "EXPOSE 9100" >> Dockerfile
+#     - sudo echo "ENV COUCHDB_USER=admin" >> Dockerfile
+#     - sudo echo "ENV COUCHDB_PASSWORD=password" >> Dockerfile
+#     - sudo echo "ENV NODENAME='45.113.234.115'" >> Dockerfile
+
+
+#     # Build and Start Docker Instance
+#     - sudo docker build -t cdb .
+#     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
+
+#     # Clone Repo
+#     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
+
+#     # Install dependencies
+#     - sudo apt-get update -y
+#     - sudo apt install python3-pip -y
+#     - sudo apt install screen -y
+
+
+#     - sudo echo "CouchDB==1.2" > requirements.txt
+#     - sudo echo "geojson==2.5.0" >> requirements.txt
+#     - sudo echo "pickleshare==0.7.5" >> requirements.txt
+#     - sudo echo "tweepy==3.10.0" >> requirements.txt
+#     - sudo echo "afinn==0.1" >> requirements.txt
+#     - pip3 install -r requirements.txt
+
+#   become: yes
+#   delegate_to: '45.113.234.115'
+  
+- name: Start Harvesters couch0
+  shell: "{{ item }}"
+  remote_user: ubuntu
+  with_items:
+    # - screen -q
+    - nohup python3 harvest.py 0 localhost &
+    # - screen -d
+  args:
+    chdir: cluster-a2/tweet_harvester
+  async: 4
+  poll: 0
+  become: yes
+  delegate_to: '45.113.233.207'

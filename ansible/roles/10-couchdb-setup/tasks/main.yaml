@@ -1,5 +1,5 @@
--debug:
-  msg: "CouchDB IPs: {{ couchdb_instance_0_ip }}','{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}, {{ web_front_end_ip }}"
+- debug:
+    msg: "CouchDB IPs: {{ couchdb_instance_0_ip }}','{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}, {{ web_front_end_ip }}"
 
 - name: Run setup for couchdb_0
   remote_user: ubuntu
@@ -14,20 +14,22 @@
     - sudo mount /dev/vdb /couchdb
 
     # Build Dockerfile
-    - echo "FROM couchdb:3.0.1
-      \nEXPOSE 5984
-      \nEXPOSE 4369
-      \nEXPOSE 9100
-      \nENV COUCHDB_USER=admin
-      \nENV COUCHDB_PASSWORD=password
-      \nENV NODENAME='{{ couchdb_instance_0_ip }}'" > Dockerfile
-
+    - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    - sudo echo "EXPOSE 5984" >> Dockerfile
+    - sudo echo "EXPOSE 4369" >> Dockerfile
+    - sudo echo "EXPOSE 9100" >> Dockerfile
+    - sudo echo "ENV COUCHDB_USER=admin" >> Dockerfile
+    - sudo echo "ENV COUCHDB_PASSWORD=password" >> Dockerfile
+    - sudo echo "ENV NODENAME='{{ couchdb_instance_0_ip }}'" >> Dockerfile
 
     # Build and Start Docker Instance
     - sudo docker build -t cdb .
     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
 
-    # Clone Repo
+    # # Enable Clustering for each node
+    # - curl -X POST -H "Content-Type: application/json" http://admin:password@'{{ couchdb_instance_0_ip }}':5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
+
+    # Clone Repo -> Change when we make the repo public
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
 
     # Install dependencies
@@ -35,10 +37,14 @@
     - sudo apt install python3-pip -y
     - sudo apt install screen -y
 
-    - cd cluster-a2/tweet_harvester
-    - pip3 install -r requirements.txt -y
+    - sudo echo "CouchDB==1.2" > requirements.txt
+    - sudo echo "geojson==2.5.0" >> requirements.txt
+    - sudo echo "pickleshare==0.7.5" >> requirements.txt
+    - sudo echo "tweepy==3.10.0" >> requirements.txt
+    - sudo echo "afinn==0.1" >> requirements.txt
+    - pip3 install -r requirements.txt
 
-
+  become: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
 
@@ -55,18 +61,21 @@
     - sudo mount /dev/vdb /couchdb
 
     # Build Dockerfile
-    - echo "FROM couchdb:3.0.1
-      \nEXPOSE 5984
-      \nEXPOSE 4369
-      \nEXPOSE 9100
-      \nENV COUCHDB_USER=admin
-      \nENV COUCHDB_PASSWORD=password
-      \nENV NODENAME='{{ couchdb_instance_1_ip }}'" > Dockerfile
+    - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    - sudo echo "EXPOSE 5984" >> Dockerfile
+    - sudo echo "EXPOSE 4369" >> Dockerfile
+    - sudo echo "EXPOSE 9100" >> Dockerfile
+    - sudo echo "ENV COUCHDB_USER=admin" >> Dockerfile
+    - sudo echo "ENV COUCHDB_PASSWORD=password" >> Dockerfile
+    - sudo echo "ENV NODENAME='{{ couchdb_instance_1_ip }}'" >> Dockerfile
 
 
     # Build and Start Docker Instance
     - sudo docker build -t cdb .
     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
+
+    #     # Enable Clustering for each node
+    # - curl -X POST -H "Content-Type: application/json" http://admin:password@'{{ couchdb_instance_1_ip }}':5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
 
     # Clone Repo
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
@@ -76,10 +85,14 @@
     - sudo apt install python3-pip -y
     - sudo apt install screen -y
 
-    - cd cluster-a2/tweet_harvester
-    - pip3 install -r requirements.txt -y
+    - sudo echo "CouchDB==1.2" > requirements.txt
+    - sudo echo "geojson==2.5.0" >> requirements.txt
+    - sudo echo "pickleshare==0.7.5" >> requirements.txt
+    - sudo echo "tweepy==3.10.0" >> requirements.txt
+    - sudo echo "afinn==0.1" >> requirements.txt
+    - pip3 install -r requirements.txt
 
-
+  become: yes
   delegate_to: '{{ couchdb_instance_1_ip }}'
 
 
@@ -96,17 +109,20 @@
     - sudo mount /dev/vdb /couchdb
 
     # Build Dockerfile
-    - echo "FROM couchdb:3.0.1
-      \nEXPOSE 5984
-      \nEXPOSE 4369
-      \nEXPOSE 9100
-      \nENV COUCHDB_USER=admin
-      \nENV COUCHDB_PASSWORD=password
-      \nENV NODENAME='{{ couchdb_instance_2_ip }}'" > Dockerfile
+    - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    - sudo echo "EXPOSE 5984" >> Dockerfile
+    - sudo echo "EXPOSE 4369" >> Dockerfile
+    - sudo echo "EXPOSE 9100" >> Dockerfile
+    - sudo echo "ENV COUCHDB_USER=admin" >> Dockerfile
+    - sudo echo "ENV COUCHDB_PASSWORD=password" >> Dockerfile
+    - sudo echo "ENV NODENAME='{{ couchdb_instance_2_ip }}'" >> Dockerfile
 
     # Build and Start Docker Instance
     - sudo docker build -t cdb .
     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
+
+    # # Enable Clustering for each node
+    # - curl -X POST -H "Content-Type: application/json" http://admin:password@'{{ couchdb_instance_2_ip }}':5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
 
     # Clone Repo
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
@@ -116,55 +132,63 @@
     - sudo apt install python3-pip -y
     - sudo apt install screen -y
 
-    - cd cluster-a2/tweet_harvester
-    - pip3 install -r requirements.txt -y
+    - sudo echo "CouchDB==1.2" > requirements.txt
+    - sudo echo "geojson==2.5.0" >> requirements.txt
+    - sudo echo "pickleshare==0.7.5" >> requirements.txt
+    - sudo echo "tweepy==3.10.0" >> requirements.txt
+    - sudo echo "afinn==0.1" >> requirements.txt
+    - pip3 install -r requirements.txt
 
-
+  become: yes
   delegate_to: '{{ couchdb_instance_2_ip }}'
 
 
 
-
-
-
-
-  
-# - name: Setup Couch DB Cluster
+# - name: Cluster Setup: Coordinating Node: 0
+#   remote_user: ubuntu
 #   shell: "{{ item }}"
 #   with_items:
 
-#       # Set up Cluster TBD with couchdb_instance_0 as main
-#       # use ip 1 and ip2 
+#     - curl -X POST -H "Content-Type: application/json" http://admin:password@"{{ couchdb_instance_0_ip }}":5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "port": 5984, "node_count": "3", "remote_node": "'{{ couchdb_instance_1_ip }}'", "remote_current_user": "admin", "remote_current_password": "password" }'
+#     - curl -X POST -H "Content-Type: application/json" http://admin:password@"{{ couchdb_instance_0_ip }}":5984/_cluster_setup -d '{"action": "add_node", "host":"'{{ couchdb_instance_1_ip }}'", "port": 5984, "username": "admin", "password":"password"}'
 
-
+#     - curl -X POST -H "Content-Type: application/json" http://admin:password@"{{ couchdb_instance_0_ip }}":5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "port": 5984, "node_count": "3", "remote_node": "'{{ couchdb_instance_2_ip }}'", "remote_current_user": "admin", "remote_current_password": "password" }'
+#     - curl -X POST -H "Content-Type: application/json" http://admin:password@'{{ couchdb_instance_0_ip }}':5984/_cluster_setup -d '{"action": "add_node", "host":"'{{ couchdb_instance_2_ip }}'", "port": 5984, "username": "admin", "password":"password"}'
+  
+#     - curl -X POST -H "Content-Type: application/json" http://admin:password@'{{ couchdb_instance_0_ip }}':5984/_cluster_setup -d '{"action": "finish_cluster"}'
+#   become: yes
+#   delegate_to: '{{ couchdb_instance_0_ip }}'
 
 
 
 
 - name: Start Harvesters couch0
   shell: "{{ item }}"
+  remote_user: ubuntu
   with_items:
     - screen -q
     - python3 harvest.py 0 localhost &
     # - screen -d
-
+  args:
+    chdir: ~/cluster-a2/tweet_harvester
+  become: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
-- name: Start Harvesters couch1
-  shell: "{{ item }}"
-  with_items:
-    - screen -q
-    - python3 harvest.py 1 localhost &
-    # - screen -d
-  delegate_to: '{{ couchdb_instance_1_ip }}'
+# - name: Start Harvesters couch1
+#   shell: "{{ item }}"
+#   with_items:
+#     - screen -q
+#     - python3 harvest.py 1 localhost &
+#     # - screen -d
+#   delegate_to: '{{ couchdb_instance_1_ip }}'
 
-- name: Start Harvesters couch2
-  shell: "{{ item }}"
-  with_items:
-    - screen -q
-    - python3 harvest.py 2 localhost &
-    # - screen -d
-  delegate_to: '{{ couchdb_instance_2_ip }}'
+# - name: Start Harvesters couch2
+#   shell: "{{ item }}"
+#   with_items:
+#     - screen -q
+#     - python3 harvest.py 2 localhost &
+#     # - screen -d
+#   delegate_to: '{{ couchdb_instance_2_ip }}'
   
 
   

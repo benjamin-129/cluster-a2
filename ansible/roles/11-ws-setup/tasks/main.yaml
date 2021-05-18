@@ -1,5 +1,5 @@
--debug:
-  msg: "CouchDB IPs: {{ couchdb_instance_0_ip }}','{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}, {{ web_front_end_ip }}"
+- debug:
+    msg: "CouchDB IPs: {{ couchdb_instance_0_ip }}','{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}, {{ web_front_end_ip }}"
 
 - name: Run setup for ws
   remote_user: ubuntu
