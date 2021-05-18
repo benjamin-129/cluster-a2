@@ -13,7 +13,7 @@ export default class Chart extends PureComponent {
   }
 
   prepareData = () => {
-      const { details,  chartfields} = this.props;
+      const { details} = this.props;
       console.log(details)
       const map_data=[
   {

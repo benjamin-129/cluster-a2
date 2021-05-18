@@ -7,7 +7,7 @@ class Tooltip extends Component {
   
 
   render() {
-    const { details, fields, handleCloseTooltip,  chartfields} = this.props;
+    const { details, fields, handleCloseTooltip} = this.props;
 
  
 
@@ -25,15 +25,15 @@ class Tooltip extends Component {
         onClose={() => handleCloseTooltip()}
       >
 
-      <Chart
-             details={details}
-             />
+    
        
         <div className="map-tooltip">
           <div className="map-tooltip-field">
             <div className="map-tooltip-header">{details.sa4_name}</div>
           </div>
-           
+            <Chart
+             details={details}
+             />
           <div className="margin" />
 
           {fields.map((field, index) => (

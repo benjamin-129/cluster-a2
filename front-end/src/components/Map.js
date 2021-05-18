@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import ReactMapGL, { Marker, NavigationControl } from "react-map-gl";
-import Chart from "./Chart"
+import ReactMapGL, { Marker } from "react-map-gl";
 import Tooltip from "./Tooltip";
 
 
@@ -74,7 +73,7 @@ class Map extends Component {
 
   render() {
     const { map_data, tooltip, viewport } = this.state;
-    const { fields,chartfields } = this.props;
+    const { fields } = this.props;
  
 
     return (
@@ -111,6 +110,7 @@ class Map extends Component {
             details={tooltip}
             fields={fields}
             handleCloseTooltip={this.handleCloseTooltip}
+             onClick={() => this.setState({ tooltip:null })}
           />
         )}
 
