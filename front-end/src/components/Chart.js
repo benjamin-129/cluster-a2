@@ -1,49 +1,70 @@
 import React, { PureComponent } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
-const data = [
+const initialState = {
+  map_data:[]
+}
+
+export default class Chart extends PureComponent {
+  state = initialState;
+ 
+   componentDidMount() {
+    this.prepareData();
+  }
+
+  prepareData = () => {
+      const { details} = this.props;
+      console.log(details)
+      const map_data=[
   {
     subject: 'SENTIMENTAL SCORE',
-    A: 56,
+    A: details.sentiment_score_std,
     fullMark: 100,
   },
   {
     subject: 'UNEMPLOY RATE',
-    A: 65,  
+    A: details.unemployed_rate_std,  
     fullMark: 100,
   },
   {
     subject: 'HOUSE PRICE',
-    A: 86,
+    A: details.median_house_price_std,
     fullMark: 100,
   },
   {
     subject: 'PERSONAL INCOME',
-    A: 54,
+    A: details.media_personal_income_std,
     fullMark: 100,
   },
   {
     subject: 'HOUSEHOLD INCOME',
-    A: 67,
+    A: details.weekly_household_income_std,
     fullMark: 100,
   },
   {
     subject: 'NUM OF TWEET',
-    A: 76,
+    A: details.tweet_counts_std,
     fullMark: 100,
   },
-];
+  {
+    subject: 'MONTHLY MORGAGE',
+    A: details.average_monthly_morgage_std,
+    fullMark: 100,
+  },
+]
+      this.setState({
+      map_data,
+    });
+  };
+  
 
-export default class Chart extends PureComponent {
 
   render() {
-     const { details,  chartfields} = this.props;
+   
     return (
       <div className="chart">
-
-
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data} fill="#ffffff" fontSize="8px" fillOpacity={0.8}>
+        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={this.state.map_data} fill="#ffffff" fontSize="8px" fillOpacity={0.8}>
           <PolarGrid />
         
           <PolarAngleAxis dataKey="subject" fill="#ffffff" />
