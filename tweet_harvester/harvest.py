@@ -4,6 +4,10 @@ import couchdb
 import time
 import argparse
 import datetime
+from sklearn import preprocessing
+import numpy as np
+import json
+
 from afinn import Afinn
 
 parser = argparse.ArgumentParser(description='Harvester Node Number')
@@ -55,6 +59,7 @@ if HARVESTER_NUMBER == 2:
 # Connect to Couch DB Server
 server = couchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
 
+
 # Create tweets DB if it doesnt exist
 dbname = 'tweets'
 
@@ -62,6 +67,13 @@ if dbname in server:
     db = server[dbname]
 else:
     db = server.create(dbname)
+
+# Create Front end DB
+if 'front_end' in server:
+    front_end_db = server['front_end']
+else:
+    front_end_db = server.create('front_end')
+
 
 
 afn = Afinn()
@@ -111,6 +123,52 @@ elif HARVESTER_NUMBER==2:
 else:
     code_to_process = sa4_coord.keys()
 
+def update_scores(db, front_end_db):
+    min_max_scaler = preprocessing.MinMaxScaler()
+
+    # Pull Sentiment Score and Tweet count from server
+
+    tweet_counts = {}
+    sent_sum = {}
+    # Store Tweet Counts
+    for code in db.view('Results/TweetCount', group='true'):
+        tweet_counts[code.key] = code.value
+
+    # Store Sentiment Scores
+    for code in db.view('Results/SentimentSum', group='true'):
+        sent_sum[code.key] = code.value
+
+    # Calculate sentiment score and normalised sentiment score
+    sentiment_score = {}
+    for key in tweet_counts.keys():
+        count = tweet_counts[key]
+        sent = sent_sum[key]
+        score = sent / count
+
+        sentiment_score[key] = score
+
+    # get saved json
+    file = open('front_output.json', 'r').read()
+    in_json = json.loads(file)
+
+    # Update file
+    for item in in_json:
+        if item['sa4_code'] in sentiment_score.keys():
+            key = item['sa4_code']
+            item['sentiment_score'] = sentiment_score[key]
+            item['sent_sum'] = sent_sum[key]
+            item['tweet_counts'] = tweet_counts[key]
+
+    # Check if output doc in front_end_db
+    if 'output' in front_end_db:
+        doc = front_end_db['output']
+    else:
+        doc_id, doc_rev = front_end_db.save({"_id": 'output_test'})
+        doc = front_end_db[doc_id]
+    # Put attachment to DB
+    front_end_db.put_attachment(doc, in_json, 'out_data.json', "application/json")
+
+
 # Run Loop
 run_count = 0
 while (True):
@@ -124,6 +182,7 @@ while (True):
         except tweepy.TweepError:
             print("Pull Limit Reached, Sleeping for 15 Minutes")
             time.sleep(900)
+    update_scores(db, front_end_db)
 
 
 
