@@ -24,6 +24,9 @@
 #     - sudo docker build -t cdb .
 #     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
 
+      # # Enable Clustering for each node
+      # - curl -X POST -H "Content-Type: application/json" http://admin:password@'{{ couchdb_instance_0_ip }}':5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
+
 #     # Clone Repo
 #     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
 
@@ -44,15 +47,22 @@
 #   delegate_to: '45.113.234.115'
   
 - name: Start Harvesters couch0
-  shell: "{{ item }}"
+  shell: cd cluster-a2/tweet_harvester; nohup python3 harvest.py 0 localhost &
   remote_user: ubuntu
-  with_items:
-    # - screen -q
-    - nohup python3 harvest.py 0 localhost &
-    # - screen -d
-  args:
-    chdir: cluster-a2/tweet_harvester
-  async: 4
-  poll: 0
   become: yes
   delegate_to: '45.113.233.207'
+
+
+# - name: "Task3: Check the status of the remote server from localhost [Ansible master]"
+#   remote_user: ubuntu
+#   uri:
+#       url: http://localhost:5984/_cluster_setup
+#       force_basic_auth: yes
+#       user: "admin"
+#       password: "password"
+#       method: POST 
+#       body: '{"action": "enable_cluster", "bind_address": "0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
+#       body_format: json
+#       status_code: 400
+#       return_content: yes
+#   delegate_to: '45.113.233.207'

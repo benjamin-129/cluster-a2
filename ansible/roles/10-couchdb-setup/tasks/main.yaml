@@ -26,9 +26,6 @@
     - sudo docker build -t cdb .
     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
 
-    # # Enable Clustering for each node
-    # - curl -X POST -H "Content-Type: application/json" http://admin:password@'{{ couchdb_instance_0_ip }}':5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
-
     # Clone Repo -> Change when we make the repo public
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
 
@@ -74,9 +71,6 @@
     - sudo docker build -t cdb .
     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
 
-    #     # Enable Clustering for each node
-    # - curl -X POST -H "Content-Type: application/json" http://admin:password@'{{ couchdb_instance_1_ip }}':5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
-
     # Clone Repo
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
 
@@ -121,9 +115,6 @@
     - sudo docker build -t cdb .
     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
 
-    # # Enable Clustering for each node
-    # - curl -X POST -H "Content-Type: application/json" http://admin:password@'{{ couchdb_instance_2_ip }}':5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
-
     # Clone Repo
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
 
@@ -143,36 +134,134 @@
   delegate_to: '{{ couchdb_instance_2_ip }}'
 
 
+- name: "Enable Clustering for Node 0"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/_cluster_setup
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: POST 
+      body: '{"action": "enable_cluster", "bind_address": "0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
+      body_format: json
+      status_code: 400
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
 
-# - name: Cluster Setup: Coordinating Node: 0
-#   remote_user: ubuntu
+- name: "Enable Clustering for Node 1"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/_cluster_setup
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: POST 
+      body: '{"action": "enable_cluster", "bind_address": "0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
+      body_format: json
+      status_code: 400
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_1_ip }}'
+
+- name: "Enable Clustering for Node 2"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/_cluster_setup
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: POST 
+      body: '{"action": "enable_cluster", "bind_address": "0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
+      body_format: json
+      status_code: 400
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_2_ip }}'
+
+- name: "Coordinate Cluster Setup on Node 0: connecting to Node 1 - p1"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/_cluster_setup
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: POST 
+      body: '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "port": 5984, "node_count": "3", "remote_node": "{{ couchdb_instance_1_ip }}", "remote_current_user": "admin", "remote_current_password": "password" }'
+      body_format: json
+      status_code: 400
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
+
+- name: "Coordinate Cluster Setup on Node 0: connecting to Node 1 - p2"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/_cluster_setup
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: POST 
+      body: '{"action": "add_node", "host":"{{ couchdb_instance_1_ip }}", "port": 5984, "username": "admin", "password":"password"}'
+      body_format: json
+      status_code: 400
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
+
+- name: "Coordinate Cluster Setup on Node 0: connecting to Node 2 - p1"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/_cluster_setup
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: POST 
+      body: '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "port": 5984, "node_count": "3", "remote_node": "{{ couchdb_instance_2_ip }}", "remote_current_user": "admin", "remote_current_password": "password" }'
+      body_format: json
+      status_code: 400
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
+
+- name: "Coordinate Cluster Setup on Node 0: connecting to Node 2 - p2"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/_cluster_setup
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: POST 
+      body: '{"action": "add_node", "host":"{{ couchdb_instance_2_ip }}", "port": 5984, "username": "admin", "password":"password"}'
+      body_format: json
+      status_code: 400
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
+
+- name: "Finalise Cluster Configuration on Node 0"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/_cluster_setup
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: POST 
+      body: '{"action": "finish_cluster"}'
+      body_format: json
+      status_code: 400
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
+
+
+
+
+
+
+# - name: Start Harvesters couch0
 #   shell: "{{ item }}"
+#   remote_user: ubuntu
 #   with_items:
-
-#     - curl -X POST -H "Content-Type: application/json" http://admin:password@"{{ couchdb_instance_0_ip }}":5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "port": 5984, "node_count": "3", "remote_node": "'{{ couchdb_instance_1_ip }}'", "remote_current_user": "admin", "remote_current_password": "password" }'
-#     - curl -X POST -H "Content-Type: application/json" http://admin:password@"{{ couchdb_instance_0_ip }}":5984/_cluster_setup -d '{"action": "add_node", "host":"'{{ couchdb_instance_1_ip }}'", "port": 5984, "username": "admin", "password":"password"}'
-
-#     - curl -X POST -H "Content-Type: application/json" http://admin:password@"{{ couchdb_instance_0_ip }}":5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "port": 5984, "node_count": "3", "remote_node": "'{{ couchdb_instance_2_ip }}'", "remote_current_user": "admin", "remote_current_password": "password" }'
-#     - curl -X POST -H "Content-Type: application/json" http://admin:password@'{{ couchdb_instance_0_ip }}':5984/_cluster_setup -d '{"action": "add_node", "host":"'{{ couchdb_instance_2_ip }}'", "port": 5984, "username": "admin", "password":"password"}'
-  
-#     - curl -X POST -H "Content-Type: application/json" http://admin:password@'{{ couchdb_instance_0_ip }}':5984/_cluster_setup -d '{"action": "finish_cluster"}'
+#     - screen -q
+#     - python3 harvest.py 0 localhost &
+#     # - screen -d
+#   args:
+#     chdir: ~/cluster-a2/tweet_harvester
 #   become: yes
 #   delegate_to: '{{ couchdb_instance_0_ip }}'
-
-
-
-
-- name: Start Harvesters couch0
-  shell: "{{ item }}"
-  remote_user: ubuntu
-  with_items:
-    - screen -q
-    - python3 harvest.py 0 localhost &
-    # - screen -d
-  args:
-    chdir: ~/cluster-a2/tweet_harvester
-  become: yes
-  delegate_to: '{{ couchdb_instance_0_ip }}'
 
 # - name: Start Harvesters couch1
 #   shell: "{{ item }}"
