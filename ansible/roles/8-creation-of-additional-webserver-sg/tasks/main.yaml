@@ -64,6 +64,24 @@
     remote_ip_prefix: '0.0.0.0/0'
     state: present
 
+# Creating Webserver HTTP egress to Internet SG
+- name: Create "Webserver HTTP egress to Internet" Security Group
+  os_security_group:
+    name: 'Webserver HTTP egress to Internet'
+    description: 'Allowing Webserver ingress HTTP smd HTTPS traffic (80/443) from Internet'
+    state: present
+
+# Attach HTTP Port rules to SG
+- name: Attach Security Group rules (HTTP ports) for "Webserver HTTP Egress to Internet"
+  os_security_group_rule:
+    security_group: 'Webserver HTTP egress to Internet'
+    protocol: 'tcp'
+    direction: 'egress'
+    port_range_min: '80'
+    port_range_max: '80'
+    remote_ip_prefix: '0.0.0.0/0'
+    state: present
+
 # Creating Webserver CouchDB ingress from CouchDB instances SG
 - name: Create "Webserver CouchDB Ingress from CouchDB Instances" Security Group
   os_security_group:
@@ -104,7 +122,8 @@
   set_fact:
     webserver_sg: ["SSH access from all", 
     "Webserver HTTP/HTTPS Ingress from CouchDB Instances",
-    "Webserver HTTP/HTTPS Ingress from Internet",
+    "Webserver HTTP/HTTPS Ingress from Internet", 
+    "Webserver HTTP egress to Internet",
     "Webserver CouchDB Ingress from CouchDB Instances",
     "Webserver CouchDB Egress to CouchDB Instances"]
 

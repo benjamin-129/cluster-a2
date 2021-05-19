@@ -46,11 +46,66 @@
 #   become: yes
 #   delegate_to: '45.113.234.115'
   
-- name: Start Harvesters couch0
-  shell: cd cluster-a2/tweet_harvester; nohup python3 harvest.py 0 localhost &
-  remote_user: ubuntu
-  become: yes
-  delegate_to: '45.113.233.207'
+# - name: "Setup CORS for Cluster - p1"
+#   remote_user: ubuntu
+#   uri:
+#       url: http://localhost:5984/_node/couchdb@45.113.233.137/_config/httpd/enable_cors
+#       force_basic_auth: yes
+#       user: "admin"
+#       password: "password"
+#       method: PUT 
+#       body: '"true"'
+#       body_format: json
+#       status_code: 200
+#       return_content: yes
+#   delegate_to: '45.113.233.137'
+
+# - name: "Setup CORS for Cluster - p2"
+#   remote_user: ubuntu
+#   uri:
+#       url: http://localhost:5984/_node/couchdb@45.113.233.137/_config/cors/origins
+#       force_basic_auth: yes
+#       user: "admin"
+#       password: "password"
+#       method: PUT 
+#       body: '"*"'
+#       body_format: json
+#       status_code: 200
+#       return_content: yes
+#   delegate_to: '45.113.233.137'
+
+
+# - name: "Coordinate Cluster Setup on Node 0: connecting to Node 2 - p2"
+#   remote_user: ubuntu
+#   uri:
+#       url: http://localhost:5984/_cluster_setup
+#       force_basic_auth: yes
+#       user: "admin"
+#       password: "password"
+#       method: POST 
+#       body: '{"action": "add_node", "host":"45.113.235.25", "port": 5984, "username": "admin", "password":"password"}'
+#       body_format: json
+#       # status_code: 400
+#       status_code: 201
+#       return_content: yes
+#   delegate_to: '45.113.233.137'
+
+
+# - name: "Finalise Cluster Configuration on Node 0"
+#   remote_user: ubuntu
+#   uri:
+#       url: http://localhost:5984/_cluster_setup
+#       force_basic_auth: yes
+#       user: "admin"
+#       password: "password"
+#       method: POST 
+#       body: '{"action": "finish_cluster"}'
+#       body_format: json
+#       # status_code: 400
+#       status_code: 201
+#       return_content: yes
+#   delegate_to: '45.113.233.137'
+
 
 
 # - name: "Task3: Check the status of the remote server from localhost [Ansible master]"

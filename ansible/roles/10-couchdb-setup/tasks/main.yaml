@@ -14,7 +14,8 @@
     - sudo mount /dev/vdb /couchdb
 
     # Build Dockerfile
-    - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    # - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    - sudo echo "FROM couchdb:2.3.1" > Dockerfile
     - sudo echo "EXPOSE 5984" >> Dockerfile
     - sudo echo "EXPOSE 4369" >> Dockerfile
     - sudo echo "EXPOSE 9100" >> Dockerfile
@@ -40,6 +41,7 @@
     - sudo echo "tweepy==3.10.0" >> requirements.txt
     - sudo echo "afinn==0.1" >> requirements.txt
     - pip3 install -r requirements.txt
+    - pip3 install sklearn
 
   become: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
@@ -58,7 +60,8 @@
     - sudo mount /dev/vdb /couchdb
 
     # Build Dockerfile
-    - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    # - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    - sudo echo "FROM couchdb:2.3.1" > Dockerfile
     - sudo echo "EXPOSE 5984" >> Dockerfile
     - sudo echo "EXPOSE 4369" >> Dockerfile
     - sudo echo "EXPOSE 9100" >> Dockerfile
@@ -85,6 +88,7 @@
     - sudo echo "tweepy==3.10.0" >> requirements.txt
     - sudo echo "afinn==0.1" >> requirements.txt
     - pip3 install -r requirements.txt
+    - pip3 install sklearn
 
   become: yes
   delegate_to: '{{ couchdb_instance_1_ip }}'
@@ -103,7 +107,8 @@
     - sudo mount /dev/vdb /couchdb
 
     # Build Dockerfile
-    - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    # - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    - sudo echo "FROM couchdb:2.3.1" > Dockerfile
     - sudo echo "EXPOSE 5984" >> Dockerfile
     - sudo echo "EXPOSE 4369" >> Dockerfile
     - sudo echo "EXPOSE 9100" >> Dockerfile
@@ -129,6 +134,7 @@
     - sudo echo "tweepy==3.10.0" >> requirements.txt
     - sudo echo "afinn==0.1" >> requirements.txt
     - pip3 install -r requirements.txt
+    - pip3 install sklearn
 
   become: yes
   delegate_to: '{{ couchdb_instance_2_ip }}'
@@ -186,7 +192,8 @@
       method: POST 
       body: '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "port": 5984, "node_count": "3", "remote_node": "{{ couchdb_instance_1_ip }}", "remote_current_user": "admin", "remote_current_password": "password" }'
       body_format: json
-      status_code: 400
+      # status_code: 400
+      status_code: 201
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
@@ -200,7 +207,8 @@
       method: POST 
       body: '{"action": "add_node", "host":"{{ couchdb_instance_1_ip }}", "port": 5984, "username": "admin", "password":"password"}'
       body_format: json
-      status_code: 400
+      # status_code: 400
+      status_code: 201
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
@@ -214,7 +222,8 @@
       method: POST 
       body: '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "port": 5984, "node_count": "3", "remote_node": "{{ couchdb_instance_2_ip }}", "remote_current_user": "admin", "remote_current_password": "password" }'
       body_format: json
-      status_code: 400
+      # status_code: 400
+      status_code: 201
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
@@ -228,9 +237,11 @@
       method: POST 
       body: '{"action": "add_node", "host":"{{ couchdb_instance_2_ip }}", "port": 5984, "username": "admin", "password":"password"}'
       body_format: json
-      status_code: 400
+      # status_code: 400
+      status_code: 201
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
+
 
 - name: "Finalise Cluster Configuration on Node 0"
   remote_user: ubuntu
@@ -242,42 +253,56 @@
       method: POST 
       body: '{"action": "finish_cluster"}'
       body_format: json
-      status_code: 400
+      # status_code: 400
+      status_code: 201
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
 
+- name: "Setup CORS for Cluster - p1"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/_node/couchdb@{{ couchdb_instance_0_ip }}/_config/httpd/enable_cors
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: PUT 
+      body: '"true"'
+      body_format: json
+      status_code: 200
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
+
+- name: "Setup CORS for Cluster - p2"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/_node/couchdb@{{ couchdb_instance_0_ip }}/_config/cors/origins
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: PUT 
+      body: '"*"'
+      body_format: json
+      status_code: 200
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
 
 
+- name: Start Harvesters couch0
+  shell: cd cluster-a2/tweet_harvester; nohup python3 harvest.py 0 localhost &
+  remote_user: ubuntu
+  delegate_to: '{{ couchdb_instance_0_ip }}'
+
+- name: Start Harvesters couch0
+  shell: cd cluster-a2/tweet_harvester; nohup python3 harvest.py 1 localhost &
+  remote_user: ubuntu
+  delegate_to: '{{ couchdb_instance_1_ip }}'
+
+- name: Start Harvesters couch0
+  shell: cd cluster-a2/tweet_harvester; nohup python3 harvest.py 2 localhost &
+  remote_user: ubuntu
+  delegate_to: '{{ couchdb_instance_2_ip }}'
 
 
-# - name: Start Harvesters couch0
-#   shell: "{{ item }}"
-#   remote_user: ubuntu
-#   with_items:
-#     - screen -q
-#     - python3 harvest.py 0 localhost &
-#     # - screen -d
-#   args:
-#     chdir: ~/cluster-a2/tweet_harvester
-#   become: yes
-#   delegate_to: '{{ couchdb_instance_0_ip }}'
-
-# - name: Start Harvesters couch1
-#   shell: "{{ item }}"
-#   with_items:
-#     - screen -q
-#     - python3 harvest.py 1 localhost &
-#     # - screen -d
-#   delegate_to: '{{ couchdb_instance_1_ip }}'
-
-# - name: Start Harvesters couch2
-#   shell: "{{ item }}"
-#   with_items:
-#     - screen -q
-#     - python3 harvest.py 2 localhost &
-#     # - screen -d
-#   delegate_to: '{{ couchdb_instance_2_ip }}'
-  
 
   

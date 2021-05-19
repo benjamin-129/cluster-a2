@@ -1,5 +1,5 @@
-- debug:
-    msg: "CouchDB IPs: {{ couchdb_instance_0_ip }}','{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}, {{ web_front_end_ip }}"
+# - debug:
+#     msg: "CouchDB IPs: {{ couchdb_instance_0_ip }}','{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}, {{ web_front_end_ip }}"
 
 - name: Run setup for ws
   remote_user: ubuntu
@@ -7,9 +7,10 @@
   with_items:
 
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
-    - cd cluster-a2/front-end
-    - sudo apt install npm
-    - sudo npm install
-    - sudo npm start
+    - cd cluster-a2/front-end ; sudo apt install npm
+    - cd cluster-a2/front-end ; sudo npm install
+    - cd cluster-a2/front-end ; nohup sudo npm start &
 
-  delegate_to: '{{ web_front_end_ip }}'
+  # delegate_to: '{{ web_front_end_ip }}'
+  delegate_to: '45.113.233.123'
+  
