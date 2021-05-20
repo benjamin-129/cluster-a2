@@ -30,7 +30,7 @@ class App extends Component {
     try {
       const response = await axios({
         method: "get",
-        url: "http://45.113.232.142:5984/front_end/output/out_data_0_100.json",
+        url: process.env.OUTPUT_URL,
       });
       const countries_data = this.processData(response.data);
  
