@@ -5,6 +5,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Menubar from "./components/Menubar"
+import {
+  BrowserRouter 
+} from "react-router-dom";
 /* The following line can be included in a src/App.scss */
 
 
