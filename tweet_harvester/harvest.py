@@ -7,8 +7,11 @@ import datetime
 from sklearn import preprocessing
 import numpy as np
 import json
-
+import sys
 from afinn import Afinn
+
+
+# sys.path.append('/tweet_harvester')
 
 parser = argparse.ArgumentParser(description='Harvester Node Number')
 parser.add_argument('h_number', type=int, help='an integer for the accumulator')
@@ -57,7 +60,8 @@ if HARVESTER_NUMBER == 2:
     api = tweepy.API(auth)
 
 # Connect to Couch DB Server
-server = couchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
+# server = couchdb.Server("http://{}:{}@{}:15984/".format(user, password, COUCH_ADDRESS))
+server = couchdb.Server("http://{}:{}@{}:15984/".format(user, password, 'localhost'))
 
 
 # Create tweets DB if it doesnt exist
@@ -73,8 +77,6 @@ if 'front_end' in server:
     front_end_db = server['front_end']
 else:
     front_end_db = server.create('front_end')
-
-
 
 afn = Afinn()
 
@@ -163,17 +165,19 @@ def update_scores(db, front_end_db):
     if 'output' in front_end_db:
         doc = front_end_db['output']
     else:
-        doc_id, doc_rev = front_end_db.save({"_id": 'output_test'})
+        doc_id, doc_rev = front_end_db.save({"_id": 'output'})
         doc = front_end_db[doc_id]
     # Put attachment to DB
     front_end_db.put_attachment(doc, in_json, 'out_data.json', "application/json")
-
 
 # Run Loop
 run_count = 0
 while (True):
     run_count+=1
     print("Harvester:", HARVESTER_NUMBER, "run:", run_count, datetime.datetime.now())
+    if HARVESTER_NUMBER == 1:
+        print('Updating Scores')
+        update_scores(db, front_end_db)
     for sa4 in code_to_process:
         try:
             push_tweets(sa4, api, tweet_sa4_min[sa4])
@@ -182,7 +186,7 @@ while (True):
         except tweepy.TweepError:
             print("Pull Limit Reached, Sleeping for 15 Minutes")
             time.sleep(900)
-    update_scores(db, front_end_db)
+
 
 
 

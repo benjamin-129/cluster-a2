@@ -121,3 +121,29 @@
 #       status_code: 400
 #       return_content: yes
 #   delegate_to: '45.113.233.207'
+
+
+- name: "Create View"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/tweets/_design/Results
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: PUT 
+      body: '{
+  "views": {
+    "TweetCount": {
+      "reduce": "_count",
+      "map": "function (doc) {\n  emit(doc.sa4, 1);\n}"
+    },
+    "SentimentSum": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  emit(doc.sa4, doc.sent_score);\n}"
+    }
+  }
+}'
+      body_format: json
+      status_code: 201
+      return_content: yes
+  delegate_to: '45.113.233.237'

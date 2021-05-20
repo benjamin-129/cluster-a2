@@ -293,12 +293,41 @@
   remote_user: ubuntu
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
-- name: Start Harvesters couch0
+
+# Add Views
+
+- name: "Create View"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/tweets/_design/Results
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: PUT 
+      body: '{
+  "views": {
+    "TweetCount": {
+      "reduce": "_count",
+      "map": "function (doc) {\n  emit(doc.sa4, 1);\n}"
+    },
+    "SentimentSum": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  emit(doc.sa4, doc.sent_score);\n}"
+    }
+  }
+}'
+      body_format: json
+      status_code: 201
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
+
+
+- name: Start Harvesters couch1
   shell: cd cluster-a2/tweet_harvester; nohup python3 harvest.py 1 localhost &
   remote_user: ubuntu
   delegate_to: '{{ couchdb_instance_1_ip }}'
 
-- name: Start Harvesters couch0
+- name: Start Harvesters couch2
   shell: cd cluster-a2/tweet_harvester; nohup python3 harvest.py 2 localhost &
   remote_user: ubuntu
   delegate_to: '{{ couchdb_instance_2_ip }}'
