@@ -9,7 +9,7 @@
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
     - sudo apt install curl
     - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-    - sudo apt install node.js
+    - sudo apt install nodejs
     # - sudo echo "OUTPUT_URL = "http://{{ couchdb_instance_0_ip }}:5984/front_end/output/out_data.json"" >> cluster-a2/front-end/.env
     - sudo echo "OUTPUT_URL = "http://45.113.232.154:5984/front_end/output/out_data.json"" >> cluster-a2/front-end/.env
     - cd cluster-a2/front-end ; sudo npm install
