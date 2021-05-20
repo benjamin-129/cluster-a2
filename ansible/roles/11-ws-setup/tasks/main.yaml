@@ -6,13 +6,15 @@
   shell: "{{ item }}"
   with_items:
     
-    # - sudo echo "{{ couchdb_instance_0_ip }}" > cluster-a2/front-end/.env
-    - sudo echo "OUTPUT_URL = "http://{{ couchdb_instance_0_ip }}:5984/front_end/output/out_data.json"" >> cluster-a2/front-end/.env
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
-    - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - ; sudo apt install node.js
+    - sudo apt install curl
+    - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+    - sudo apt install node.js
+    # - sudo echo "OUTPUT_URL = "http://{{ couchdb_instance_0_ip }}:5984/front_end/output/out_data.json"" >> cluster-a2/front-end/.env
+    - sudo echo "OUTPUT_URL = "http://45.113.232.154:5984/front_end/output/out_data.json"" >> cluster-a2/front-end/.env
     - cd cluster-a2/front-end ; sudo npm install
     - cd cluster-a2/front-end ; nohup sudo npm start &
 
-  delegate_to: '{{ web_front_end_ip }}'
-  # delegate_to: '45.113.233.123'
+  # delegate_to: '{{ web_front_end_ip }}'
+  delegate_to: '45.113.232.105'
   

@@ -287,6 +287,33 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
+# Add DBs
+
+- name: "Create Tweet DBs"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/tweets
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: PUT 
+      status_code: 201
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
+
+- name: "Create front_end DB"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/front_end
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: PUT 
+      status_code: 201
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
+
+
 
 - name: Start Harvesters couch0
   shell: cd cluster-a2/tweet_harvester; nohup python3 harvest.py 0 localhost &

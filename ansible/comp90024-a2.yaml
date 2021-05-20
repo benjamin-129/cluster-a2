@@ -19,8 +19,8 @@
     # - role: 8-creation-of-additional-webserver-sg
     # - role: 9-application-of-additional-sg
     # - role: 10-couchdb-setup
-    # - role: 11-ws-setup
-    - role: 12-test
+    - role: 11-ws-setup
+    # - role: 12-test
 
 
 # Add couch cluster setup
