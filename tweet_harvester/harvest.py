@@ -61,7 +61,7 @@ if HARVESTER_NUMBER == 2:
 
 # Connect to Couch DB Server
 # server = couchdb.Server("http://{}:{}@{}:15984/".format(user, password, COUCH_ADDRESS))
-server = couchdb.Server("http://{}:{}@{}:15984/".format(user, password, 'localhost'))
+server = couchdb.Server("http://{}:{}@{}:5984/".format(user, password, COUCH_ADDRESS))
 
 
 # Create tweets DB if it doesnt exist
