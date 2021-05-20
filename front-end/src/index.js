@@ -12,13 +12,12 @@ import Menubar from "./components/Menubar"
 /* The following line can be included in your src/index.js or App.js file */
 
 
-
 ReactDOM.render(
-  <React.StrictMode>
-  <Menubar/>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <BrowserRouter>
+      <Menubar/>
+       <App />
+    </BrowserRouter>, 
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
