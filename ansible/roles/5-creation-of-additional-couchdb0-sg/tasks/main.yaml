@@ -47,6 +47,24 @@
     port_range_max: '80'
     remote_ip_prefix: '0.0.0.0/0'  
 
+- name: Attach Security Group rules HTTP for "CDB0 CouchDB and Internet"
+  os_security_group_rule:
+    security_group: 'CDB0 CouchDB and Internet'
+    protocol: 'tcp'
+    direction: 'egress'
+    port_range_min: '5984'
+    port_range_max: '5984'
+    remote_ip_prefix: '0.0.0.0/0' 
+
+- name: Attach Security Group rules HTTP for "CDB0 CouchDB and Internet"
+  os_security_group_rule:
+    security_group: 'CDB0 CouchDB and Internet'
+    protocol: 'tcp'
+    direction: 'ingress'
+    port_range_min: '5984'
+    port_range_max: '5984'
+    remote_ip_prefix: '0.0.0.0/0' 
+
 
 # Attach CouchDB Port rules to SG
 - name: Attach Security Group rules (CouchDB ports) for "CDB0 CouchDB Ingress from CDB1"

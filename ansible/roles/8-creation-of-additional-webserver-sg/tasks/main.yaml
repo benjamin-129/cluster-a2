@@ -5,6 +5,7 @@
   set_fact:
     couchdb_inst_ips: ['{{ couchdb_instance_0_ip }}','{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}']
 
+
 # Creating Webserver HTTP ingress SG
 - name: Create "Webserver HTTP/HTTPS Ingress from CouchDB Instances" Security Group
   os_security_group:
@@ -64,12 +65,23 @@
     remote_ip_prefix: '0.0.0.0/0'
     state: present
 
+- name: Attach Security Group rules (3000) for "Webserver HTTP/HTTPS Ingress from Internet"
+  os_security_group_rule:
+    security_group: 'Webserver HTTP/HTTPS Ingress from Internet'
+    protocol: 'tcp'
+    direction: 'ingress'
+    port_range_min: '3000'
+    port_range_max: '3000'
+    remote_ip_prefix: '0.0.0.0/0'
+    state: present
+
 # Creating Webserver HTTP egress to Internet SG
 - name: Create "Webserver HTTP egress to Internet" Security Group
   os_security_group:
     name: 'Webserver HTTP egress to Internet'
     description: 'Allowing Webserver ingress HTTP smd HTTPS traffic (80/443) from Internet'
     state: present
+
 
 # Attach HTTP Port rules to SG
 - name: Attach Security Group rules (HTTP ports) for "Webserver HTTP Egress to Internet"
@@ -79,6 +91,17 @@
     direction: 'egress'
     port_range_min: '80'
     port_range_max: '80'
+    remote_ip_prefix: '0.0.0.0/0'
+    state: present
+
+# Attach HTTP Port rules to SG
+- name: Attach Security Group rules (3000) for "Webserver HTTP Egress to Internet"
+  os_security_group_rule:
+    security_group: 'Webserver HTTP egress to Internet'
+    protocol: 'tcp'
+    direction: 'egress'
+    port_range_min: '3000'
+    port_range_max: '3000'
     remote_ip_prefix: '0.0.0.0/0'
     state: present
 
