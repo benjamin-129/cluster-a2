@@ -17,7 +17,6 @@ const initialState = {
   countries_data: [],
   data_loaded: false,
   fields: ["sentiment_score", "tweet_counts","median_house_price","unemployed_rate", "weekly_household_income","average_monthly_morgage","media_personal_income"],
-  chartfields: ["sentiment_score", "tweet_counts","median_house_price","unemployed_rate", "weekly_household_income","average_monthly_morgage","media_personal_income"],
   query: "sentiment_score",
 };
 class App extends Component {
@@ -31,7 +30,7 @@ class App extends Component {
     try {
       const response = await axios({
         method: "get",
-        url: "http://localhost:15984/front_end/output/out_data.json",
+        url: "/front_end/output/out_data.json",
       });
       console.log(response)
       const countries_data = this.processData(response.data);
