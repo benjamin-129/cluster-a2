@@ -146,8 +146,45 @@ def update_scores(db, front_end_db):
         count = tweet_counts[key]
         sent = sent_sum[key]
         score = sent / count
-
         sentiment_score[key] = score
+
+    # Normalise Scores and Counts
+    normalised_sent = []
+    normalised_counts = []
+    normalised_sum = [] 
+
+    for sa4, value in sentiment_score.items():
+        normalised_sent.append([sa4,value])
+    for sa4, value in tweet_counts.items():
+        normalised_counts.append([sa4,value])
+    for sa4, value in sent_sum.items():
+        normalised_sum.append([sa4,value])
+
+    sent_scaled_val = min_max_scaler.fit_transform(np.array(normalised_sent)[:, 1].reshape(-1, 1))
+    count_scaled_val = min_max_scaler.fit_transform(np.array(normalised_counts)[:, 1].reshape(-1, 1))
+    sum_scaled_val = min_max_scaler.fit_transform(np.array(normalised_sum)[:, 1].reshape(-1, 1))
+    
+    for i, v in enumerate(sent_scaled_val):
+        normalised_sent[i].append(v[0])
+    for i, v in enumerate(count_scaled_val):
+        normalised_counts[i].append(v[0])
+    for i, v in enumerate(sum_scaled_val):
+        normalised_sum[i].append(v[0])
+
+    # Add back into original dict
+
+    for item in normalised_sent:
+        if item[0] in sentiment_score:
+            sentiment_score[item[0]] = [round(item[1],2), round(item[2],2)]
+
+    for item in normalised_counts:
+        if item[0] in tweet_counts:
+            tweet_counts[item[0]] = [round(item[1],2), round(item[2],2)]
+
+    for item in normalised_sum:
+        if item[0] in sent_sum:
+            sent_sum[item[0]] = [round(item[1],2), round(item[2],2)]
+
 
     # get saved json
     file = open('front_output.json', 'r').read()
