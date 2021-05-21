@@ -4,8 +4,8 @@
   with_items:
     - sudo apt install jq
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
-    - cd cluster-a2/front-end ; tmp=$(mktemp)
-    - cd cluster-a2/front-end ; jq '.proxy = "{{ couchdb_instance_0_ip }}"' package.json > "$tmp" && mv "$tmp" package.json
+    - cd cluster-a2/front-end ; sudo tmp=$(mktemp)
+    - cd cluster-a2/front-end ; sudo jq '.proxy = "{{ couchdb_instance_0_ip }}"' package.json > "$tmp" && mv "$tmp" package.json
     - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
     - sudo apt install nodejs
     - sudo echo "OUTPUT_URL = 'http://{{ couchdb_instance_0_ip }}:5984/front_end/output/out_data.json'" >> cluster-a2/front-end/.env
