@@ -2,17 +2,17 @@
 - name: Create CouchDB instances
   os_server:
     name: '{{ item.name }}'
-    image: '{{ instance_image }}'
-    key_name: '{{ instance_key_name }}'
-    flavor: '{{ instance_flavor_1c4g }}'
-    availability_zone: '{{ availability_zone }}'
+    image: '{{ item.image }}'
+    key_name: '{{ item.key_name }}'
+    flavor: '{{ item.flavour }}'
+    availability_zone: '{{ item.availability_zone }}'
     nics: 
-      - net-name: qh2-uom
+      - net-name: '{{ item.network }}'
     security_groups: '{{ ssh_access }}'
-    volumes: 'couchdb0_vol_1'
+    volumes: '{{ item.volume }}' 
     auto_floating_ip: yes
     wait: yes
-    timeout: 600
+    timeout: 500
     state: present
   loop: '{{ couchdb_instance_0 }}'
   register: os_instance
@@ -28,17 +28,17 @@
 - name: Create CouchDB instances
   os_server:
     name: '{{ item.name }}'
-    image: '{{ instance_image }}'
-    key_name: '{{ instance_key_name }}'
-    flavor: '{{ instance_flavor_1c4g }}'
-    availability_zone: '{{ availability_zone }}'
+    image: '{{ item.image }}'
+    key_name: '{{ item.key_name }}'
+    flavor: '{{ item.flavour }}'
+    availability_zone: '{{ item.availability_zone }}'
     nics: 
-      - net-name: qh2-uom
+      - net-name: '{{ item.network }}'
     security_groups: '{{ ssh_access }}'
-    volumes: 'couchdb1_vol_1'
+    volumes: '{{ item.volume }}' 
     auto_floating_ip: yes
     wait: yes
-    timeout: 600
+    timeout: 500
     state: present
   loop: '{{ couchdb_instance_1 }}'
   register: os_instance
@@ -54,17 +54,17 @@
 - name: Create CouchDB instances
   os_server:
     name: '{{ item.name }}'
-    image: '{{ instance_image }}'
-    key_name: '{{ instance_key_name }}'
-    flavor: '{{ instance_flavor_1c4g }}'
-    availability_zone: '{{ availability_zone }}'
+    image: '{{ item.image }}'
+    key_name: '{{ item.key_name }}'
+    flavor: '{{ item.flavour }}'
+    availability_zone: '{{ item.availability_zone }}'
     nics: 
-      - net-name: qh2-uom
+      - net-name: '{{ item.network }}'
     security_groups: '{{ ssh_access }}'
-    volumes: 'couchdb2_vol_1'
+    volumes: '{{ item.volume }}' 
     auto_floating_ip: yes
     wait: yes
-    timeout: 600
+    timeout: 500
     state: present
   loop: '{{ couchdb_instance_2 }}'
   register: os_instance
@@ -80,16 +80,16 @@
 - name: Create Web Front-End Instance
   os_server:
     name: '{{ item.name }}'
-    image: '{{ instance_image }}'
-    key_name: '{{ instance_key_name }}'
-    flavor: '{{ instance_flavor_2c9g }}'
-    availability_zone: '{{ availability_zone }}'
+    image: '{{ item.image }}'
+    key_name: '{{ item.key_name }}'
+    flavor: '{{ item.flavour }}'
+    availability_zone: '{{ item.availability_zone }}'
     nics: 
-      - net-name: qh2-uom
+      - net-name: '{{ item.network }}'
     security_groups: '{{ ssh_access }}'
     auto_floating_ip: yes
     wait: yes
-    timeout: 600
+    timeout: 500
     state: present
   loop: '{{ web_front_end_instance }}'
   register: os_instance 

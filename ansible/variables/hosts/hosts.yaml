@@ -6,6 +6,8 @@ couchdb_instance_0:
     key_name: benKP
     availability_zone: melbourne-qh2-uom
     network: qh2-uom
+    volume: couchdb0_vol_1
+
 couchdb_instance_1:
   - name: couchdb-a2-1
     image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
@@ -13,6 +15,8 @@ couchdb_instance_1:
     key_name: benKP
     availability_zone: melbourne-qh2-uom
     network: qh2-uom
+    volume: couchdb1_vol_1
+
 couchdb_instance_2:
   - name: couchdb-a2-2
     image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
@@ -20,6 +24,7 @@ couchdb_instance_2:
     key_name: benKP
     availability_zone: melbourne-qh2-uom
     network: qh2-uom
+    volume: couchdb2_vol_1
 
 # Web front end Instance
 web_front_end_instance:
