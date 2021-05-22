@@ -81,7 +81,7 @@ class App extends Component {
   };
 
   render() {
-    const { colors, countries_data, data_loaded, fields, query,chartfields } = this.state;
+    const { colors, countries_data, data_loaded, fields, query} = this.state;
 
     return data_loaded ? (
       
@@ -97,11 +97,13 @@ class App extends Component {
           data={countries_data}
           fields={fields}
           query={query}
-          chartfields={chartfields}
         />
       </Route>
       <Route exact path="/chart">
-        <Chart />
+        <Chart 
+        data={countries_data}
+          fields={fields}
+          />
       </Route>
       <Route component={NotFound} />
          </Switch>

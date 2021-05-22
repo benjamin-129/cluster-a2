@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import {
   ResponsiveContainer,
   ComposedChart,
-  Line,
-  Area,
   Bar,
   XAxis,
   YAxis,
@@ -12,56 +10,51 @@ import {
   Legend,
 } from 'recharts';
 
-const data = [
-  {
-    name: 'Page A',
-    uv: 590,
-    pv: 800,
-    amt: 1400,
-  },
-  {
-    name: 'Page B',
-    uv: 868,
-    pv: 967,
-    amt: 1506,
-  },
-  {
-    name: 'Page C',
-    uv: 1397,
-    pv: 1098,
-    amt: 989,
-  },
-  {
-    name: 'Page D',
-    uv: 1480,
-    pv: 1200,
-    amt: 1228,
-  },
-  {
-    name: 'Page E',
-    uv: 1520,
-    pv: 1108,
-    amt: 1100,
-  },
-  {
-    name: 'Page F',
-    uv: 1400,
-    pv: 680,
-    amt: 1700,
-  },
-];
+const initialState = {
+  chart_data:[
+    {
+      name: "sa4",
+      sentiment_score:0.3
+    }
+  ]
+}
 
-export default class Example extends PureComponent {
-  static demoUrl = 'https://codesandbox.io/s/composed-chart-in-responsive-container-pkqmy';
+export default class BarChart extends PureComponent {
+  state = initialState;
+   componentDidMount() {
+    this.prepareData();
+  }
+
+  prepareData = () => {
+    const chart_data=[];
+    const {data} = this.props;
+
+    data.forEach(item => {
+    const dict = {
+       name: item.sa4_name,
+       sentiment_score: item.sentiment_score_std,
+       personal_income:item.media_personal_income_std,
+       unemployment_rate:item.unemployed_rate_std
+    }
+    chart_data.push(dict);
+});
+      this.setState({
+        chart_data,
+      });
+      console.log(chart_data)
+  }
 
   render() {
     return (
-      <div style={{ width: '100%', height: 300 }}>
+    
+
+      <div style={{ width: '100%', height: 560 }}>
+      
         <ResponsiveContainer>
           <ComposedChart
             width={500}
             height={400}
-            data={data}
+            data={this.state.chart_data}
             margin={{
               top: 20,
               right: 20,
@@ -74,12 +67,14 @@ export default class Example extends PureComponent {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" />
-            <Bar dataKey="pv" barSize={20} fill="#413ea0" />
-            <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+  
+            <Bar dataKey="sentiment_score" fill="#8884d8" stackId="stack" />
+          <Bar dataKey="personal_income" fill="#82ca9d" stackId="stack" />
+
           </ComposedChart>
         </ResponsiveContainer>
       </div>
+
     );
   }
 }

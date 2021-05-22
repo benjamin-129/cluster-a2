@@ -53,7 +53,7 @@ class Map extends Component {
       }
       switch (query) {
         case "sa4_name":
-          d.color = colors[0];
+          d.color = colors[1];
           break;
        
         default:
