@@ -1,141 +1,141 @@
-# CDB0 CouchDB and Internet Security Group
-cdb0-internet-security-group: 
-  - name: CDB0 CouchDB and Internet
+# CDB1 CouchDB and Internet Security Group
+cdb1-internet-security-group: 
+  - name: CDB1 CouchDB and Internet
     description: Allowing traffic on CouchDB Ports from Internet
 
-# CDB0 CouchDB and Internet Security Group Roles
-cdb0-internet-security-group-roles: 
-  - name: CDB0 CouchDB and Internet
+# CDB1 CouchDB and Internet Security Group Roles
+cdb1-internet-security-group-roles: 
+  - name: CDB1 CouchDB and Internet
     protocol: tcp
     direction: ingress
     port_range_min: 80
     port_range_max: 80
     ip_prefix: 0.0.0.0/0
-  - name: CDB0 CouchDB and Internet 
+  - name: CDB1 CouchDB and Internet 
     protocol: tcp
     direction: egress
     port_range_min: 80
     port_range_max: 80
     ip_prefix: 0.0.0.0/0
-  - name: CDB0 CouchDB and Internet 
+  - name: CDB1 CouchDB and Internet 
     protocol: tcp
     direction: ingress
     port_range_min: 5984
     port_range_max: 5984
     ip_prefix: 0.0.0.0/0
-  - name: CDB0 CouchDB and Internet 
+  - name: CDB1 CouchDB and Internet 
     protocol: tcp
     direction: egress
     port_range_min: 5984
     port_range_max: 5984
     ip_prefix: 0.0.0.0/0
 
-# CDB0 CouchDB Ingress/Egress to/from CDB1 Security Group
-cdb0-cdb1-couch-security-group:
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB1
-    description: Allowing traffic on CouchDB Ports to/from CDB1
+# CDB1 CouchDB Ingress/Egress to/from CDB0 Security Group
+cdb1-cdb0-couch-security-group:
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB0
+    description: Allowing traffic on CouchDB Ports to/from CDB0
 
-# CDB0 CouchDB Ingress/Egress to/from CDB1 Security Group
-cdb0-cdb1-couch-security-group-roles:
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB1
+# CDB1 CouchDB Ingress/Egress to/from CDB0 Security Group
+cdb1-cdb0-couch-security-group-roles:
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB0
     protocol: tcp
     direction: ingress
     port_range_min: 4369
     port_range_max: 4369
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB1
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB0
     protocol: tcp
     direction: ingress
     port_range_min: 5984
     port_range_max: 5984
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB1
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB0
     protocol: tcp
     direction: ingress
     port_range_min: 9100
     port_range_max: 9100
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB1
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB0
     protocol: tcp
     direction: egress
     port_range_min: 4369
     port_range_max: 4369
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB1
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB0
     protocol: tcp
     direction: egress
     port_range_min: 5984
     port_range_max: 5984
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB1
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB0
     protocol: tcp
     direction: egress
     port_range_min: 9100
     port_range_max: 9100
 
-# CDB0 CouchDB Ingress/Egress to/from CDB2 Security Group
-cdb0-cdb2-couch-security-group:
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB2
+# CDB1 CouchDB Ingress/Egress to/from CDB2 Security Group
+cdb1-cdb2-couch-security-group:
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB2
     description: Allowing traffic on CouchDB Ports to/from CDB2
 
-# CDB0 CouchDB Ingress/Egress to/from CDB2 Security Group
-cdb0-cdb2-couch-security-group-roles:
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB2
+# CDB1 CouchDB Ingress/Egress to/from CDB2 Security Group
+cdb1-cdb2-couch-security-group-roles:
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB2
     protocol: tcp
     direction: ingress
     port_range_min: 4369
     port_range_max: 4369
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB2
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB2
     protocol: tcp
     direction: ingress
     port_range_min: 5984
     port_range_max: 5984
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB2
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB2
     protocol: tcp
     direction: ingress
     port_range_min: 9100
     port_range_max: 9100
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB2
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB2
     protocol: tcp
     direction: egress
     port_range_min: 4369
     port_range_max: 4369
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB2
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB2
     protocol: tcp
     direction: egress
     port_range_min: 5984
     port_range_max: 5984
-  - name: CDB0 CouchDB Ingress/Egress to/from CDB2
+  - name: CDB1 CouchDB Ingress/Egress to/from CDB2
     protocol: tcp
     direction: egress
     port_range_min: 9100
     port_range_max: 9100
 
 # CDB0 CouchDB Ingress/Egress to/from Web Server Security Group
-cdb0-webserver-couch-security-group:
-  - name: CDB0 CouchDB Ingress/Egress to/from Web Server
+cdb1-webserver-couch-security-group:
+  - name: CDB1 CouchDB Ingress/Egress to/from Web Server
     description: Allowing traffic on CouchDB Port 5984 to/from Web Server
 
 # CDB0 CouchDB Ingress/Egress to/from Web Server Security Group Roles
-cdb0-webserver-couch-security-group-roles:
-  - name: CDB0 CouchDB Ingress/Egress to/from Web Server
+cdb1-webserver-couch-security-group-roles:
+  - name: CDB1 CouchDB Ingress/Egress to/from Web Server
     protocol: tcp
     direction: ingress
     port_range_min: 5984
     port_range_max: 5984
-  - name: CDB0 CouchDB Ingress/Egress to/from Web Server
+  - name: CDB1 CouchDB Ingress/Egress to/from Web Server
     protocol: tcp
     direction: egress
     port_range_min: 5984
     port_range_max: 5984
 
-# CDB0 HTTP/S Egress to Web Server Security Group
-cdb0-webserver-https-security-group:
-  - name: CDB0 HTTP/S Egress to Web Server
+# CDB1 HTTP/S Egress to Web Server Security Group
+cdb1-webserver-https-security-group:
+  - name: CDB1 HTTP/S Egress to Web Server
     description: Allowing HTTP/S egress traffic to Web Server
 
-cdb0-webserver-https-security-group-roles:
-  - name: CDB0 HTTP/S Egress to Web Server
+cdb1-webserver-https-security-group-roles:
+  - name: CDB1 HTTP/S Egress to Web Server
     protocol: tcp
     direction: egress
     port_range_min: 80
     port_range_max: 80
-  - name: CDB0 HTTP/S Egress to Web Server
+  - name: CDB1 HTTP/S Egress to Web Server
     protocol: tcp
     direction: egress
     port_range_min: 443
