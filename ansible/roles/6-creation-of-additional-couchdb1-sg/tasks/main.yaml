@@ -93,12 +93,12 @@
     state: present'
   loop: '{{ cdb1-webserver-https-security-group-roles }}'
 
-# Setting additional Security Group list for CouchDB0
-- name: Setting additional CouchDB0 instance rules list
+# Setting additional Security Group list for CouchDB1
+- name: Setting additional CouchDB1 instance rules list
   set_fact:
     couchdb1_sg: ["SSH access from all", 
      "CDB1 CouchDB and Internet",
-     "CDB1 CouchDB Ingress/Egress to/from CDB1",
+     "CDB1 CouchDB Ingress/Egress to/from CDB0",
      "CDB1 CouchDB Ingress/Egress to/from CDB2",
      "CDB1 CouchDB Ingress/Egress to/from Web Server",
      "CDB1 HTTP/S Egress to Web Server"]
