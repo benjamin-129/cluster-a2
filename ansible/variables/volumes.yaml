@@ -1,0 +1,12 @@
+# Volumes
+couchdb0_volumes:
+  - name: couchdb0_vol_1
+    size: 15
+    
+couchdb1_volumes:
+  - name: couchdb1_vol_1
+    size: 15
+
+couchdb2_volumes:
+  - name: couchdb2_vol_1
+    size: 15

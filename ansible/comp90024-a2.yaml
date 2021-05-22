@@ -3,7 +3,8 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   vars_files:
-    - variables/variables-a2.yaml
+    - variables/volumes.yaml
+    - varaibles/hosts/hosts.yaml
     - variables/security-groups/initial-sg.yaml
     - variables/security-groups/couchdb-sg.yaml
   gather_facts: true
