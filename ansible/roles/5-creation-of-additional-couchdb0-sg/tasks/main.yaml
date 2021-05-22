@@ -1,192 +1,107 @@
-- debug:
-    msg: " CouchDB instance 0 has IP {{ couchdb_instance_0_ip }}, {{ couchdb_instance_1_ip }}, {{ couchdb_instance_2_ip }}, {{ web_front_end_ip }}" 
-
-# Create CouchDB 0 Ingress Security Groups
-- name: Create "CDB0 CouchDB Ingress from CDB1" Security Group
+# CDB0 CouchDB and Internet Security Group/Roles
+- name: Creating "CDB0 CouchDB and Internet" Security Group
   os_security_group:
-    name: 'CDB0 CouchDB Ingress from CDB1'
-    description: 'Allowing traffic on CouchDB Ports from CDB1'
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
     state: present
+  loop: '{{ cdb0-internet-security-group }}'
 
-# Create CouchDB 0 Ingress Security Groups
-- name: Create "CDB0 CouchDB Ingress from CDB2" Security Group
+- name: Attach Security Group rules (TCP/CouchDB ports) for "CDB0 CouchDB and Internet"
+  os_security_group_rule:
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ item.ip_prefix }}'
+    state: present'
+  loop: '{{ cdb0-internet-security-group-roles }}'
+
+# CDB0 CouchDB Ingress/Egress to/from CDB1 Security Group/Roles
+- name: Creating "CDB0 CouchDB Ingress/Egress to/from CDB1" Security Group
   os_security_group:
-    name: 'CDB0 CouchDB Ingress from CDB2'
-    description: 'Allowing traffic on CouchDB Ports from CDB2'
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
     state: present
+  loop: '{{ cdb0-cdb1-couch-security-group }}'
 
-
-- name: Create "CDB0 CouchDB Ingress from Webserver" Security Group
-  os_security_group:
-    name: 'CDB0 CouchDB Ingress from Webserver'
-    description: 'Allowing traffic on CouchDB Ports from Webserver'
-    state: present
-
-
-- name: Create "CDB0 CouchDB and Internet" Security Group
-  os_security_group:
-    name: 'CDB0 CouchDB and Internet'
-    description: 'Allowing traffic on CouchDB Ports from Internet'
-    state: present
-
-- name: Attach Security Group rules HTTP for "CDB0 CouchDB and Internet"
+- name: Attach Security Group rules (CouchDB ports) for "CDB0 CouchDB Ingress/Egress to/from CDB1"
   os_security_group_rule:
-    security_group: 'CDB0 CouchDB and Internet'
-    protocol: 'tcp'
-    direction: 'egress'
-    port_range_min: '80'
-    port_range_max: '80'
-    remote_ip_prefix: '0.0.0.0/0'  
-
-- name: Attach Security Group rules HTTP for "CDB0 CouchDB and Internet"
-  os_security_group_rule:
-    security_group: 'CDB0 CouchDB and Internet'
-    protocol: 'tcp'
-    direction: 'ingress'
-    port_range_min: '80'
-    port_range_max: '80'
-    remote_ip_prefix: '0.0.0.0/0'  
-
-- name: Attach Security Group rules HTTP for "CDB0 CouchDB and Internet"
-  os_security_group_rule:
-    security_group: 'CDB0 CouchDB and Internet'
-    protocol: 'tcp'
-    direction: 'egress'
-    port_range_min: '5984'
-    port_range_max: '5984'
-    remote_ip_prefix: '0.0.0.0/0' 
-
-- name: Attach Security Group rules HTTP for "CDB0 CouchDB and Internet"
-  os_security_group_rule:
-    security_group: 'CDB0 CouchDB and Internet'
-    protocol: 'tcp'
-    direction: 'ingress'
-    port_range_min: '5984'
-    port_range_max: '5984'
-    remote_ip_prefix: '0.0.0.0/0' 
-
-
-# Attach CouchDB Port rules to SG
-- name: Attach Security Group rules (CouchDB ports) for "CDB0 CouchDB Ingress from CDB1"
-  os_security_group_rule:
-    security_group: 'CDB0 CouchDB Ingress from CDB1'
-    protocol: 'tcp'
-    direction: 'ingress'
-    port_range_min: '{{ item }}'
-    port_range_max: '{{ item }}'
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
-    state: present
-  loop: '{{ couchdb_ports }}'
+    state: present'
+  loop: '{{ cdb0-cdb1-couch-security-group-roles }}'
 
-- name: Attach Security Group rules (CouchDB ports) for "CDB0 CouchDB Ingress from CDB2"
+# CDB0 CouchDB Ingress/Egress to/from CDB2 Security Group/Roles
+- name: Creating "CDB0 CouchDB Ingress/Egress to/from CDB2" Security Group
+  os_security_group:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    state: present
+  loop: '{{ cdb0-cdb2-couch-security-group }}'
+
+- name: Attach Security Group rules (CouchDB ports) for "CDB0 CouchDB Ingress/Egress to/from CDB2"
   os_security_group_rule:
-    security_group: 'CDB0 CouchDB Ingress from CDB2'
-    protocol: 'tcp'
-    direction: 'ingress'
-    port_range_min: '{{ item }}'
-    port_range_max: '{{ item }}'
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
-    state: present
-  loop: '{{ couchdb_ports }}'
+    state: present'
+  loop: '{{ cdb0-cdb2-couch-security-group-roles }}'
 
-
-
-# Create CouchDB 0 Egress Security Groups
-- name: Create "CDB0 CouchDB Egress to CDB1" Security Group
+# CDB0 CouchDB Ingress/Egress to/from Web Server Security Group/Roles
+- name: Creating "CDB0 CouchDB Ingress/Egress to/from Web Server" Security Group
   os_security_group:
-    name: 'CDB0 CouchDB Egress to CDB1'
-    description: 'Allowing traffic on CouchDB Ports to CDB2'
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
     state: present
-- name: Create "CDB0 CouchDB Egress to CDB2" Security Group
+  loop: '{{ cdb0-webserver-couch-security-group }}'
+
+- name: Attach Security Group rules (CouchDB ports) for "CDB0 CouchDB Ingress/Egress to/from Web Server"
+  os_security_group_rule:
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ web_front_end_ip }}/32'
+    state: present'
+  loop: '{{ cdb0-webserver-couch-security-group-roles }}'
+
+# CDB0 HTTP/S Egress to Web Server Security Group/Roles
+- name: Creating "CDB0 HTTP/S Egress to Web Server" Security Group
   os_security_group:
-    name: 'CDB0 CouchDB Egress to CDB2'
-    description: 'Allowing traffic on CouchDB Ports to CDB2'
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
     state: present
+  loop: '{{ ccdb0-webserver-https-security-group }}'
 
-- name: Create "CDB0 HTTP/HTTPS Egress to Webserver" Security Group
-  os_security_group:
-    name: 'CDB0 HTTP/HTTPS Egress to Webserver'
-    description: 'Allowing traffic on HTTP and HTTPS Ports to Webserver'
-    state: present
-
-- name: Create "CDB0 CouchDB Egress to Webserver" Security Group
-  os_security_group:
-    name: 'CDB0 CouchDB Egress to Webserver'
-    description: 'Allowing CouchDB egress traffic to Webserver'
-    state: present
-
-# Attach CouchDB Port rules to SG
-- name: Attach Security Group rules (CouchDB ports) for "CDB0 CouchDB Egress to CDB1"
+- name: Attach Security Group rules (HTTP/S ports) for "CDB0 HTTP/S Egress to Web Server"
   os_security_group_rule:
-    security_group: 'CDB0 CouchDB Egress to CDB1'
-    protocol: 'tcp'
-    direction: 'egress'
-    port_range_min: '{{ item }}'
-    port_range_max: '{{ item }}'
-    remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
-    state: present
-  loop: '{{ couchdb_ports }}'
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ web_front_end_ip }}/32'
+    state: present'
+  loop: '{{ cdb0-webserver-https-security-group-roles }}'
 
-- name: Attach Security Group rules (CouchDB ports) for "CDB0 CouchDB Egress to CDB2"
-  os_security_group_rule:
-    security_group: 'CDB0 CouchDB Egress to CDB2'
-    protocol: 'tcp'
-    direction: 'egress'
-    port_range_min: '{{ item }}'
-    port_range_max: '{{ item }}'
-    remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
-    state: present
-  loop: '{{ couchdb_ports }}'
-
-- name: Attach Security Group rules (HTTP port) for "CDB0 HTTP/HTTPS Egress to Webserver"
-  os_security_group_rule:
-    security_group: 'CDB0 HTTP/HTTPS Egress to Webserver'
-    protocol: 'tcp'
-    direction: 'egress'
-    port_range_min: '80'
-    port_range_max: '80'
-    remote_ip_prefix: '{{ web_front_end_ip }}/32'  
-
-- name: Attach Security Group rules (HTTPS port) for "CDB0 HTTP/HTTPS Egress to Webserver"
-  os_security_group_rule:
-    security_group: 'CDB0 HTTP/HTTPS Egress to Webserver'
-    protocol: 'tcp'
-    direction: 'egress'
-    port_range_min: '443'
-    port_range_max: '443'
-    remote_ip_prefix: '{{ web_front_end_ip }}/32'  
-
-- name: Attach Security Group rules (CouchDB port) for "CDB0 CouchDB Egress to Webserver"
-  os_security_group_rule:
-    security_group: 'CDB0 CouchDB Egress to Webserver'
-    protocol: 'tcp'
-    direction: 'egress'
-    port_range_min: '5984'
-    port_range_max: '5984'
-    remote_ip_prefix: '{{ web_front_end_ip }}/32' 
-
-- name: Attach Security Group rules (CouchDB port) for "CDB0 CouchDB Ingress from Webserver"
-  os_security_group_rule:
-    security_group: 'CDB0 CouchDB Ingress from Webserver'
-    protocol: 'tcp'
-    direction: 'ingress'
-    port_range_min: '5984'
-    port_range_max: '5984'
-    remote_ip_prefix: '0.0.0.0/0' 
-
-
-# Setting additional rules list
+# Setting additional Security Group list for CouchDB0
 - name: Setting additional CouchDB0 instance rules list
   set_fact:
     couchdb0_sg: ["SSH access from all", 
-     "CDB0 CouchDB Ingress from CDB1",
-     "CDB0 CouchDB Egress to CDB1",
-     "CDB0 CouchDB Ingress from CDB2",
-     "CDB0 CouchDB Egress to CDB2",
-     "CDB0 HTTP/HTTPS Egress to Webserver",
-     "CDB0 CouchDB Egress to Webserver",
-     "CDB0 CouchDB Ingress from Webserver", 
-     "CDB0 CouchDB and Internet"]
+     "CDB0 CouchDB and Internet",
+     "CDB0 CouchDB Ingress/Egress to/from CDB1",
+     "CDB0 CouchDB Ingress/Egress to/from CDB2",
+     "CDB0 CouchDB Ingress/Egress to/from Web Server",
+     "CDB0 HTTP/S Egress to Web Server"]
 
 - debug:
     msg: "Security group(s) {{ couchdb0_sg }} have been created."

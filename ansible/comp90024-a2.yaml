@@ -6,7 +6,7 @@
     - variables/volumes/volumes.yaml
     - varaibles/hosts/hosts.yaml
     - variables/security-groups/ssh-access.yaml
-    - variables/security-groups/couchdb-sg.yaml
+    - variables/security-groups/couchdb0-security-groups.yaml
   gather_facts: true
 
   roles:
