@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Map from "./components/Map";
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
-
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Home from "./components/Home";
+import NotFound from "./components/NotFound";
+import Chart from "./components/BarChart";
 
 import "./App.css";
 
@@ -83,17 +84,29 @@ class App extends Component {
     const { colors, countries_data, data_loaded, fields, query,chartfields } = this.state;
 
     return data_loaded ? (
+      
       <div className="root">
-
-        <Map
+        <BrowserRouter>
+        <Switch>
+        <Route exact path="/">
+        <Home />
+      </Route>
+      <Route exact path="/map">
+      <Map
           colors={colors}
           data={countries_data}
           fields={fields}
           query={query}
           chartfields={chartfields}
         />
-
+      </Route>
+      <Route exact path="/chart">
+        <Chart />
+      </Route>
+      <Route component={NotFound} />
+         </Switch>
         <div className="footer">Data source:Twitter API, Afinn, Aurin</div>
+        </BrowserRouter>
       </div>
     ) : null;
   }

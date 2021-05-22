@@ -22,6 +22,7 @@ class Tooltip extends Component {
         longitude={details.coordinates[0]}
         latitude={details.coordinates[1]}
         closeButton={true}
+        closeOnClick={true}
         onClose={() => handleCloseTooltip()}
       >
 

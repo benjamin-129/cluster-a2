@@ -17,7 +17,7 @@ export default class Chart extends PureComponent {
       console.log(details)
       const map_data=[
   {
-    subject: 'SENTIMENTAL SCORE',
+    subject: 'SENTIMENT SCORE',
     A: details.sentiment_score_std,
     fullMark: 100,
   },

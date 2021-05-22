@@ -110,7 +110,6 @@ class Map extends Component {
             details={tooltip}
             fields={fields}
             handleCloseTooltip={this.handleCloseTooltip}
-             onClick={() => this.setState({ tooltip:null })}
           />
         )}
 
