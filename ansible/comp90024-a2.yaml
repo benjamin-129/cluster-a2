@@ -22,5 +22,7 @@
     - role: 7-creation-of-additional-couchdb2-sg
     - role: 8-creation-of-additional-webserver-sg
     - role: 9-application-of-additional-sg
-    - role: 10-couchdb-setup
-    - role: 11-ws-setup
+    - role: 10-volume-mount-and-dependency-installation
+    - role: 11-creation-of-couchdb-cluster
+    - role: 12-startup-of-harvesters
+    - role: 13-setup-of-web-server
