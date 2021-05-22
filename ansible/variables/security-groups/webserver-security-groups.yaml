@@ -1,0 +1,79 @@
+# Webserver HTTP/HTTPS Ingress from CouchDB Instances Security Group 
+webserver-https-couch-inst-security-group:
+  - name: Webserver HTTP/HTTPS Ingress from CouchDB Instances
+    description: Allowing ingress HTTP and HTTPS traffic (80/443) from Couch DB Instances
+
+# Webserver HTTP/HTTPS Ingress from CouchDB Instances Security Group Roles
+webserver-https-couch-inst-security-group-roles:
+  - name: Webserver HTTP/HTTPS Ingress from CouchDB Instances
+    protocol: tcp
+    direction: ingress
+    port_range_min: 80
+    port_range_max: 80
+  - name: Webserver HTTP/HTTPS Ingress from CouchDB Instances
+    protocol: tcp
+    direction: ingress
+    port_range_min: 443
+    port_range_max: 443
+
+# Webserver HTTP/S/React Ingress/Egress from Internet Security Group 
+webserver-https-react-internet-security-group:
+  - name: Webserver HTTP/S/React Ingress/Egress from Internet
+    description: Allowing HTTP, HTTPS and React traffic (80/443/3000) to/from Internet
+
+# Webserver HTTP/S/React Ingress/Egress from Internet Security Group Roles
+webserver-https-react-internet-security-group-roles:
+  - name: Webserver HTTP/S/React Ingress/Egress from Internet
+    protocol: tcp
+    direction: ingress
+    port_range_min: 80
+    port_range_max: 80
+    ip_prefix: 0.0.0.0/0
+  - name: Webserver HTTP/S/React Ingress/Egress from Internet
+    protocol: tcp
+    direction: ingress
+    port_range_min: 443
+    port_range_max: 443
+    ip_prefix: 0.0.0.0/0
+  - name: Webserver HTTP/S/React Ingress/Egress from Internet
+    protocol: tcp
+    direction: ingress
+    port_range_min: 3000
+    port_range_max: 3000
+    ip_prefix: 0.0.0.0/0
+  - name: Webserver HTTP/S/React Ingress/Egress from Internet
+    protocol: tcp
+    direction: egress
+    port_range_min: 80
+    port_range_max: 80
+    ip_prefix: 0.0.0.0/0
+  - name: Webserver HTTP/S/React Ingress/Egress from Internet
+    protocol: tcp
+    direction: egress
+    port_range_min: 443
+    port_range_max: 443
+    ip_prefix: 0.0.0.0/0
+  - name: Webserver HTTP/S/React Ingress/Egress from Internet
+    protocol: tcp
+    direction: egress
+    port_range_min: 3000
+    port_range_max: 3000
+    ip_prefix: 0.0.0.0/0
+
+# Webserver CouchDB Ingress/Egress from CouchDB Instances Security Group 
+webserver-couchdb-couch-inst-security-group:
+  - name: Webserver CouchDB Ingress/Egress from CouchDB Instances
+    description: Allowing ingress/egress CouchDB traffic (5984) to/from Couch DB Instances
+
+# Webserver CouchDB Ingress/Egress from CouchDB Instances Security Group Roles
+webserver-couchdb-couch-inst-security-group-roles:
+  - name: Webserver CouchDB Ingress/Egress from CouchDB Instances
+    protocol: tcp
+    direction: ingress
+    port_range_min: 5984
+    port_range_max: 5984
+  - name: Webserver CouchDB Ingress/Egress from CouchDB Instances
+    protocol: tcp
+    direction: egress
+    port_range_min: 5984
+    port_range_max: 5984

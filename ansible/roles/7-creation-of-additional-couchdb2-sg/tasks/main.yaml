@@ -93,7 +93,7 @@
     state: present'
   loop: '{{ cdb2-webserver-https-security-group-roles }}'
 
-# Setting additional Security Group list for CouchDB1
+# Setting additional Security Group list for CouchDB2
 - name: Setting additional CouchDB1 instance rules list
   set_fact:
     couchdb2_sg: ["SSH access from all", 
