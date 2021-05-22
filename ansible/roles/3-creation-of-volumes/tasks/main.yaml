@@ -3,7 +3,7 @@
   os_volume:
     display_name: '{{ item.name }}'
     size: '{{ item.size }}'
-    availability_zone: '{{ availability_zone }}'
+    availability_zone: '{{ item.availability_zone }}'
     wait: yes
     timeout: 300
     state: present
@@ -21,7 +21,7 @@
   os_volume:
     display_name: '{{ item.name }}'
     size: '{{ item.size }}'
-    availability_zone: '{{ availability_zone }}'
+    availability_zone: '{{ item.availability_zone }}'
     wait: yes
     timeout: 300
     state: present
@@ -39,7 +39,7 @@
   os_volume:
     display_name: '{{ item.name }}'
     size: '{{ item.size }}'
-    availability_zone: '{{ availability_zone }}'
+    availability_zone: '{{ item.availability_zone }}'
     wait: yes
     timeout: 300
     state: present
