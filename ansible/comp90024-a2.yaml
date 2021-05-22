@@ -7,6 +7,9 @@
     - varaibles/hosts/hosts.yaml
     - variables/security-groups/ssh-access.yaml
     - variables/security-groups/couchdb0-security-groups.yaml
+    - variables/security-groups/couchdb1-security-groups.yaml
+    - variables/security-groups/couchdb2-security-groups.yaml
+    - variables/security-groups/webserver-security-groups.yaml
   gather_facts: true
 
   roles:
