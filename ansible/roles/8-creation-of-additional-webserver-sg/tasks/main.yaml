@@ -39,7 +39,7 @@
     state: present'
   loop: '{{ webserver-https-couch-inst-security-group-roles }}'
 
-# Webserver HTTP/S/React Ingress/Egress from Internet Security Group/Roles
+# Webserver HTTP/S/React Ingress/Egress to/from Internet Security Group/Roles
 - name: Creating "Webserver HTTP/S/React Ingress/Egress from Internet" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -58,7 +58,7 @@
     state: present'
   loop: '{{ webserver-https-react-internet-security-group-roles }}'
 
-# Webserver CouchDB Ingress/Egress from CouchDB Instances Security Group/Roles
+# Webserver CouchDB Ingress/Egress to/from CouchDB Instances Security Group/Roles
 - name: Creating "Webserver CouchDB Ingress/Egress from CouchDB Instances" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -104,8 +104,8 @@
   set_fact:
     webserver_sg: ["SSH access from all", 
     "Webserver HTTP/HTTPS Ingress from CouchDB Instances",
-    "Webserver HTTP/S/React Ingress/Egress from Internet",
-    "Webserver CouchDB Ingress/Egress from CouchDB Instances"]
+    "Webserver HTTP/S/React Ingress/Egress to/from Internet",
+    "Webserver CouchDB Ingress/Egress to/from CouchDB Instances"]
 
 - debug:
     msg: "Security group(s) {{ webserver_sg }} have been created."
