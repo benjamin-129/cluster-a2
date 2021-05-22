@@ -1,12 +1,12 @@
-# Create a security group
-- name: Create a security group
+# Creating SSH access from all security group
+- name: Creating 'SSH access from all' Security Group
   os_security_group:
     name: 'SSH access from all'
     description: 'Allow SSH access from anywhere'
     state: present
 
-# Create security group rules
-- name: Create security group rules
+# Applying security group rules to SSH access from all
+- name: Creating SSH ingress port rule (22) for 'SSH access from all'
   os_security_group_rule:
     security_group: 'SSH access from all'
     protocol: 'tcp'
@@ -15,9 +15,9 @@
     remote_ip_prefix: '0.0.0.0/0'
     state: present
 
-- name: Create a list of security group names
+- name: Create a ssh_access list fact (for initial isntance application)
   set_fact:
-    sg_initial: ["SSH access from all"]
+    ssh_access: ["SSH access from all"]
 
 - debug:
-    msg: "Security group(s) {{ sg_initial }} have been created."
+    msg: "Security group(s) {{ ssh_access }} have been created."

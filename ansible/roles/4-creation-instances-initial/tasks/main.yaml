@@ -8,7 +8,7 @@
     availability_zone: '{{ availability_zone }}'
     nics: 
       - net-name: qh2-uom
-    security_groups: '{{ sg_initial }}'
+    security_groups: '{{ ssh_access }}'
     volumes: 'couchdb0_vol_1'
     auto_floating_ip: yes
     wait: yes
@@ -34,7 +34,7 @@
     availability_zone: '{{ availability_zone }}'
     nics: 
       - net-name: qh2-uom
-    security_groups: '{{ sg_initial }}'
+    security_groups: '{{ ssh_access }}'
     volumes: 'couchdb1_vol_1'
     auto_floating_ip: yes
     wait: yes
@@ -60,7 +60,7 @@
     availability_zone: '{{ availability_zone }}'
     nics: 
       - net-name: qh2-uom
-    security_groups: '{{ sg_initial }}'
+    security_groups: '{{ ssh_access }}'
     volumes: 'couchdb2_vol_1'
     auto_floating_ip: yes
     wait: yes
@@ -86,7 +86,7 @@
     availability_zone: '{{ availability_zone }}'
     nics: 
       - net-name: qh2-uom
-    security_groups: '{{ sg_initial }}'
+    security_groups: '{{ ssh_access }}'
     auto_floating_ip: yes
     wait: yes
     timeout: 600

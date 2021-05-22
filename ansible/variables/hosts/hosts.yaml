@@ -1,4 +1,4 @@
-# CouchDB Instances
+# CouchDB Instances 0, 1, and 2
 couchdb_instance_0:
   - name: couchdb-a2-0
     image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
@@ -6,7 +6,6 @@ couchdb_instance_0:
     key_name: benKP
     availability_zone: melbourne-qh2-uom
     network: qh2-uom
-
 couchdb_instance_1:
   - name: couchdb-a2-1
     image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
@@ -14,7 +13,6 @@ couchdb_instance_1:
     key_name: benKP
     availability_zone: melbourne-qh2-uom
     network: qh2-uom
-
 couchdb_instance_2:
   - name: couchdb-a2-2
     image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
