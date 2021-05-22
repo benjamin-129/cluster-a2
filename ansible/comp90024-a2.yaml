@@ -11,7 +11,7 @@
 
   roles:
     - role: 1-common
-    - role: 2-creation-of-initial-sg
+    - role: 2-creation-of-ssh-access-sg
     - role: 3-creation-of-volumes
     - role: 4-creation-instances-initial
     - role: 5-creation-of-additional-couchdb0-sg
