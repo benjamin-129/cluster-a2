@@ -75,7 +75,7 @@ export default class BarChart extends PureComponent {
             <Legend />
   
             <Bar dataKey="sentiment_score" fill="#8884d8" stackId="stack" />
-          <Bar dataKey="average_monthly_morgage" fill="rgba(5,5,75,0.3)" stackId="stack" />
+          <Bar dataKey="average_monthly_morgage" fill="rgba(0,175,275,0.3)" stackId="stack" />
 
           </ComposedChart>
         </ResponsiveContainer>
