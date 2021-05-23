@@ -4,7 +4,7 @@
     name: '{{ item.name }}'
     description: '{{ item.description }}'
     state: present
-  loop: '{{ ssh-ingress-security-group }}'
+  loop: '{{ ssh_ingress_security_group }}'
 
 # Applying security group rules to SSH access from all (Pan 2021).
 - name: Creating SSH ingress port rule (22) for 'SSH access from all'
@@ -16,7 +16,7 @@
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ item.ip_prefix }}'
     state: present
-  loop: '{{ ssh-ingress-security-group }}'
+  loop: '{{ ssh_ingress_security_group }}'
 
 # Setting fact for initial SSH Access Security Group (Pan 2021).
 - name: Create a ssh_access list fact (for initial isntance application)

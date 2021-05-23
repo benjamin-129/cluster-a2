@@ -4,7 +4,7 @@
     name: '{{ item.name }}'
     description: '{{ item.description }}'
     state: present
-  loop: '{{ webserver-https-couch-inst-security-group }}'
+  loop: '{{ webserver_https_couch_inst_security_group }}'
 
 - name: Attach Security Group rules (HTTP/S ports) for "Webserver HTTP/HTTPS Ingress from CouchDB Instances" (CouchDB0)
   os_security_group_rule:
@@ -15,7 +15,7 @@
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_0_ip }}/32'
     state: present'
-  loop: '{{ webserver-https-couch-inst-security-group-roles }}'
+  loop: '{{ webserver_https_couch_inst_security_group_roles }}'
 
 - name: Attach Security Group rules (HTTP/S ports) for "Webserver HTTP/HTTPS Ingress from CouchDB Instances" (CouchDB1)
   os_security_group_rule:
@@ -26,7 +26,7 @@
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
     state: present'
-  loop: '{{ webserver-https-couch-inst-security-group-roles }}'
+  loop: '{{ webserver_https_couch_inst_security_group_roles }}'
 
 - name: Attach Security Group rules (HTTP/S ports) for "Webserver HTTP/HTTPS Ingress from CouchDB Instances" (CouchDB2)
   os_security_group_rule:
@@ -37,7 +37,7 @@
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
     state: present'
-  loop: '{{ webserver-https-couch-inst-security-group-roles }}'
+  loop: '{{ webserver_https_couch_inst_security_group_roles }}'
 
 # Webserver HTTP/S/React Ingress/Egress to/from Internet Security Group/Roles (Pan 2021).
 - name: Creating "Webserver HTTP/S/React Ingress/Egress from Internet" Security Group
@@ -45,7 +45,7 @@
     name: '{{ item.name }}'
     description: '{{ item.description }}'
     state: present
-  loop: '{{ webserver-https-react-internet-security-group }}'
+  loop: '{{ webserver_https_react_internet_security_group }}'
 
 - name: Attach Security Group rules (HTTP/S/React) for "Webserver HTTP/S/React Ingress/Egress from Internet"
   os_security_group_rule:
@@ -56,7 +56,7 @@
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ item.ip_prefix }}'
     state: present'
-  loop: '{{ webserver-https-react-internet-security-group-roles }}'
+  loop: '{{ webserver_https_react_internet_security_group_roles }}'
 
 # Webserver CouchDB Ingress/Egress to/from CouchDB Instances Security Group/Roles (Pan 2021).
 - name: Creating "Webserver CouchDB Ingress/Egress from CouchDB Instances" Security Group
@@ -64,7 +64,7 @@
     name: '{{ item.name }}'
     description: '{{ item.description }}'
     state: present
-  loop: '{{ webserver-couchdb-couch-inst-security-group }}'
+  loop: '{{ webserver_couchdb_couch_inst_security_group }}'
 
 - name: Attach Security Group rules (CouchDB ports) for "Webserver CouchDB Ingress/Egress from CouchDB Instances" (CouchDB0)
   os_security_group_rule:
@@ -75,7 +75,7 @@
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_0_ip }}/32'
     state: present'
-  loop: '{{ webserver-couchdb-couch-inst-security-group-roles }}'
+  loop: '{{ webserver_couchdb_couch_inst_security_group_roles }}'
 
 - name: Attach Security Group rules (CouchDB ports) for "Webserver CouchDB Ingress/Egress from CouchDB Instances" (CouchDB1)
   os_security_group_rule:
@@ -86,7 +86,7 @@
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
     state: present'
-  loop: '{{ webserver-couchdb-couch-inst-security-group-roles }}'
+  loop: '{{ webserver_couchdb_couch_inst_security_group_roles }}'
 
 - name: Attach Security Group rules (CouchDB ports) for "Webserver CouchDB Ingress/Egress from CouchDB Instances" (CouchDB2)
   os_security_group_rule:
@@ -97,7 +97,7 @@
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
     state: present'
-  loop: '{{ webserver-couchdb-couch-inst-security-group-roles }}'
+  loop: '{{ webserver_couchdb_couch_inst_security_group_roles }}'
 
 # Setting additional Security Group list for Web Server (Pan 2021).
 - name: Create a list of security group names
