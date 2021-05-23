@@ -154,12 +154,11 @@
 .home-content{
     margin-left:64px;
     margin-right:64px;
-    margin-top:32px;
+
 }
 
 .header{
     margin-top:152px;
-    background-color: rgba(25, 26, 26,0.95);
-    color:rgba(255, 255, 255, 0.8);
+
     padding:64px;
 }

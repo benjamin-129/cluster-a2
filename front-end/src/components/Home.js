@@ -15,7 +15,7 @@ export default class Home extends Component {
       <h2>
       ANALYSIS OF TWEETS 
       </h2>
-      <h5>Wealth VS Happniess</h5>
+      <h5>Wealth VS Happiness</h5>
       <p>Group 42: Joey Xinyue Hu, Matthew Lim, Benjamin Tam, Andrzej Poniatowski, James Sammut
 </p>
       </div>
@@ -45,7 +45,7 @@ export default class Home extends Component {
       <ul>
       <li>Equivalised total weekly household income</li>
       <li>Annual median personal income</li>
-      <li>Average rent monthly rent</li>
+      <li>Average monthly rent</li>
       <li>Average monthly mortgage payments</li>
       <li>Unemployment rate</li>
       <li>Median house price</li>
