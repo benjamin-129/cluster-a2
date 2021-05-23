@@ -41,7 +41,7 @@ export default class Home extends Component {
       <h3>
       Measures used in the study
       </h3>
-      <p>We used a wide range of metrics establish wealth levels across Australia:</p>
+      <p>We used a wide range of metrics to establish wealth levels across Australia:</p>
       <ul>
       <li>Equivalised total weekly household income</li>
       <li>Annual median personal income</li>
