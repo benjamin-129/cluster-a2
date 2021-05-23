@@ -8,16 +8,16 @@ export default class Menubar extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const { activeItem } = this.state
-
+  
     return (
       <div>
 
     <Navbar className="menu" variant="dark">
-    <Navbar.Brand href="#home">Tweets Analysis</Navbar.Brand>
+    <Navbar.Brand href="/">Tweets Analysis</Navbar.Brand>
     <Nav className="mr-auto">
-      <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#Map">Map Chart</Nav.Link>
+      <Nav.Link href="/">Home</Nav.Link>
+      <Nav.Link href="/map">Map</Nav.Link>
+      <Nav.Link href="/personal_income">Chart</Nav.Link>
     </Nav>
 
   </Navbar>

@@ -150,3 +150,16 @@
     font-size: 0.2rem;
     font-family: Roboto, sans-serif;
 }
+
+.home-content{
+    margin-left:64px;
+    margin-right:64px;
+    margin-top:32px;
+}
+
+.header{
+    margin-top:152px;
+    padding-top:64px;
+    padding-left:64px;
+    padding-right:64px;
+}

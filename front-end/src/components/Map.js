@@ -53,7 +53,7 @@ class Map extends Component {
       }
       switch (query) {
         case "sa4_name":
-          d.color = colors[0];
+          d.color = colors[1];
           break;
        
         default:
@@ -77,6 +77,7 @@ class Map extends Component {
  
 
     return (
+      
    
       <ReactMapGL
         {...viewport}
@@ -84,6 +85,7 @@ class Map extends Component {
         mapStyle="mapbox://styles/mapbox/dark-v10"
         onViewportChange={(viewport) => this.setState({ viewport })}
       >
+            <div className="footer">Data source:Twitter API, Afinn, Aurin</div>
         {map_data.map((country, index) => {
       
           const latitude = Number(country.coordinates[1]);
@@ -110,12 +112,12 @@ class Map extends Component {
             details={tooltip}
             fields={fields}
             handleCloseTooltip={this.handleCloseTooltip}
-             onClick={() => this.setState({ tooltip:null })}
           />
         )}
 
    
       </ReactMapGL>
+      
     );
   }
 }
