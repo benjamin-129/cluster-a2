@@ -15,7 +15,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ item.ip_prefix }}'
-    state: present'
+    state: present
   loop: '{{ ssh-ingress-security-group }}'
 
 # Setting fact for initial SSH Access Security Group (Pan 2021).
