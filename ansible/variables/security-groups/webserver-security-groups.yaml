@@ -1,9 +1,9 @@
-# Webserver HTTP/HTTPS Ingress from CouchDB Instances Security Group 
+# Webserver HTTP/HTTPS Ingress from CouchDB Instances Security Group (Pan 2021).
 webserver-https-couch-inst-security-group:
   - name: Webserver HTTP/HTTPS Ingress from CouchDB Instances
     description: Allowing ingress HTTP and HTTPS traffic (80/443) from Couch DB Instances
 
-# Webserver HTTP/HTTPS Ingress from CouchDB Instances Security Group Roles
+# Webserver HTTP/HTTPS Ingress from CouchDB Instances Security Group Roles (Pan 2021).
 webserver-https-couch-inst-security-group-roles:
   - name: Webserver HTTP/HTTPS Ingress from CouchDB Instances
     protocol: tcp
@@ -16,12 +16,12 @@ webserver-https-couch-inst-security-group-roles:
     port_range_min: 443
     port_range_max: 443
 
-# Webserver HTTP/S/React Ingress/Egress from Internet Security Group 
+# Webserver HTTP/S/React Ingress/Egress from Internet Security Group (Pan 2021).
 webserver-https-react-internet-security-group:
   - name: Webserver HTTP/S/React Ingress/Egress to/from Internet
     description: Allowing HTTP, HTTPS and React traffic (80/443/3000) to/from Internet
 
-# Webserver HTTP/S/React Ingress/Egress from Internet Security Group Roles
+# Webserver HTTP/S/React Ingress/Egress from Internet Security Group Roles (Pan 2021).
 webserver-https-react-internet-security-group-roles:
   - name: Webserver HTTP/S/React Ingress/Egress to/from Internet
     protocol: tcp
@@ -60,12 +60,12 @@ webserver-https-react-internet-security-group-roles:
     port_range_max: 3000
     ip_prefix: 0.0.0.0/0
 
-# Webserver CouchDB Ingress/Egress from CouchDB Instances Security Group 
+# Webserver CouchDB Ingress/Egress from CouchDB Instances Security Group (Pan 2021).
 webserver-couchdb-couch-inst-security-group:
   - name: Webserver CouchDB Ingress/Egress to/from CouchDB Instances
     description: Allowing ingress/egress CouchDB traffic (5984) to/from Couch DB Instances
 
-# Webserver CouchDB Ingress/Egress from CouchDB Instances Security Group Roles
+# Webserver CouchDB Ingress/Egress from CouchDB Instances Security Group Roles (Pan 2021).
 webserver-couchdb-couch-inst-security-group-roles:
   - name: Webserver CouchDB Ingress/Egress to/from CouchDB Instances
     protocol: tcp

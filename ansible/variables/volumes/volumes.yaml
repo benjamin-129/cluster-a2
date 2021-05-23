@@ -1,4 +1,4 @@
-# Volumes
+# CouchDB0, 1, 2 Volumes (Pan 2021).
 couchdb0_volumes:
   - name: couchdb0_vol_1
     availability_zone: melbourne-qh2-uom

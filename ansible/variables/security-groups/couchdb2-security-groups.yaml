@@ -1,9 +1,9 @@
-# CDB2 CouchDB and Internet Security Group
+# CDB2 CouchDB and Internet Security Group (Pan 2021).
 cdb2-internet-security-group: 
   - name: CDB2 CouchDB and Internet
     description: Allowing traffic on CouchDB Ports from Internet
 
-# CDB2 CouchDB and Internet Security Group Roles
+# CDB2 CouchDB and Internet Security Group Roles (Pan 2021).
 cdb2-internet-security-group-roles: 
   - name: CDB2 CouchDB and Internet
     protocol: tcp
@@ -30,12 +30,12 @@ cdb2-internet-security-group-roles:
     port_range_max: 5984
     ip_prefix: 0.0.0.0/0
 
-# CDB2 CouchDB Ingress/Egress to/from CDB0 Security Group
+# CDB2 CouchDB Ingress/Egress to/from CDB0 Security Group (Pan 2021).
 cdb2-cdb0-couch-security-group:
   - name: CDB2 CouchDB Ingress/Egress to/from CDB0
     description: Allowing traffic on CouchDB Ports to/from CDB0
 
-# CDB2 CouchDB Ingress/Egress to/from CDB0 Security Group Roles
+# CDB2 CouchDB Ingress/Egress to/from CDB0 Security Group Roles (Pan 2021).
 cdb2-cdb0-couch-security-group-roles:
   - name: CDB2 CouchDB Ingress/Egress to/from CDB0
     protocol: tcp
@@ -68,12 +68,12 @@ cdb2-cdb0-couch-security-group-roles:
     port_range_min: 9100
     port_range_max: 9100
 
-# CDB2 CouchDB Ingress/Egress to/from CDB1 Security Group
+# CDB2 CouchDB Ingress/Egress to/from CDB1 Security Group (Pan 2021).
 cdb2-cdb1-couch-security-group:
   - name: CDB2 CouchDB Ingress/Egress to/from CDB1
     description: Allowing traffic on CouchDB Ports to/from CDB1
 
-# CDB2 CouchDB Ingress/Egress to/from CDB1 Security Group Roles
+# CDB2 CouchDB Ingress/Egress to/from CDB1 Security Group Roles (Pan 2021).
 cdb2-cdb1-couch-security-group-roles:
   - name: CDB2 CouchDB Ingress/Egress to/from CDB1
     protocol: tcp
@@ -106,12 +106,12 @@ cdb2-cdb1-couch-security-group-roles:
     port_range_min: 9100
     port_range_max: 9100
 
-# CDB2 CouchDB Ingress/Egress to/from Web Server Security Group
+# CDB2 CouchDB Ingress/Egress to/from Web Server Security Group (Pan 2021).
 cdb2-webserver-couch-security-group:
   - name: CDB2 CouchDB Ingress/Egress to/from Web Server
     description: Allowing traffic on CouchDB Port 5984 to/from Web Server
 
-# CDB2 CouchDB Ingress/Egress to/from Web Server Security Group Roles
+# CDB2 CouchDB Ingress/Egress to/from Web Server Security Group Roles (Pan 2021).
 cdb2-webserver-couch-security-group-roles:
   - name: CDB2 CouchDB Ingress/Egress to/from Web Server
     protocol: tcp
@@ -124,12 +124,12 @@ cdb2-webserver-couch-security-group-roles:
     port_range_min: 5984
     port_range_max: 5984
 
-# CDB2 HTTP/S Egress to Web Server Security Group
+# CDB2 HTTP/S Egress to Web Server Security Group (Pan 2021).
 cdb2-webserver-https-security-group:
   - name: CDB2 HTTP/S Egress to Web Server
     description: Allowing HTTP/S egress traffic to Web Server
 
-# CDB2 HTTP/S Egress to Web Server Security Group
+# CDB2 HTTP/S Egress to Web Server Security Group Roles (Pan 2021).
 cdb2-webserver-https-security-group-roles:
   - name: CDB2 HTTP/S Egress to Web Server
     protocol: tcp

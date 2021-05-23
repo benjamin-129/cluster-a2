@@ -1,4 +1,4 @@
-# SSH access from all Security Group
+# SSH access from all Security Group (Pan 2021).
 ssh-ingress-security-group: 
   - name: SSH access from all
     description: Allow SSH access from anywhere

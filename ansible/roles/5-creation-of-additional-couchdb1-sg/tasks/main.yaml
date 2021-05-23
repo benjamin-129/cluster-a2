@@ -1,4 +1,4 @@
-# CDB1 CouchDB and Internet Security Group/Roles
+# CDB1 CouchDB and Internet Security Group/Role (Pan 2021).
 - name: Creating "CDB1 CouchDB and Internet" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -17,7 +17,7 @@
     state: present'
   loop: '{{ cdb1-internet-security-group-roles }}'
 
-# CDB1 CouchDB Ingress/Egress to/from CDB0 Security Group/Roles
+# CDB1 CouchDB Ingress/Egress to/from CDB0 Security Group/Role (Pan 2021).
 - name: Creating "CDB1 CouchDB Ingress/Egress to/from CDB0" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -36,7 +36,7 @@
     state: present'
   loop: '{{ cdb1-cdb0-couch-security-group-roles }}'
 
-# CDB1 CouchDB Ingress/Egress to/from CDB2 Security Group/Roles
+# CDB1 CouchDB Ingress/Egress to/from CDB2 Security Group/Role (Pan 2021).
 - name: Creating "CDB1 CouchDB Ingress/Egress to/from CDB2" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -55,7 +55,7 @@
     state: present'
   loop: '{{ cdb1-cdb2-couch-security-group-roles }}'
 
-# CDB1 CouchDB Ingress/Egress to/from Web Server Security Group/Roles
+# CDB1 CouchDB Ingress/Egress to/from Web Server Security Group/Role (Pan 2021).
 - name: Creating "CDB1 CouchDB Ingress/Egress to/from Web Server" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -74,7 +74,7 @@
     state: present'
   loop: '{{ cdb1-webserver-couch-security-group-roles }}'
 
-# CDB1 HTTP/S Egress to Web Server Security Group/Roles
+# CDB1 HTTP/S Egress to Web Server Security Group/Role (Pan 2021).
 - name: Creating "CDB1 HTTP/S Egress to Web Server" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -93,7 +93,7 @@
     state: present'
   loop: '{{ cdb1-webserver-https-security-group-roles }}'
 
-# Setting additional Security Group list for CouchDB1
+# Setting additional Security Group list for CouchDB1 (Pan 2021).
 - name: Setting additional CouchDB1 instance rules list
   set_fact:
     couchdb1_sg: ["SSH access from all", 

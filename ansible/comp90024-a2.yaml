@@ -1,6 +1,6 @@
 # COMP90024: Assignment 2 - City Analytics on the Cloud
 
-# Main Paybook (Pan 2021)
+# Main Paybook (Pan 2021).
 - name: COMP90024-A2-Playbook_Team-42
   hosts: localhost
   vars:
