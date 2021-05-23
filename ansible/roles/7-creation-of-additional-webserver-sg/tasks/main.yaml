@@ -45,7 +45,7 @@
     name: '{{ item.name }}'
     description: '{{ item.description }}'
     state: present
-  loop: '{{ webserver-https-react-internet-security-group: }}'
+  loop: '{{ webserver-https-react-internet-security-group }}'
 
 - name: Attach Security Group rules (HTTP/S/React) for "Webserver HTTP/S/React Ingress/Egress from Internet"
   os_security_group_rule:
