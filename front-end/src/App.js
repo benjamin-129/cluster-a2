@@ -7,6 +7,8 @@ import NotFound from "./components/NotFound";
 import Chart1 from "./components/BarChart";
 import Chart2 from "./components/BarChart2";
 import Chart3 from "./components/BarChart3";
+import Chart4 from "./components/BarChart4";
+import Chart5 from "./components/BarChart5";
 
 import "./App.css";
 
@@ -113,6 +115,16 @@ class App extends Component {
       </Route>
       <Route exact path="/house_price">
         <Chart3
+        data={countries_data}
+          />
+      </Route>
+      <Route exact path="/average_monthly_morgage">
+        <Chart4
+        data={countries_data}
+          />
+      </Route>
+      <Route exact path="/weekly_household_income">
+        <Chart5
         data={countries_data}
           />
       </Route>
