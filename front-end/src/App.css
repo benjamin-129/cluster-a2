@@ -159,6 +159,7 @@
 
 .header{
     margin-top:152px;
-
-    padding:64px;
+    padding-top:64px;
+    padding-left:64px;
+    padding-right:64px;
 }
