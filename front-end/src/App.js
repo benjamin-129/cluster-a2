@@ -118,7 +118,6 @@ class App extends Component {
       </Route>
       <Route component={NotFound} />
          </Switch>
-        <div className="footer">Data source:Twitter API, Afinn, Aurin</div>
         </BrowserRouter>
       </div>
     ) : null;

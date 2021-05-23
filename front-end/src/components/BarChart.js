@@ -50,7 +50,11 @@ export default class BarChart extends PureComponent {
     return (
       <div style={{ width: '100%', height: 560 }}>
         <Nav />
-      
+        <div className="home-content">
+        <h5>Personal Income vs Sentiment Score</h5>
+
+      <p > In order to better represent the data, each feature's data was normalised using a min-max scalar and scaled between a range of 0 and 1.</p>
+      </div>
         <ResponsiveContainer>
           <ComposedChart
             width={500}

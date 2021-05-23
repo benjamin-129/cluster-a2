@@ -77,6 +77,7 @@ class Map extends Component {
  
 
     return (
+      
    
       <ReactMapGL
         {...viewport}
@@ -84,6 +85,7 @@ class Map extends Component {
         mapStyle="mapbox://styles/mapbox/dark-v10"
         onViewportChange={(viewport) => this.setState({ viewport })}
       >
+            <div className="footer">Data source:Twitter API, Afinn, Aurin</div>
         {map_data.map((country, index) => {
       
           const latitude = Number(country.coordinates[1]);
@@ -115,6 +117,7 @@ class Map extends Component {
 
    
       </ReactMapGL>
+      
     );
   }
 }
