@@ -36,7 +36,7 @@ export default class BarChart extends PureComponent {
        name: item.sa4_name,
        sentiment_score: item.sentiment_score_std,
        personal_income:item.media_personal_income_std,
-       average_monthly_morgage:item.average_monthly_morgage_std
+       average_monthly_morgage:item.average_monthly_mortgage_std
     }
     chart_data.push(dict);
 });
@@ -52,7 +52,7 @@ export default class BarChart extends PureComponent {
       <div style={{ width: '100%', height: 560 }}>
         <Nav />
         <div className="home-content">
-        <h5>Average Monthly Morgage vs Sentiment Score</h5>
+        <h5>Average Monthly Mortgage vs Sentiment Score</h5>
 
       <p > In order to better represent the data, each feature's data was normalised using a min-max scalar and scaled between a range of 0 and 1.</p>
       </div>

@@ -17,7 +17,7 @@ export default class Chart extends PureComponent {
       console.log(details)
       const map_data=[
   {
-    subject: 'SENTIMENT SCORE',
+    subject: 'SENTIMENTAL SCORE',
     A: details.sentiment_score_std,
     fullMark: 100,
   },
@@ -33,7 +33,7 @@ export default class Chart extends PureComponent {
   },
   {
     subject: 'PERSONAL INCOME',
-    A: details.media_personal_income_std,
+    A: details.median_personal_income_std,
     fullMark: 100,
   },
   {
@@ -47,8 +47,8 @@ export default class Chart extends PureComponent {
     fullMark: 100,
   },
   {
-    subject: 'MONTHLY MORGAGE',
-    A: details.average_monthly_morgage_std,
+    subject: 'MONTHLY MORTGAGE',
+    A: details.average_monthly_mortgage_std,
     fullMark: 100,
   },
 ]

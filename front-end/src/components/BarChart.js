@@ -35,7 +35,7 @@ export default class BarChart extends PureComponent {
     const dict = {
        name: item.sa4_name,
        sentiment_score: item.sentiment_score_std,
-       personal_income:item.media_personal_income_std,
+       personal_income:item.median_personal_income_std,
        unemployment_rate:item.unemployed_rate_std
     }
     chart_data.push(dict);

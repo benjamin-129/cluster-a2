@@ -21,7 +21,7 @@ const initialState = {
   ],
   countries_data: [],
   data_loaded: false,
-  fields: ["sentiment_score", "tweet_counts","median_house_price","unemployed_rate", "weekly_household_income","average_monthly_morgage","media_personal_income"],
+  fields: ["sentiment_score", "tweet_counts","median_house_price","unemployed_rate", "weekly_household_income","average_monthly_mortgage","median_personal_income"],
   query: "sentiment_score",
 };
 class App extends Component {
@@ -60,15 +60,15 @@ class App extends Component {
         unemployed_rate: d.unemployed_rate[0],
         median_house_price: d.median_house_price[0],
         weekly_household_income: d.equivalised_total_household_income_census_median_weekly[0],
-        average_monthly_morgage: d.rent_mortgage_payments_census_average_monthly_household_payment[0],
-        media_personal_income:d.median_aud[0],
+        average_monthly_mortgage: d.rent_mortgage_payments_census_average_monthly_household_payment[0],
+        median_personal_income:d.median_aud[0],
         sentiment_score_std: d.sentiment_score[1],
         tweet_counts_std: d.tweet_counts[1],
         unemployed_rate_std: d.unemployed_rate[1],
         median_house_price_std: d.median_house_price[1],
         weekly_household_income_std: d.equivalised_total_household_income_census_median_weekly[1],
-        average_monthly_morgage_std: d.rent_mortgage_payments_census_average_monthly_household_payment[1],
-        media_personal_income_std:d.median_aud[1],
+        average_monthly_mortgage_std: d.rent_mortgage_payments_census_average_monthly_household_payment[1],
+        median_personal_income_std:d.median_aud[1],
         coordinates:d.centroid
       };
       processed.push(obj);
