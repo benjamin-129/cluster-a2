@@ -23,7 +23,7 @@ export default class NavMenu extends Component {
       <Nav.Link href="/house_price">Median House Price</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-      <Nav.Link href="/average_monthly_morgage">Average Monthly Morgage</Nav.Link>
+      <Nav.Link href="/average_monthly_morgage">Average Monthly Mortgage</Nav.Link>
       </Nav.Item>
       <Nav.Item>
       <Nav.Link href="/weekly_household_income">Weekly Household Income</Nav.Link>
