@@ -17,7 +17,7 @@ export default class Menubar extends Component {
     <Nav className="mr-auto">
       <Nav.Link href="/">Home</Nav.Link>
       <Nav.Link href="/map">Map</Nav.Link>
-      <Nav.Link href="/chart">Chart</Nav.Link>
+      <Nav.Link href="/personal_income">Chart</Nav.Link>
     </Nav>
 
   </Navbar>

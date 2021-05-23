@@ -48,6 +48,7 @@ export default class BarChart extends PureComponent {
 
   render() {
     return (
+
       <div style={{ width: '100%', height: 560 }}>
         <Nav />
       
@@ -70,7 +71,7 @@ export default class BarChart extends PureComponent {
             <Legend />
   
             <Bar dataKey="sentiment_score" fill="#8884d8" stackId="stack" />
-          <Bar dataKey="personal_income" fill="#82ca9d" stackId="stack" />
+          <Bar dataKey="unemployment_rate" fill="rgba(233,30,99,0.7)" stackId="stack" />
 
           </ComposedChart>
         </ResponsiveContainer>

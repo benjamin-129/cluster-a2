@@ -36,7 +36,7 @@ export default class BarChart extends PureComponent {
        name: item.sa4_name,
        sentiment_score: item.sentiment_score_std,
        personal_income:item.media_personal_income_std,
-       unemployment_rate:item.unemployed_rate_std
+       median_house_price:item.median_house_price_std
     }
     chart_data.push(dict);
 });
@@ -48,6 +48,7 @@ export default class BarChart extends PureComponent {
 
   render() {
     return (
+
       <div style={{ width: '100%', height: 560 }}>
         <Nav />
       
@@ -70,7 +71,7 @@ export default class BarChart extends PureComponent {
             <Legend />
   
             <Bar dataKey="sentiment_score" fill="#8884d8" stackId="stack" />
-          <Bar dataKey="personal_income" fill="#82ca9d" stackId="stack" />
+          <Bar dataKey="median_house_price" fill="rgba(275,155,5,0.7)" stackId="stack" />
 
           </ComposedChart>
         </ResponsiveContainer>

@@ -4,7 +4,9 @@ import Map from "./components/Map";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./components/Home";
 import NotFound from "./components/NotFound";
-import Chart from "./components/BarChart";
+import Chart1 from "./components/BarChart";
+import Chart2 from "./components/BarChart2";
+import Chart3 from "./components/BarChart3";
 
 import "./App.css";
 
@@ -99,10 +101,19 @@ class App extends Component {
           query={query}
         />
       </Route>
-      <Route exact path="/chart">
-        <Chart 
+      <Route exact path="/personal_income">
+        <Chart1 
         data={countries_data}
-          fields={fields}
+          />
+      </Route>
+      <Route exact path="/unemployment_rate">
+        <Chart2
+        data={countries_data}
+          />
+      </Route>
+      <Route exact path="/house_price">
+        <Chart3
+        data={countries_data}
           />
       </Route>
       <Route component={NotFound} />
