@@ -7,7 +7,7 @@
     ansible_python_interpreter: /usr/bin/python3
   vars_files:
     - variables/volumes/volumes.yaml
-    - varaibles/hosts/hosts.yaml
+    - variables/hosts/hosts.yaml
     - variables/security-groups/ssh-access.yaml
     - variables/security-groups/couchdb0-security-groups.yaml
     - variables/security-groups/couchdb1-security-groups.yaml
