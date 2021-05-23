@@ -23,4 +23,4 @@
     ssh_access: ["SSH access from all"]
 
 - debug:
-    msg: "Security group(s) {{ ssh_access }} have been created."
+    msg: "Initial SSH Access Security Group created: {{ ssh_access }}"

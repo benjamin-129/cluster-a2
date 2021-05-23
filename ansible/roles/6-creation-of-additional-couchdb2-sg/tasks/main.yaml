@@ -104,5 +104,4 @@
      "CDB2 HTTP/S Egress to Web Server"]
 
 - debug:
-    msg: "Security group(s) {{ couchdb2_sg }} have been created."
-
+    msg: " Additional Security groups for CouchDB2 created: {{ couchdb2_sg }}"

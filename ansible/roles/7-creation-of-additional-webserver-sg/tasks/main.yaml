@@ -108,5 +108,4 @@
     "Webserver CouchDB Ingress/Egress to/from CouchDB Instances"]
 
 - debug:
-    msg: "Security group(s) {{ webserver_sg }} have been created."
-
+    msg: " Additional Security groups for Web Server created: {{ webserver_sg }}"
