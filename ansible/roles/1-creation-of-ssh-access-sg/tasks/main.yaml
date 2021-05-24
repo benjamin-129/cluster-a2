@@ -1,33 +1,30 @@
-# COMP90024: Assignment 2 - City Analytics on the Cloud
+# Creating SSH access from all security group (Pan 2021).
+- name: Creating 'SSH access from all' Security Group
+  os_security_group:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    state: present
+  loop: '{{ ssh_ingress_security_group }}'
 
-# Main Paybook (Pan 2021).
-- name: COMP90024-A2-Playbook_Team-42
-  hosts: localhost
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-  vars_files:
-    - variables/volumes/volumes.yaml
-    - variables/hosts/hosts.yaml
-    - variables/security-groups/ssh-access.yaml
-    - variables/security-groups/couchdb0-security-groups.yaml
-    - variables/security-groups/couchdb1-security-groups.yaml
-    - variables/security-groups/couchdb2-security-groups.yaml
-    - variables/security-groups/webserver-security-groups.yaml
-  gather_facts: true
+# Applying security group rules to SSH access from all (Pan 2021).
+- name: Creating SSH ingress port rule (22) for 'SSH access from all'
+  os_security_group_rule:
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ item.ip_prefix }}'
+    state: present
+  loop: '{{ ssh_ingress_security_group }}'
 
-  roles:
-    - role: 1-creation-of-ssh-access-sg
-    - role: 2-creation-of-volumes
-    - role: 3-creation-instances-initial
-    - role: 4-creation-of-additional-couchdb0-sg
-    - role: 5-creation-of-additional-couchdb1-sg
-    - role: 6-creation-of-additional-couchdb2-sg
-    - role: 7-creation-of-additional-webserver-sg
-    - role: 8-application-of-additional-sg
-    - role: 9-volume-mount-and-dependency-installation
-    - role: 10-creation-of-couchdb-cluster
-    - role: 11-startup-of-harvesters
-    - role: 12-setup-of-web-server
+# Setting fact for initial SSH Access Security Group (Pan 2021).
+- name: Create a ssh_access list fact (for initial isntance application)
+  set_fact:
+    ssh_access: ["SSH access from all"]
+
+- debug:
+    msg: "Initial SSH Access Security Group created: {{ ssh_access }}"
 
 # REFERENCES
 # 

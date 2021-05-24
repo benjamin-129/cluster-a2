@@ -1,0 +1,177 @@
+# Volume mount on CouchDB0 and Dependency/Docker Installation/Instansiation
+- name: Run setup for couchdb_0
+  remote_user: ubuntu
+  shell: "{{ item }}"
+  with_items:
+
+    # Setup Volume Mount:
+    - sudo mkfs -t ext4 /dev/vdb
+
+    # Mount Volume:
+    - sudo mkdir /couchdb
+    - sudo mount /dev/vdb /couchdb
+
+    # Build Dockerfile
+    # - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    - sudo echo "FROM couchdb:2.3.1" > Dockerfile
+    - sudo echo "EXPOSE 5984" >> Dockerfile
+    - sudo echo "EXPOSE 4369" >> Dockerfile
+    - sudo echo "EXPOSE 9100" >> Dockerfile
+    - sudo echo "ENV COUCHDB_USER=admin" >> Dockerfile
+    - sudo echo "ENV COUCHDB_PASSWORD=password" >> Dockerfile
+    - sudo echo "ENV NODENAME='{{ couchdb_instance_0_ip }}'" >> Dockerfile
+
+    # Build and Start Docker Instance
+    - sudo docker build -t cdb .
+    - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
+
+    # Clone Repo -> Change when we make the repo public
+    - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
+
+    # Install dependencies
+    - sudo apt-get update -y
+    - sudo apt install python3-pip -y
+    - sudo apt install screen -y
+
+    - sudo echo "CouchDB==1.2" > requirements.txt
+    - sudo echo "geojson==2.5.0" >> requirements.txt
+    - sudo echo "pickleshare==0.7.5" >> requirements.txt
+    - sudo echo "tweepy==3.10.0" >> requirements.txt
+    - sudo echo "afinn==0.1" >> requirements.txt
+    - pip3 install -r requirements.txt
+    - pip3 install sklearn
+
+  become: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
+
+# Volume mount on CouchDB1 and Dependency/Docker Installation/Instansiation
+- name: Run setup for couchdb_1
+  remote_user: ubuntu
+  shell: "{{ item }}"
+  with_items:
+
+    # Setup Volume Mount:
+    - sudo mkfs -t ext4 /dev/vdb
+
+    # Mount Volume:
+    - sudo mkdir /couchdb
+    - sudo mount /dev/vdb /couchdb
+
+    # Build Dockerfile
+    # - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    - sudo echo "FROM couchdb:2.3.1" > Dockerfile
+    - sudo echo "EXPOSE 5984" >> Dockerfile
+    - sudo echo "EXPOSE 4369" >> Dockerfile
+    - sudo echo "EXPOSE 9100" >> Dockerfile
+    - sudo echo "ENV COUCHDB_USER=admin" >> Dockerfile
+    - sudo echo "ENV COUCHDB_PASSWORD=password" >> Dockerfile
+    - sudo echo "ENV NODENAME='{{ couchdb_instance_1_ip }}'" >> Dockerfile
+
+
+    # Build and Start Docker Instance
+    - sudo docker build -t cdb .
+    - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
+
+    # Clone Repo
+    - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
+
+    # Install dependencies
+    - sudo apt-get update -y
+    - sudo apt install python3-pip -y
+    - sudo apt install screen -y
+
+    - sudo echo "CouchDB==1.2" > requirements.txt
+    - sudo echo "geojson==2.5.0" >> requirements.txt
+    - sudo echo "pickleshare==0.7.5" >> requirements.txt
+    - sudo echo "tweepy==3.10.0" >> requirements.txt
+    - sudo echo "afinn==0.1" >> requirements.txt
+    - pip3 install -r requirements.txt
+    - pip3 install sklearn
+
+  become: yes
+  delegate_to: '{{ couchdb_instance_1_ip }}'
+
+# Volume mount on CouchDB2 and Dependency/Docker Installation/Instansiation
+- name: Run setup for couchdb_2
+  remote_user: ubuntu
+  shell: "{{ item }}"
+  with_items:
+
+    # Setup Volume Mount:
+    - sudo mkfs -t ext4 /dev/vdb
+
+    # Mount Volume:
+    - sudo mkdir /couchdb
+    - sudo mount /dev/vdb /couchdb
+
+    # Build Dockerfile
+    # - sudo echo "FROM couchdb:3.0.1" > Dockerfile
+    - sudo echo "FROM couchdb:2.3.1" > Dockerfile
+    - sudo echo "EXPOSE 5984" >> Dockerfile
+    - sudo echo "EXPOSE 4369" >> Dockerfile
+    - sudo echo "EXPOSE 9100" >> Dockerfile
+    - sudo echo "ENV COUCHDB_USER=admin" >> Dockerfile
+    - sudo echo "ENV COUCHDB_PASSWORD=password" >> Dockerfile
+    - sudo echo "ENV NODENAME='{{ couchdb_instance_2_ip }}'" >> Dockerfile
+
+    # Build and Start Docker Instance
+    - sudo docker build -t cdb .
+    - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
+
+    # Clone Repo
+    - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
+
+    # Install dependencies
+    - sudo apt-get update -y
+    - sudo apt install python3-pip -y
+    - sudo apt install screen -y
+
+    - sudo echo "CouchDB==1.2" > requirements.txt
+    - sudo echo "geojson==2.5.0" >> requirements.txt
+    - sudo echo "pickleshare==0.7.5" >> requirements.txt
+    - sudo echo "tweepy==3.10.0" >> requirements.txt
+    - sudo echo "afinn==0.1" >> requirements.txt
+    - pip3 install -r requirements.txt
+    - pip3 install sklearn
+
+  become: yes
+  delegate_to: '{{ couchdb_instance_2_ip }}'
+
+# REFERENCES
+# 
+# Ansible 2021, Loops, viewed 1st May 2021, 
+# <https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#iterating-over-a-simple-list>
+# 
+# Ansible 2021, os_security_group_rule - Add/Delete rule from an existing security group, viewed 1st May 2021, 
+# <https://docs.ansible.com/ansible/2.5/modules/os_security_group_rule_module.html>
+# 
+# Ansible 2021, os_server - Create/Delete Compute Instances from Openstack, viewed 25th April 2021, <https://docs.ansible.com/ansible/2.4/os_server_module.html>
+# 
+# Ansible 2021, Tags, viewed 25th April 2021, 
+# <https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html>.
+# 
+# Apache Software Foundation 2021, 2.2/ Cluster Setup, viewed 1st May 2021,
+# <https://docs.couchdb.org/en/stable/setup/cluster.html>.
+# 
+# Eisenkot, G 2020, Security challenges and risks with infrastructure as code, viewed 21st May 2021,
+# <https://bridgecrew.io/blog/security-challenges-and-risks-with-infrastructure-as-code/>
+# 
+# Harrower, M. and Bloch, M., 2006. MapShaper. org: A map generalization web service. IEEE Computer Graphics and Applications, 26(4), pp.22-27.
+# 
+# Internet Assigned Numbers Authority 2021, Service Name and Transport Protocol Port Number Registry, viewed 1st May 2021, <https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=http>.
+# 
+# JGraph 2021, diagrams.net, viewed 1st April 2021, 
+# <https://www.diagrams.net>.
+# 
+# Pan, A 2021, Workshop 9-10 Ansible, The University of Melbourne, Parkville, viewed 24th April 2021, <https://canvas.lms.unimelb.edu.au/courses/105440/files/7077574/download?download_frd=1>.
+# 
+# Pan, A 2021, Workshop 9-10 Ansible Code, The University of Melbourne, Parkville, viewed 24th April 2021, <https://canvas.lms.unimelb.edu.au/files/7112800/download?download_frd=1>.
+# 
+# The University of Melbourne 2021, Re:Cite, viewed 21st May 2021, 
+# <https://library.unimelb.edu.au/recite>.
+# 
+# Tutorials Point 2021, YAML - Comments, viewed 1st May 2021, 
+# <https://www.tutorialspoint.com/yaml/yaml_comments.htm>.
+# 
+# Vasiljevic, S 2020, Infrastructure As Code Demistifyed: IaC Benefits, Challenges and Best Practies, viewed 21st May 2021, 
+# <https://superadmins.com/infrastructure-as-code-demystified-iac-benefits-challenges-best-practices/>

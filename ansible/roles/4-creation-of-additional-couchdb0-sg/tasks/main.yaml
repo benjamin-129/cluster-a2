@@ -1,0 +1,146 @@
+# CDB0 CouchDB and Internet Security Group/Role (Pan 2021).
+- name: Creating "CDB0 CouchDB and Internet" Security Group
+  os_security_group:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    state: present
+  loop: '{{ cdb0_internet_security_group }}'
+
+- name: Attach Security Group rules (TCP/CouchDB ports) for "CDB0 CouchDB and Internet"
+  os_security_group_rule:
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ item.ip_prefix }}'
+    state: present
+  loop: '{{ cdb0_internet_security_group_roles }}'
+
+# CDB0 CouchDB Ingress/Egress to/from CDB1 Security Group/Role (Pan 2021).
+- name: Creating "CDB0 CouchDB Ingress/Egress to/from CDB1" Security Group
+  os_security_group:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    state: present
+  loop: '{{ cdb0_cdb1_couch_security_group }}'
+
+- name: Attach Security Group rules (CouchDB ports) for "CDB0 CouchDB Ingress/Egress to/from CDB1"
+  os_security_group_rule:
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
+    state: present
+  loop: '{{ cdb0_cdb1_couch_security_group_roles }}'
+
+# CDB0 CouchDB Ingress/Egress to/from CDB2 Security Group/Role (Pan 2021).
+- name: Creating "CDB0 CouchDB Ingress/Egress to/from CDB2" Security Group
+  os_security_group:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    state: present
+  loop: '{{ cdb0_cdb2_couch_security_group }}'
+
+- name: Attach Security Group rules (CouchDB ports) for "CDB0 CouchDB Ingress/Egress to/from CDB2"
+  os_security_group_rule:
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
+    state: present
+  loop: '{{ cdb0_cdb2_couch_security_group_roles }}'
+
+# CDB0 CouchDB Ingress/Egress to/from Web Server Security Group/Role (Pan 2021).
+- name: Creating "CDB0 CouchDB Ingress/Egress to/from Web Server" Security Group
+  os_security_group:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    state: present
+  loop: '{{ cdb0_webserver_couch_security_group }}'
+
+- name: Attach Security Group rules (CouchDB ports) for "CDB0 CouchDB Ingress/Egress to/from Web Server"
+  os_security_group_rule:
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ web_front_end_ip }}/32'
+    state: present
+  loop: '{{ cdb0_webserver_couch_security_group_roles }}'
+
+# CDB0 HTTP/S Egress to Web Server Security Group/Role (Pan 2021).
+- name: Creating "CDB0 HTTP/S Egress to Web Server" Security Group
+  os_security_group:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    state: present
+  loop: '{{ cdb0_webserver_https_security_group }}'
+
+- name: Attach Security Group rules (HTTP/S ports) for "CDB0 HTTP/S Egress to Web Server"
+  os_security_group_rule:
+    security_group: '{{ item.name }}'
+    protocol: '{{ item.protocol }}'
+    direction: '{{ item.direction }}'
+    port_range_min: '{{ item.port_range_min }}'
+    port_range_max: '{{ item.port_range_max }}'
+    remote_ip_prefix: '{{ web_front_end_ip }}/32'
+    state: present
+  loop: '{{ cdb0_webserver_https_security_group_roles }}'
+
+# Setting additional Security Group list for CouchDB0 (Pan 2021).
+- name: Setting additional CouchDB0 instance rules list
+  set_fact:
+    couchdb0_sg: ["SSH access from all", 
+     "CDB0 CouchDB and Internet",
+     "CDB0 CouchDB Ingress/Egress to/from CDB1",
+     "CDB0 CouchDB Ingress/Egress to/from CDB2",
+     "CDB0 CouchDB Ingress/Egress to/from Web Server",
+     "CDB0 HTTP/S Egress to Web Server"]
+
+- debug:
+    msg: " Additional Security groups for CouchDB0 created: {{ couchdb0_sg }}"
+
+# REFERENCES
+# 
+# Ansible 2021, Loops, viewed 1st May 2021, 
+# <https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#iterating-over-a-simple-list>
+# 
+# Ansible 2021, os_security_group_rule - Add/Delete rule from an existing security group, viewed 1st May 2021, 
+# <https://docs.ansible.com/ansible/2.5/modules/os_security_group_rule_module.html>
+# 
+# Ansible 2021, os_server - Create/Delete Compute Instances from Openstack, viewed 25th April 2021, <https://docs.ansible.com/ansible/2.4/os_server_module.html>
+# 
+# Ansible 2021, Tags, viewed 25th April 2021, 
+# <https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html>.
+# 
+# Apache Software Foundation 2021, 2.2/ Cluster Setup, viewed 1st May 2021,
+# <https://docs.couchdb.org/en/stable/setup/cluster.html>.
+# 
+# Eisenkot, G 2020, Security challenges and risks with infrastructure as code, viewed 21st May 2021,
+# <https://bridgecrew.io/blog/security-challenges-and-risks-with-infrastructure-as-code/>
+# 
+# Harrower, M. and Bloch, M., 2006. MapShaper. org: A map generalization web service. IEEE Computer Graphics and Applications, 26(4), pp.22-27.
+# 
+# Internet Assigned Numbers Authority 2021, Service Name and Transport Protocol Port Number Registry, viewed 1st May 2021, <https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=http>.
+# 
+# JGraph 2021, diagrams.net, viewed 1st April 2021, 
+# <https://www.diagrams.net>.
+# 
+# Pan, A 2021, Workshop 9-10 Ansible, The University of Melbourne, Parkville, viewed 24th April 2021, <https://canvas.lms.unimelb.edu.au/courses/105440/files/7077574/download?download_frd=1>.
+# 
+# Pan, A 2021, Workshop 9-10 Ansible Code, The University of Melbourne, Parkville, viewed 24th April 2021, <https://canvas.lms.unimelb.edu.au/files/7112800/download?download_frd=1>.
+# 
+# The University of Melbourne 2021, Re:Cite, viewed 21st May 2021, 
+# <https://library.unimelb.edu.au/recite>.
+# 
+# Tutorials Point 2021, YAML - Comments, viewed 1st May 2021, 
+# <https://www.tutorialspoint.com/yaml/yaml_comments.htm>.
+# 
+# Vasiljevic, S 2020, Infrastructure As Code Demistifyed: IaC Benefits, Challenges and Best Practies, viewed 21st May 2021, 
+# <https://superadmins.com/infrastructure-as-code-demystified-iac-benefits-challenges-best-practices/>

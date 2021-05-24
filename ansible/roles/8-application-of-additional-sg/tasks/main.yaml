@@ -1,33 +1,77 @@
-# COMP90024: Assignment 2 - City Analytics on the Cloud
+# Refresh CouchDB Instance 0 on MRC with new Security Groups (Pan 2021).
+- name: Create CouchDB instances
+  os_server:
+    name: '{{ item.name }}'
+    image: '{{ item.image }}'
+    key_name: '{{ item.key_name }}'
+    flavor: '{{ item.flavour }}'
+    availability_zone: '{{ item.availability_zone }}'
+    nics: 
+      - net-name: '{{ item.network }}'
+    security_groups: '{{ couchdb0_sg }}'
+    volumes: '{{ item.volume }}' 
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 500
+    state: present
+  loop: '{{ couchdb_instance_0 }}'
+  register: os_instance
 
-# Main Paybook (Pan 2021).
-- name: COMP90024-A2-Playbook_Team-42
-  hosts: localhost
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-  vars_files:
-    - variables/volumes/volumes.yaml
-    - variables/hosts/hosts.yaml
-    - variables/security-groups/ssh-access.yaml
-    - variables/security-groups/couchdb0-security-groups.yaml
-    - variables/security-groups/couchdb1-security-groups.yaml
-    - variables/security-groups/couchdb2-security-groups.yaml
-    - variables/security-groups/webserver-security-groups.yaml
-  gather_facts: true
+# Refresh CouchDB Instance 1 on MRC with new Security Groups (Pan 2021).
+- name: Create CouchDB instances
+  os_server:
+    name: '{{ item.name }}'
+    image: '{{ item.image }}'
+    key_name: '{{ item.key_name }}'
+    flavor: '{{ item.flavour }}'
+    availability_zone: '{{ item.availability_zone }}'
+    nics: 
+      - net-name: '{{ item.network }}'
+    security_groups: '{{ couchdb1_sg }}'
+    volumes: '{{ item.volume }}' 
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 500
+    state: present
+  loop: '{{ couchdb_instance_1 }}'
+  register: os_instance
 
-  roles:
-    - role: 1-creation-of-ssh-access-sg
-    - role: 2-creation-of-volumes
-    - role: 3-creation-instances-initial
-    - role: 4-creation-of-additional-couchdb0-sg
-    - role: 5-creation-of-additional-couchdb1-sg
-    - role: 6-creation-of-additional-couchdb2-sg
-    - role: 7-creation-of-additional-webserver-sg
-    - role: 8-application-of-additional-sg
-    - role: 9-volume-mount-and-dependency-installation
-    - role: 10-creation-of-couchdb-cluster
-    - role: 11-startup-of-harvesters
-    - role: 12-setup-of-web-server
+# Refresh CouchDB Instance 2 on MRC with new Security Groups (Pan 2021).
+- name: Create CouchDB instances
+  os_server:
+    name: '{{ item.name }}'
+    image: '{{ item.image }}'
+    key_name: '{{ item.key_name }}'
+    flavor: '{{ item.flavour }}'
+    availability_zone: '{{ item.availability_zone }}'
+    nics: 
+      - net-name: '{{ item.network }}'
+    security_groups: '{{ couchdb2_sg }}'
+    volumes: '{{ item.volume }}' 
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 500
+    state: present
+  loop: '{{ couchdb_instance_2 }}'
+  register: os_instance
+
+# Refresh Webserver on MRC with new Security Groups (Pan 2021).
+- name: Create Web Front-End Instance
+  os_server:
+    name: '{{ item.name }}'
+    image: '{{ item.image }}'
+    key_name: '{{ item.key_name }}'
+    flavor: '{{ item.flavour }}'
+    availability_zone: '{{ item.availability_zone }}'
+    nics: 
+      - net-name: '{{ item.network }}'
+    security_groups: '{{ webserver_sg }}'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 500
+    state: present
+  loop: '{{ web_front_end_instance }}'
+  register: os_instance 
 
 # REFERENCES
 # 

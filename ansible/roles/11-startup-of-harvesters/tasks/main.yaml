@@ -1,33 +1,46 @@
-# COMP90024: Assignment 2 - City Analytics on the Cloud
+# Start Twitter Harvester on CouchDB0 (nohup)
+- name: Start Harvesters couch0
+  shell: cd cluster-a2/tweet_harvester; nohup python3 harvest.py 0 localhost &
+  remote_user: ubuntu
+  delegate_to: '{{ couchdb_instance_0_ip }}'
 
-# Main Paybook (Pan 2021).
-- name: COMP90024-A2-Playbook_Team-42
-  hosts: localhost
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-  vars_files:
-    - variables/volumes/volumes.yaml
-    - variables/hosts/hosts.yaml
-    - variables/security-groups/ssh-access.yaml
-    - variables/security-groups/couchdb0-security-groups.yaml
-    - variables/security-groups/couchdb1-security-groups.yaml
-    - variables/security-groups/couchdb2-security-groups.yaml
-    - variables/security-groups/webserver-security-groups.yaml
-  gather_facts: true
+# Add Views in CouchDB 
+- name: "Create View"
+  remote_user: ubuntu
+  uri:
+      url: http://localhost:5984/tweets/_design/Results
+      force_basic_auth: yes
+      user: "admin"
+      password: "password"
+      method: PUT 
+      body: '{
+  "views": {
+    "TweetCount": {
+      "reduce": "_count",
+      "map": "function (doc) {\n  emit(doc.sa4, 1);\n}"
+    },
+    "SentimentSum": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  emit(doc.sa4, doc.sent_score);\n}"
+    }
+  }
+}'
+      body_format: json
+      status_code: 201
+      return_content: yes
+  delegate_to: '{{ couchdb_instance_0_ip }}'
 
-  roles:
-    - role: 1-creation-of-ssh-access-sg
-    - role: 2-creation-of-volumes
-    - role: 3-creation-instances-initial
-    - role: 4-creation-of-additional-couchdb0-sg
-    - role: 5-creation-of-additional-couchdb1-sg
-    - role: 6-creation-of-additional-couchdb2-sg
-    - role: 7-creation-of-additional-webserver-sg
-    - role: 8-application-of-additional-sg
-    - role: 9-volume-mount-and-dependency-installation
-    - role: 10-creation-of-couchdb-cluster
-    - role: 11-startup-of-harvesters
-    - role: 12-setup-of-web-server
+# Start Twitter Harvester on CouchDB1 (nohup)
+- name: Start Harvesters couch1
+  shell: cd cluster-a2/tweet_harvester; nohup python3 harvest.py 1 localhost &
+  remote_user: ubuntu
+  delegate_to: '{{ couchdb_instance_1_ip }}'
+
+# Start Twitter Harvester on CouchDB2 (nohup)
+- name: Start Harvesters couch2
+  shell: cd cluster-a2/tweet_harvester; nohup python3 harvest.py 2 localhost &
+  remote_user: ubuntu
+  delegate_to: '{{ couchdb_instance_2_ip }}'
 
 # REFERENCES
 # 

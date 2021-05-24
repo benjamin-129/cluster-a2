@@ -1,33 +1,39 @@
-# COMP90024: Assignment 2 - City Analytics on the Cloud
+# CouchDB Instances 0, 1, and 2 (Pan 2021).
+couchdb_instance_0:
+  - name: couchdb-a2-0
+    image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
+    flavour: uom.mse.1c4g
+    key_name: benKP
+    availability_zone: melbourne-qh2-uom
+    network: qh2-uom
+    volume: couchdb0_vol_1
 
-# Main Paybook (Pan 2021).
-- name: COMP90024-A2-Playbook_Team-42
-  hosts: localhost
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-  vars_files:
-    - variables/volumes/volumes.yaml
-    - variables/hosts/hosts.yaml
-    - variables/security-groups/ssh-access.yaml
-    - variables/security-groups/couchdb0-security-groups.yaml
-    - variables/security-groups/couchdb1-security-groups.yaml
-    - variables/security-groups/couchdb2-security-groups.yaml
-    - variables/security-groups/webserver-security-groups.yaml
-  gather_facts: true
+couchdb_instance_1:
+  - name: couchdb-a2-1
+    image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
+    flavour: uom.mse.1c4g
+    key_name: benKP
+    availability_zone: melbourne-qh2-uom
+    network: qh2-uom
+    volume: couchdb1_vol_1
 
-  roles:
-    - role: 1-creation-of-ssh-access-sg
-    - role: 2-creation-of-volumes
-    - role: 3-creation-instances-initial
-    - role: 4-creation-of-additional-couchdb0-sg
-    - role: 5-creation-of-additional-couchdb1-sg
-    - role: 6-creation-of-additional-couchdb2-sg
-    - role: 7-creation-of-additional-webserver-sg
-    - role: 8-application-of-additional-sg
-    - role: 9-volume-mount-and-dependency-installation
-    - role: 10-creation-of-couchdb-cluster
-    - role: 11-startup-of-harvesters
-    - role: 12-setup-of-web-server
+couchdb_instance_2:
+  - name: couchdb-a2-2
+    image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
+    flavour: uom.mse.1c4g
+    key_name: benKP
+    availability_zone: melbourne-qh2-uom
+    network: qh2-uom
+    volume: couchdb2_vol_1
+
+# Web front end Instance (Pan 2021).
+web_front_end_instance:
+  - name: web-fe-a2-1
+    image: 916cad7a-c545-48b2-b36c-d509ee63b3ce
+    flavour: uom.mse.2c9g
+    key_name: benKP
+    availability_zone: melbourne-qh2-uom
+    network: qh2-uom
 
 # REFERENCES
 # 

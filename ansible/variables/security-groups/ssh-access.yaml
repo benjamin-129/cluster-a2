@@ -1,33 +1,12 @@
-# COMP90024: Assignment 2 - City Analytics on the Cloud
-
-# Main Paybook (Pan 2021).
-- name: COMP90024-A2-Playbook_Team-42
-  hosts: localhost
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-  vars_files:
-    - variables/volumes/volumes.yaml
-    - variables/hosts/hosts.yaml
-    - variables/security-groups/ssh-access.yaml
-    - variables/security-groups/couchdb0-security-groups.yaml
-    - variables/security-groups/couchdb1-security-groups.yaml
-    - variables/security-groups/couchdb2-security-groups.yaml
-    - variables/security-groups/webserver-security-groups.yaml
-  gather_facts: true
-
-  roles:
-    - role: 1-creation-of-ssh-access-sg
-    - role: 2-creation-of-volumes
-    - role: 3-creation-instances-initial
-    - role: 4-creation-of-additional-couchdb0-sg
-    - role: 5-creation-of-additional-couchdb1-sg
-    - role: 6-creation-of-additional-couchdb2-sg
-    - role: 7-creation-of-additional-webserver-sg
-    - role: 8-application-of-additional-sg
-    - role: 9-volume-mount-and-dependency-installation
-    - role: 10-creation-of-couchdb-cluster
-    - role: 11-startup-of-harvesters
-    - role: 12-setup-of-web-server
+# SSH access from all Security Group (Pan 2021).
+ssh_ingress_security_group: 
+  - name: SSH access from all
+    description: "Allow SSH access from anywhere"
+    protocol: tcp
+    direction: ingress
+    port_range_min: 22
+    port_range_max: 22
+    ip_prefix: 0.0.0.0/0
 
 # REFERENCES
 # 

@@ -1,34 +1,38 @@
-# COMP90024: Assignment 2 - City Analytics on the Cloud
+# Run Web Server Setup
+- name: Run setup for ws
+  remote_user: ubuntu
+  ignore_errors: true
+  shell: "{{ item }}"
+  with_items:
+    - sudo apt install jq -y
+    - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
+    - cd cluster-a2/front-end/ && tmp=$(mktemp) && sudo jq '.proxy = "http://{{ couchdb_instance_0_ip }}:5984"' package.json > "$tmp" && mv "$tmp" package.json
+    - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - && sudo apt install nodejs -y
+    - sudo echo "OUTPUT_URL = 'http://{{ couchdb_instance_0_ip }}:5984/front_end/output/out_data.json'" >> cluster-a2/front-end/.env
+    - cd cluster-a2/front-end/ && sudo npm install
+    - sudo npm install pm2 -g
+    - cd cluster-a2/front-end/ && pm2 start npm -- start
 
-# Main Paybook (Pan 2021).
-- name: COMP90024-A2-Playbook_Team-42
-  hosts: localhost
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-  vars_files:
-    - variables/volumes/volumes.yaml
-    - variables/hosts/hosts.yaml
-    - variables/security-groups/ssh-access.yaml
-    - variables/security-groups/couchdb0-security-groups.yaml
-    - variables/security-groups/couchdb1-security-groups.yaml
-    - variables/security-groups/couchdb2-security-groups.yaml
-    - variables/security-groups/webserver-security-groups.yaml
-  gather_facts: true
+  delegate_to: '{{ web_front_end_ip }}'
 
-  roles:
-    - role: 1-creation-of-ssh-access-sg
-    - role: 2-creation-of-volumes
-    - role: 3-creation-instances-initial
-    - role: 4-creation-of-additional-couchdb0-sg
-    - role: 5-creation-of-additional-couchdb1-sg
-    - role: 6-creation-of-additional-couchdb2-sg
-    - role: 7-creation-of-additional-webserver-sg
-    - role: 8-application-of-additional-sg
-    - role: 9-volume-mount-and-dependency-installation
-    - role: 10-creation-of-couchdb-cluster
-    - role: 11-startup-of-harvesters
-    - role: 12-setup-of-web-server
+# - name: Run setup for ws
+#   remote_user: ubuntu
+#   ignore_errors: true
+#   shell: "{{ item }}"
+#   with_items:
+#     - sudo apt install jq -y
+#     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
+#     - cd cluster-a2/front-end/ && tmp=$(mktemp) && sudo jq '.proxy = "http://45.113.232.114:5984"' package.json > "$tmp" && mv "$tmp" package.json
 
+
+#     - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - && sudo apt install nodejs -y
+#     - sudo npm install pm2 -g
+#     - sudo echo "OUTPUT_URL = 'http://45.113.232.114:5984/front_end/output/out_data.json'" >> cluster-a2/front-end/.env
+#     - cd cluster-a2/front-end/ && sudo npm install
+#     - cd cluster-a2/front-end/ && pm2 start npm -- start
+
+#   delegate_to: '45.113.233.215'
+  
 # REFERENCES
 # 
 # Ansible 2021, Loops, viewed 1st May 2021, 

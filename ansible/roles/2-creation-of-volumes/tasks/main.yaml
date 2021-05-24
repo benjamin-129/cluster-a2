@@ -1,33 +1,56 @@
-# COMP90024: Assignment 2 - City Analytics on the Cloud
+# Create CouchDB Instance 0 volume on MRC (Pan 2021).
+- name: Create volume for CouchDB0 instance
+  os_volume:
+    display_name: '{{ item.name }}'
+    size: '{{ item.size }}'
+    availability_zone: '{{ item.availability_zone }}'
+    wait: yes
+    timeout: 300
+    state: present
+  loop: '{{ couchdb0_volumes }}'
+  register: os_vol
 
-# Main Paybook (Pan 2021).
-- name: COMP90024-A2-Playbook_Team-42
-  hosts: localhost
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-  vars_files:
-    - variables/volumes/volumes.yaml
-    - variables/hosts/hosts.yaml
-    - variables/security-groups/ssh-access.yaml
-    - variables/security-groups/couchdb0-security-groups.yaml
-    - variables/security-groups/couchdb1-security-groups.yaml
-    - variables/security-groups/couchdb2-security-groups.yaml
-    - variables/security-groups/webserver-security-groups.yaml
-  gather_facts: true
+  # Set couchdb0_vols list (Pan 2021).
+- name: Set couchdb0_vols fact 
+  set_fact:
+    couchdb0_vols: [ item.id ] 
+  loop: '{{ os_vol.results }}'
 
-  roles:
-    - role: 1-creation-of-ssh-access-sg
-    - role: 2-creation-of-volumes
-    - role: 3-creation-instances-initial
-    - role: 4-creation-of-additional-couchdb0-sg
-    - role: 5-creation-of-additional-couchdb1-sg
-    - role: 6-creation-of-additional-couchdb2-sg
-    - role: 7-creation-of-additional-webserver-sg
-    - role: 8-application-of-additional-sg
-    - role: 9-volume-mount-and-dependency-installation
-    - role: 10-creation-of-couchdb-cluster
-    - role: 11-startup-of-harvesters
-    - role: 12-setup-of-web-server
+# Create CouchDB Instance 1 volume on MRC (Pan 2021).
+- name: Create volume for CouchDB1 instance
+  os_volume:
+    display_name: '{{ item.name }}'
+    size: '{{ item.size }}'
+    availability_zone: '{{ item.availability_zone }}'
+    wait: yes
+    timeout: 300
+    state: present
+  loop: '{{ couchdb1_volumes }}'
+  register: os_vol
+
+# Set couchdb1_vols list (Pan 2021).
+- name: Set couchdb1_vols fact 
+  set_fact:
+    couchdb1_vols: [ item.id ] 
+  loop: '{{ os_vol.results }}'
+
+# Create CouchDB Instance 2 volume on MRC (Pan 2021).
+- name: Create volume for CouchDB2 instance
+  os_volume:
+    display_name: '{{ item.name }}'
+    size: '{{ item.size }}'
+    availability_zone: '{{ item.availability_zone }}'
+    wait: yes
+    timeout: 300
+    state: present
+  loop: '{{ couchdb2_volumes }}'
+  register: os_vol
+
+# Set couchdb2_vols list (Pan 2021).
+- name: Set couchdb2_vols fact 
+  set_fact:
+    couchdb2_vols: [ item.id ] 
+  loop: '{{ os_vol.results }}'
 
 # REFERENCES
 # 
