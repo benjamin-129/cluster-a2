@@ -11,8 +11,8 @@ Assignment #2 - City Analytics on the Cloud
 ## Abstract ##
 The goal of our study was to determine whether there exists a correlation between wealth and happiness in Australia. Due to a lack of surveys measuring self-reported citizen happiness, we chose to use an approach of Tweet text sentiment analysis to determine the happiness levels across Australia. Our study has found no correlation between these two variables.
 
-Analysis: https://youtu.be/gw_DLllSDd0 
-Deployment: https://youtu.be/7C7A7vSteb4 
+- Analysis: https://youtu.be/gw_DLllSDd0 
+- Deployment: https://youtu.be/7C7A7vSteb4 
 
 ------------------------------------------------------------------------------------
 Instructions to run:
