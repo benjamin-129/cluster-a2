@@ -1,3 +1,4 @@
+# Volume mount on CouchDB0 and Dependency/Docker Installation/Instansiation
 - name: Run setup for couchdb_0
   remote_user: ubuntu
   shell: "{{ item }}"
@@ -43,7 +44,7 @@
   become: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
-
+# Volume mount on CouchDB1 and Dependency/Docker Installation/Instansiation
 - name: Run setup for couchdb_1
   remote_user: ubuntu
   shell: "{{ item }}"
@@ -90,7 +91,7 @@
   become: yes
   delegate_to: '{{ couchdb_instance_1_ip }}'
 
-
+# Volume mount on CouchDB2 and Dependency/Docker Installation/Instansiation
 - name: Run setup for couchdb_2
   remote_user: ubuntu
   shell: "{{ item }}"

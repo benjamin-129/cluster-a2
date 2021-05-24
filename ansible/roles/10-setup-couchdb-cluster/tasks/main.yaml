@@ -1,3 +1,4 @@
+# Enabling DB Clustering on CouchDB0 
 - name: "Enable Clustering for Node 0"
   remote_user: ubuntu
   uri:
@@ -12,6 +13,7 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
+# Enabling DB Clustering on CouchDB1
 - name: "Enable Clustering for Node 1"
   remote_user: ubuntu
   uri:
@@ -26,6 +28,7 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_1_ip }}'
 
+# Enabling DB Clustering on CouchDB2
 - name: "Enable Clustering for Node 2"
   remote_user: ubuntu
   uri:
@@ -40,6 +43,7 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_2_ip }}'
 
+# CouchDB Cluster Setup on CouchDB0 - Remote Node CouchDB1
 - name: "Coordinate Cluster Setup on Node 0: connecting to Node 1 - p1"
   remote_user: ubuntu
   uri:
@@ -55,6 +59,7 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
+# CouchDB Cluster Setup on CouchDB0 - adding CouchDB1
 - name: "Coordinate Cluster Setup on Node 0: connecting to Node 1 - p2"
   remote_user: ubuntu
   uri:
@@ -70,6 +75,7 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
+# CouchDB Cluster Setup on CouchDB0 - Remote Node CouchDB2
 - name: "Coordinate Cluster Setup on Node 0: connecting to Node 2 - p1"
   remote_user: ubuntu
   uri:
@@ -85,6 +91,7 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
+# CouchDB Cluster Setup on CouchDB0 - adding CouchDB1
 - name: "Coordinate Cluster Setup on Node 0: connecting to Node 2 - p2"
   remote_user: ubuntu
   uri:
@@ -100,7 +107,7 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
-
+# Finalise CouchDB cluster setup on CouchDB0
 - name: "Finalise Cluster Configuration on Node 0"
   remote_user: ubuntu
   uri:
@@ -116,7 +123,7 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
-
+# Enabling CORS on CouchDB0 Part 1
 - name: "Setup CORS for Cluster - p1"
   remote_user: ubuntu
   uri:
@@ -131,6 +138,7 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
+# Enabling CORS on CouchDB0 Part 2
 - name: "Setup CORS for Cluster - p2"
   remote_user: ubuntu
   uri:
@@ -145,8 +153,7 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
-# Add DBs
-
+# Adding Tweet CouchDB Database
 - name: "Create Tweet DBs"
   remote_user: ubuntu
   uri:
@@ -159,6 +166,7 @@
       return_content: yes
   delegate_to: '{{ couchdb_instance_0_ip }}'
 
+# Adding Front End CouchDB Database
 - name: "Create front_end DB"
   remote_user: ubuntu
   uri:

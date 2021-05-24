@@ -1,26 +1,25 @@
-# Create CouchDB 2 Ingress Security Groups
+# CDB2 CouchDB Ingress from CDB0 Security Group (Pan 2021).
 - name: Create "CDB2 CouchDB Ingress from CDB0" Security Group
   os_security_group:
     name: 'CDB2 CouchDB Ingress from CDB0'
     description: 'Allowing traffic on CouchDB Ports from CDB0'
     state: present
     
-# Create CouchDB 2 Ingress Security Groups
+# CDB2 CouchDB Ingress from CDB1 Security Group (Pan 2021).
 - name: Create "CDB2 CouchDB Ingress from CDB1" Security Group
   os_security_group:
     name: 'CDB2 CouchDB Ingress from CDB1'
     description: 'Allowing traffic on CouchDB Ports from CDB1'
     state: present
 
-
+# CDB2 CouchDB Ingress from WebserverSecurity Group (Pan 2021).
 - name: Create "CDB2 CouchDB Ingress from Webserver" Security Group
   os_security_group:
     name: 'CDB2 CouchDB Ingress from Webserver'
     description: 'Allowing traffic on CouchDB Ports from Webserver'
     state: present
 
-
-# Attach CouchDB Port rules to SG
+# CDB2 CouchDB Ingress from CDB0 Security Group Role (Pan 2021).
 - name: Attach Security Group rules (CouchDB ports) for "CDB2 CouchDB Ingress from CDB0"
   os_security_group_rule:
     security_group: 'CDB2 CouchDB Ingress from CDB0'
@@ -32,6 +31,7 @@
     state: present
   loop: '{{ couchdb_ports }}'
 
+# CDB2 CouchDB Ingress from CDB1 Security Group Role (Pan 2021).
 - name: Attach Security Group rules (CouchDB ports) for "CDB2 CouchDB Ingress from CDB1"
   os_security_group_rule:
     security_group: 'CDB2 CouchDB Ingress from CDB1'
@@ -43,31 +43,35 @@
     state: present
   loop: '{{ couchdb_ports }}'
 
-# Create CouchDB 2 Egress Security Groups
+# DB2 CouchDB Egress to CDB1 Security Group (Pan 2021).
 - name: Create "CDB2 CouchDB Egress to CDB1" Security Group
   os_security_group:
     name: 'CDB2 CouchDB Egress to CDB1'
     description: 'Allowing traffic on CouchDB Ports to CDB0'
     state: present
+
+# CDB2 CouchDB Egress to CDB0 Security Group (Pan 2021).
 - name: Create "CDB2 CouchDB Egress to CDB0" Security Group
   os_security_group:
     name: 'CDB2 CouchDB Egress to CDB0'
     description: 'Allowing traffic on CouchDB Ports to CDB0'
     state: present
 
+# CDB2 HTTP/HTTPS Egress to Webserver Security Group (Pan 2021).
 - name: Create "CDB2 HTTP/HTTPS Egress to Webserver" Security Group
   os_security_group:
     name: 'CDB2 HTTP/HTTPS Egress to Webserver'
     description: 'Allowing traffic on HTTP and HTTPS Ports to Webserver'
     state: present
 
+# CDB2 CouchDB Egress to Webserver Security Group (Pan 2021).
 - name: Create "CDB2 CouchDB Egress to Webserver" Security Group
   os_security_group:
     name: 'CDB2 CouchDB Egress to Webserver'
     description: 'Allowing CouchDB egress traffic to Webserver'
     state: present
 
-# Attach CouchDB Port rules to SG
+# CDB2 CouchDB Egress to CDB0 Security Group Role (Pan 2021).
 - name: Attach Security Group rules (CouchDB ports) for "CDB2 CouchDB Egress to CDB0"
   os_security_group_rule:
     security_group: 'CDB2 CouchDB Egress to CDB0'
@@ -79,6 +83,7 @@
     state: present
   loop: '{{ couchdb_ports }}'
 
+# CDB2 CouchDB Egress to CDB1 Security Group Role (Pan 2021).
 - name: Attach Security Group rules (CouchDB ports) for "CDB2 CouchDB Egress to CDB1"
   os_security_group_rule:
     security_group: 'CDB2 CouchDB Egress to CDB1'
@@ -90,6 +95,7 @@
     state: present
   loop: '{{ couchdb_ports }}'
 
+# CDB2 HTTP/HTTPS Egress to Webserver Group Roles (Pan 2021).
 - name: Attach Security Group rules (HTTP port) for "CDB2 HTTP/HTTPS Egress to Webserver"
   os_security_group_rule:
     security_group: 'CDB2 HTTP/HTTPS Egress to Webserver'
@@ -108,6 +114,7 @@
     port_range_max: '443'
     remote_ip_prefix: '{{ web_front_end_ip }}/32'  
 
+# CDB2 CouchDB Egress to Webserver Security Group Role (Pan 2021).
 - name: Attach Security Group rules (CouchDB port) for "CDB2 CouchDB Egress to Webserver"
   os_security_group_rule:
     security_group: 'CDB2 CouchDB Egress to Webserver'
@@ -117,6 +124,7 @@
     port_range_max: '5984'
     remote_ip_prefix: '{{ web_front_end_ip }}/32' 
 
+# CDB2 CouchDB Ingress from Webserver'Security Group Role (Pan 2021).
 - name: Attach Security Group rules (CouchDB port) for "CDB2 CouchDB Ingress from Webserver"
   os_security_group_rule:
     security_group: 'CDB2 CouchDB Ingress from Webserver'
@@ -126,9 +134,8 @@
     port_range_max: '5984'
     remote_ip_prefix: '0.0.0.0/0' 
 
-
-# Setting additional rules list
-- name: Setting additional CouchDB2 instance rules list
+# Setting additional Security Group list for CouchDB2 (Pan 2021).
+- name: Setting additional CouchDB2 instance SG rules list
   set_fact:
     couchdb2_sg: ["SSH access from all", 
      "CDB2 CouchDB Ingress from CDB0",
@@ -140,7 +147,7 @@
      "CDB2 CouchDB Ingress from Webserver"]
 
 - debug:
-    msg: "Security group(s) {{ couchdb2_sg }} have been created."
+    msg: " Additional Security groups for CouchDB2 created: {{ couchdb2_sg }}"
 
 # REFERENCES
 # 

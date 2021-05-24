@@ -1,4 +1,4 @@
-# Update CouchDB Instance 0 on MRC
+# Refresh CouchDB Instance 0 on MRC with new Security Groups (Pan 2021).
 - name: Update CouchDB instances (additional SGs)
   os_server:
     name: '{{ item.name }}'
@@ -17,7 +17,7 @@
   loop: '{{ couchdb_instance_0 }}'
   register: os_instance
 
-# Update CouchDB Instance 1 on MRC
+# Refresh CouchDB Instance 1 on MRC with new Security Groups (Pan 2021).
 - name: Update CouchDB instances (additional SGs)
   os_server:
     name: '{{ item.name }}'
@@ -36,8 +36,8 @@
   loop: '{{ couchdb_instance_1 }}'
   register: os_instance
 
-# Update CouchDB Instance 2 on MRC
-- name: Update CouchDB instances (additional SGs)
+# Refresh CouchDB Instance 2 on MRC with new Security Groups (Pan 2021).
+1- name: Update CouchDB instances (additional SGs)
   os_server:
     name: '{{ item.name }}'
     image: '{{ instance_image }}'
@@ -55,7 +55,7 @@
   loop: '{{ couchdb_instance_2 }}'
   register: os_instance
 
-# Update Web Front End Instance
+# Refresh Webserver on MRC with new Security Groups (Pan 2021).
 - name: Update Web Front-End Instance (additional SGs)
   os_server:
     name: '{{ item.name }}'
