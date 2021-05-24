@@ -1,6 +1,3 @@
-- debug:
-    msg: " CouchDB instance 0 has IP {{ couchdb_instance_0_ip }}, {{ couchdb_instance_1_ip }}, {{ couchdb_instance_2_ip }}, {{ web_front_end_ip }}" 
-
 - name: Setting couchdb_instance_0_ip fact
   set_fact:
     couchdb_inst_ips: ['{{ couchdb_instance_0_ip }}','{{ couchdb_instance_1_ip }}', '{{ couchdb_instance_2_ip }}']

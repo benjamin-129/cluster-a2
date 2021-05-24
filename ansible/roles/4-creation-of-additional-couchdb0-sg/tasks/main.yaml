@@ -1,6 +1,3 @@
-- debug:
-    msg: " CouchDB instance 0 has IP {{ couchdb_instance_0_ip }}, {{ couchdb_instance_1_ip }}, {{ couchdb_instance_2_ip }}, {{ web_front_end_ip }}" 
-
 # Create CouchDB 0 Ingress Security Groups
 - name: Create "CDB0 CouchDB Ingress from CDB1" Security Group
   os_security_group:

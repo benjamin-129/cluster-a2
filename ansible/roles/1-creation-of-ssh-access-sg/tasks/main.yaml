@@ -1,11 +1,11 @@
-# Create a security group
+# Creating SSH access from all security group (Pan 2021).
 - name: Creating SSH access from all Security Group
   os_security_group:
     name: 'SSH access from all'
     description: 'Allow SSH access from anywhere'
     state: present
 
-# Create security group rules
+# Applying security group rules to SSH access from all (Pan 2021).
 - name: Creating SSH access from all security group rules
   os_security_group_rule:
     security_group: 'SSH access from all'
@@ -15,6 +15,7 @@
     remote_ip_prefix: '0.0.0.0/0'
     state: present
 
+# Setting fact for initial SSH Access Security Group (Pan 2021).
 - name: Creating sg_initial initial Security Group List
   set_fact:
     sg_initial: ["SSH access from all"]

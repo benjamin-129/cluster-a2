@@ -1,6 +1,3 @@
-- debug:
-    msg: " CouchDB instance 2 has IP {{ couchdb_instance_0_ip }}, {{ couchdb_instance_1_ip }}, {{ couchdb_instance_2_ip }}, {{ web_front_end_ip }}" 
-
 # Create CouchDB 2 Ingress Security Groups
 - name: Create "CDB2 CouchDB Ingress from CDB0" Security Group
   os_security_group:
@@ -45,8 +42,6 @@
     remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
     state: present
   loop: '{{ couchdb_ports }}'
-
-
 
 # Create CouchDB 2 Egress Security Groups
 - name: Create "CDB2 CouchDB Egress to CDB1" Security Group
