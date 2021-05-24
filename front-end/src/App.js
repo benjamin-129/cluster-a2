@@ -19,7 +19,7 @@ const initialState = {
     "rgba(53,211,156,0.7)",
     "rgba(257,234,13,0.7)"
   ],
-  countries_data: [],
+  states_data: [],
   data_loaded: false,
   fields: ["sentiment_score", "tweet_counts","median_house_price","unemployed_rate", "weekly_household_income","average_monthly_mortgage","median_personal_income"],
   query: "sentiment_score",
@@ -28,20 +28,20 @@ class App extends Component {
   state = initialState;
 
   componentDidMount() {
-    this.fetchCountryData();
+    this.fetchStateData();
   }
 
-  fetchCountryData = async () => {
+  fetchStateData = async () => {
     try {
       const response = await axios({
         method: "get",
         url: "/front_end/output/out_data.json",
       });
       console.log(response)
-      const countries_data = this.processData(response.data);
+      const states_data = this.processData(response.data);
  
       this.setState({
-        countries_data,
+        states_data,
         data_loaded: true,
       });
     } catch (e) {
@@ -85,7 +85,7 @@ class App extends Component {
   };
 
   render() {
-    const { colors, countries_data, data_loaded, fields, query} = this.state;
+    const { colors, states_data, data_loaded, fields, query} = this.state;
 
     return data_loaded ? (
       
@@ -98,34 +98,34 @@ class App extends Component {
       <Route exact path="/map">
       <Map
           colors={colors}
-          data={countries_data}
+          data={states_data}
           fields={fields}
           query={query}
         />
       </Route>
       <Route exact path="/personal_income">
         <Chart1 
-        data={countries_data}
+        data={states_data}
           />
       </Route>
       <Route exact path="/unemployment_rate">
         <Chart2
-        data={countries_data}
+        data={states_data}
           />
       </Route>
       <Route exact path="/house_price">
         <Chart3
-        data={countries_data}
+        data={states_data}
           />
       </Route>
       <Route exact path="/average_monthly_morgage">
         <Chart4
-        data={countries_data}
+        data={states_data}
           />
       </Route>
       <Route exact path="/weekly_household_income">
         <Chart5
-        data={countries_data}
+        data={states_data}
           />
       </Route>
       <Route component={NotFound} />
