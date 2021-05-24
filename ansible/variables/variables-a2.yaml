@@ -36,3 +36,6 @@ couchdb1_volumes:
 couchdb2_volumes:
   - name: couchdb2_vol_1
     size: 15
+
+# CouchDB ports
+couchdb_ports: [5984, 4369, 9100]
