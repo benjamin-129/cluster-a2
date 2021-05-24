@@ -107,7 +107,7 @@ cdb1_cdb2_couch_security_group_roles:
     port_range_max: 9100
 
 # CDB1 CouchDB Ingress/Egress to/from Web Server Security Group (Pan 2021).
-cdb1_webserver_couch-_scurity_group:
+cdb1_webserver_couch_scurity_group:
   - name: CDB1 CouchDB Ingress/Egress to/from Web Server
     description: "Allowing traffic on CouchDB Port 5984 to/from Web Server"
 
