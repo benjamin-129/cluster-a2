@@ -7,6 +7,13 @@
   shell: "{{ item }}"
   with_items:
 
+    # Add unimelb proxy
+    - sudo echo "HTTP_PROXY=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "HTTPS_PROXY=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "http_proxy=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "https_proxy=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "no_proxy=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au" >> /etc/environment 
+
     # Setup Volume Mount:
     - sudo mkfs -t ext4 /dev/vdb
 
@@ -34,7 +41,6 @@
     # Install dependencies
     - sudo apt-get update -y
     - sudo apt install python3-pip -y
-    - sudo apt install screen -y
 
     - sudo echo "CouchDB==1.2" > requirements.txt
     - sudo echo "geojson==2.5.0" >> requirements.txt
@@ -52,6 +58,14 @@
   remote_user: ubuntu
   shell: "{{ item }}"
   with_items:
+
+      # Add unimelb proxy
+    - sudo echo "HTTP_PROXY=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "HTTPS_PROXY=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "http_proxy=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "https_proxy=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "no_proxy=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au" >> /etc/environment 
+
 
     # Setup Volume Mount:
     - sudo mkfs -t ext4 /dev/vdb
@@ -81,7 +95,6 @@
     # Install dependencies
     - sudo apt-get update -y
     - sudo apt install python3-pip -y
-    - sudo apt install screen -y
 
     - sudo echo "CouchDB==1.2" > requirements.txt
     - sudo echo "geojson==2.5.0" >> requirements.txt
@@ -99,6 +112,14 @@
   remote_user: ubuntu
   shell: "{{ item }}"
   with_items:
+
+      # Add unimelb proxy
+    - sudo echo "HTTP_PROXY=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "HTTPS_PROXY=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "http_proxy=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "https_proxy=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "no_proxy=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au" >> /etc/environment 
+
 
     # Setup Volume Mount:
     - sudo mkfs -t ext4 /dev/vdb
@@ -127,7 +148,6 @@
     # Install dependencies
     - sudo apt-get update -y
     - sudo apt install python3-pip -y
-    - sudo apt install screen -y
 
     - sudo echo "CouchDB==1.2" > requirements.txt
     - sudo echo "geojson==2.5.0" >> requirements.txt

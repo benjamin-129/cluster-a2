@@ -7,6 +7,15 @@
   ignore_errors: true
   shell: "{{ item }}"
   with_items:
+
+    - sudo apt-get update
+    # Add unimelb proxy
+    - sudo echo "HTTP_PROXY=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "HTTPS_PROXY=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "http_proxy=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "https_proxy=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
+    - sudo echo "no_proxy=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au" >> /etc/environment 
+
     - sudo apt install jq -y
     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
     - cd cluster-a2/front-end/ && tmp=$(mktemp) && sudo jq '.proxy = "http://{{ couchdb_instance_0_ip }}:5984"' package.json > "$tmp" && mv "$tmp" package.json
