@@ -26,7 +26,7 @@
     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
 
     # Clone Repo -> Change when we make the repo public
-    - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
+    - git clone https://github.com/benjamin-129/cluster-a2.git
 
     # Install dependencies
     - sudo apt-get update -y
@@ -73,7 +73,7 @@
     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
 
     # Clone Repo
-    - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
+    - git clone https://github.com/benjamin-129/cluster-a2.git
 
     # Install dependencies
     - sudo apt-get update -y
@@ -119,7 +119,7 @@
     - sudo docker run --name couchdb -p 4369:4369 -p 5984:5984 -p 9100:9100 -v /couchdb:/opt/couchdb/data -d cdb
 
     # Clone Repo
-    - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
+    - git clone https://github.com/benjamin-129/cluster-a2.git
 
     # Install dependencies
     - sudo apt-get update -y
