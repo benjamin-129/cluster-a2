@@ -14,7 +14,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_0_ip }}/32'
-    state: present'
+    state: present
   loop: '{{ webserver_https_couch_inst_security_group_roles }}'
 
 - name: Attach Security Group rules (HTTP/S ports) for "Webserver HTTP/HTTPS Ingress from CouchDB Instances" (CouchDB1)
@@ -25,7 +25,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
-    state: present'
+    state: present
   loop: '{{ webserver_https_couch_inst_security_group_roles }}'
 
 - name: Attach Security Group rules (HTTP/S ports) for "Webserver HTTP/HTTPS Ingress from CouchDB Instances" (CouchDB2)
@@ -36,7 +36,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
-    state: present'
+    state: present
   loop: '{{ webserver_https_couch_inst_security_group_roles }}'
 
 # Webserver HTTP/S/React Ingress/Egress to/from Internet Security Group/Roles (Pan 2021).
@@ -55,7 +55,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ item.ip_prefix }}'
-    state: present'
+    state: present
   loop: '{{ webserver_https_react_internet_security_group_roles }}'
 
 # Webserver CouchDB Ingress/Egress to/from CouchDB Instances Security Group/Roles (Pan 2021).
@@ -74,7 +74,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_0_ip }}/32'
-    state: present'
+    state: present
   loop: '{{ webserver_couchdb_couch_inst_security_group_roles }}'
 
 - name: Attach Security Group rules (CouchDB ports) for "Webserver CouchDB Ingress/Egress from CouchDB Instances" (CouchDB1)
@@ -85,7 +85,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
-    state: present'
+    state: present
   loop: '{{ webserver_couchdb_couch_inst_security_group_roles }}'
 
 - name: Attach Security Group rules (CouchDB ports) for "Webserver CouchDB Ingress/Egress from CouchDB Instances" (CouchDB2)
@@ -96,7 +96,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_2_ip }}/32'
-    state: present'
+    state: present
   loop: '{{ webserver_couchdb_couch_inst_security_group_roles }}'
 
 # Setting additional Security Group list for Web Server (Pan 2021).

@@ -14,7 +14,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ item.ip_prefix }}'
-    state: present'
+    state: present
   loop: '{{ cdb2_internet_security_group_roles }}'
 
 # CDB2 CouchDB Ingress/Egress to/from CDB0 Security Group/Role (Pan 2021).s
@@ -33,7 +33,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_0_ip }}/32'
-    state: present'
+    state: present
   loop: '{{ cdb2_cdb0_couch_security_group_roles }}'
 
 # CDB2 CouchDB Ingress/Egress to/from CDB2 Security Group/Role (Pan 2021).s
@@ -52,7 +52,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ couchdb_instance_1_ip }}/32'
-    state: present'
+    state: present
   loop: '{{ cdb2_cdb1_couch_security_group_roles }}'
 
 # CDB2 CouchDB Ingress/Egress to/from Web Server Security Group/Role (Pan 2021).
@@ -71,7 +71,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ web_front_end_ip }}/32'
-    state: present'
+    state: present
   loop: '{{ cdb2_webserver_couch_security_group_roles }}'
 
 # CDB2 HTTP/S Egress to Web Server Security Group/Role (Pan 2021).
@@ -90,7 +90,7 @@
     port_range_min: '{{ item.port_range_min }}'
     port_range_max: '{{ item.port_range_max }}'
     remote_ip_prefix: '{{ web_front_end_ip }}/32'
-    state: present'
+    state: present
   loop: '{{ cdb2_webserver_https_security_group_roles }}'
 
 # Setting additional Security Group list for CouchDB2 (Pan 2021).
