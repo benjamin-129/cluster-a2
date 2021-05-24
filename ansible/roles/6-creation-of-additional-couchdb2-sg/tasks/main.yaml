@@ -80,7 +80,7 @@
     name: '{{ item.name }}'
     description: '{{ item.description }}'
     state: present
-  loop: '{{ ccdb2_webserver_https_security_group }}'
+  loop: '{{ cdb2_webserver_https_security_group }}'
 
 - name: Attach Security Group rules (HTTP/S ports) for "CDB2 HTTP/S Egress to Web Server"
   os_security_group_rule:
