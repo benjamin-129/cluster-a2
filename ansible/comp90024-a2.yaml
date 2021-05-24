@@ -1,3 +1,6 @@
+# COMP90024: Assignment 2 - City Analytics on the Cloud
+
+# Main Paybook (Pan 2021).
 - name: COMP90024-A2-Playbook_Team-42
   hosts: localhost
   vars:
@@ -7,14 +10,15 @@
   gather_facts: true
 
   roles:
-    - role: 1-common
-    - role: 2-creation-of-initial-sg
-    - role: 3-creation-of-volumes
-    - role: 4-creation-instances-initial
-    - role: 5-creation-of-additional-couchdb0-sg
-    - role: 6-creation-of-additional-couchdb1-sg
-    - role: 7-creation-of-additional-couchdb2-sg
-    - role: 8-creation-of-additional-webserver-sg
-    - role: 9-application-of-additional-sg
-    - role: 10-couchdb-setup
-    - role: 11-ws-setup
+    - role: 1-creation-of-ssh-access-sg
+    - role: 2-creation-of-volumes
+    - role: 3-creation-instances-initial
+    - role: 4-creation-of-additional-couchdb0-sg
+    - role: 5-creation-of-additional-couchdb1-sg
+    - role: 6-creation-of-additional-couchdb2-sg
+    - role: 7-creation-of-additional-webserver-sg
+    - role: 8-application-of-additional-sg
+    - role: 9-docker-dependency-init
+    - role: 10-setup-couchdb-cluster
+    - role: 11-start-twitter-harvesters
+    - role: 12-setup-of-webserver
