@@ -2,11 +2,11 @@
 Assignment #2 - City Analytics on the Cloud
 
 ## Team 42 ##
-James Sammut (502030)
-Andrzej Poniatowski (1048535)
-Matthew Lim (895507)
-Benjamin Tam (889835)
-Xinyue Hu (1147042)
+- James Sammut (502030)
+- Andrzej Poniatowski (1048535)
+- Matthew Lim (895507)
+- Benjamin Tam (889835)
+- Xinyue Hu (1147042)
 
 ## Abstract ##
 The goal of our study was to determine whether there exists a correlation between wealth and happiness in Australia. Due to a lack of surveys measuring self-reported citizen happiness, we chose to use an approach of Tweet text sentiment analysis to determine the happiness levels across Australia. Our study has found no correlation between these two variables.
