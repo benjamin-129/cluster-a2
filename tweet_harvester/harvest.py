@@ -1,3 +1,6 @@
+# Team-42: James Sammut (502030) Andrzej Poniatowski (1048535) 
+# Matthew Lim (895507) Benjamin Tam (889835) Xinyue Hu (1147042) 
+
 import tweepy
 import pickle
 import couchdb

@@ -1,3 +1,6 @@
+# Team-42: James Sammut (502030) Andrzej Poniatowski (1048535) 
+# Matthew Lim (895507) Benjamin Tam (889835) Xinyue Hu (1147042) 
+
 # CouchDB Instances 0, 1, and 2 (Pan 2021).
 couchdb_instance_0:
   - name: couchdb-a2-0

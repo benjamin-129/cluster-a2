@@ -1,3 +1,6 @@
+# Team-42: James Sammut (502030) Andrzej Poniatowski (1048535) 
+# Matthew Lim (895507) Benjamin Tam (889835) Xinyue Hu (1147042) 
+
 # Refresh CouchDB Instance 0 on MRC with new Security Groups (Pan 2021).
 - name: Create CouchDB instances
   os_server:

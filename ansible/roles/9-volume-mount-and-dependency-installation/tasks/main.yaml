@@ -1,3 +1,6 @@
+# Team-42: James Sammut (502030) Andrzej Poniatowski (1048535) 
+# Matthew Lim (895507) Benjamin Tam (889835) Xinyue Hu (1147042) 
+
 # Volume mount on CouchDB0 and Dependency/Docker Installation/Instansiation
 - name: Run setup for couchdb_0
   remote_user: ubuntu

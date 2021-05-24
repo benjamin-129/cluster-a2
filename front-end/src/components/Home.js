@@ -15,16 +15,22 @@ export default class Home extends Component {
       <h2>
       ANALYSIS OF TWEETS 
       </h2>
-      <h5>Wealth VS Happiness</h5>
-      <p>Group 42: Joey Xinyue Hu, Matthew Lim, Benjamin Tam, Andrzej Poniatowski, James Sammut
+      <h5>Wealth and Happiness</h5>
+      <p>Group 42: Joey Xinyue Hu (1147042), Matthew Lim (895507), Benjamin Tam (889835), Andrzej Poniatowski (1048535), James Sammut (502030)
 </p>
       </div>
       <div className="home-content">
       <h3>
        Abstract
       </h3>
-      <p>The goal of our study was to determine whether there exists a correlation between wealth and happiness in Australia. Due to a lack of surveys measuring self-reported citizen happiness, we chose to use an approach of Tweet text sentiment analysis to determine the happiness levels across Australia. Our study has found no correlation between these two variables.
+      <p>The goal of our study was to determine whether a correlation exists between wealth and happiness in Australia. Due to a lack of surveys measuring self-reported citizen happiness, we chose to use an approach of Tweet text sentiment analysis to determine the happiness levels across Australia. Overall, our study found no correlation between these two variables.
+      <ul>
+      <li>Video Link: https://youtu.be/gw_DLllSDd0 </li>
+      <li>Deployment Video: https://youtu.be/zBW-AfO5RiA </li>
+      <li>Github Repository: https://github.com/benjamin-129/cluster-a2</li>
+      </ul>
       </p>
+
       <h3>
       Study assumptions
       </h3>
