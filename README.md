@@ -9,7 +9,7 @@ Assignment #2 - City Analytics on the Cloud
 - Xinyue Hu (1147042)
 
 ## Abstract ##
-The goal of our study was to determine whether there exists a correlation between wealth and happiness in Australia. Due to a lack of surveys measuring self-reported citizen happiness, we chose to use an approach of Tweet text sentiment analysis to determine the happiness levels across Australia. Our study has found no correlation between these two variables.
+The goal of our study was to determine whether a correlation exists between wealth and happiness in Australia. Due to a lack of surveys measuring self-reported citizen happiness, we chose to use an approach of Tweet text sentiment analysis to determine the happiness levels across Australia. Overall, our study found no correlation between these two variables.
 
 - Analysis: https://youtu.be/gw_DLllSDd0 
 - Deployment: https://www.youtube.com/watch?v=zBW-AfO5RiA
@@ -17,13 +17,10 @@ The goal of our study was to determine whether there exists a correlation betwee
 ------------------------------------------------------------------------------------
 Instructions to run:
 
-#### MAKE SURE ALL ROLES IN PLAYBOOK ARE UNHASHED ##########
+Go to the ansible directory, make sure MRC key is in same directory.
+Place <<KEY_NAME>>.pem in the ansible directory and navigate to ansible/variables/hosts/hosts.yaml and replace benKP with <<KEY_NAME>>.
 
-Go to ansible directory, make sure benKP.pem is in same directory.
-
-If using a different key, place <<KEY_NAME>>.pem in the ansible directory and navigate to ansible/variables/hosts/hosts.yaml and replace benKP with the new key name.
-
-Ensure path to python interpreter is appropriate for your device. This can be changed in ansible/comp90024-a2.yaml
+Ensure path to python interpreter is appropriate for your system. This can be changed in ansible/comp90024-a2.yaml
 
 ## In Bash/ WSL ##
 source openrc.sh
