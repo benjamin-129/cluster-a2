@@ -9,6 +9,7 @@
   with_items:
 
     - sudo apt-get update
+    
     # Add unimelb proxy
     - sudo echo "HTTP_PROXY=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
     - sudo echo "HTTPS_PROXY=http://wwwproxy.unimelb.edu.au:8000/" >> /etc/environment
@@ -27,23 +28,6 @@
 
   delegate_to: '{{ web_front_end_ip }}'
 
-# - name: Run setup for ws
-#   remote_user: ubuntu
-#   ignore_errors: true
-#   shell: "{{ item }}"
-#   with_items:
-#     - sudo apt install jq -y
-#     - git clone https://benjamin-129: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@github.com/benjamin-129/cluster-a2.git
-#     - cd cluster-a2/front-end/ && tmp=$(mktemp) && sudo jq '.proxy = "http://45.113.232.114:5984"' package.json > "$tmp" && mv "$tmp" package.json
-
-
-#     - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - && sudo apt install nodejs -y
-#     - sudo npm install pm2 -g
-#     - sudo echo "OUTPUT_URL = 'http://45.113.232.114:5984/front_end/output/out_data.json'" >> cluster-a2/front-end/.env
-#     - cd cluster-a2/front-end/ && sudo npm install
-#     - cd cluster-a2/front-end/ && pm2 start npm -- start
-
-#   delegate_to: '45.113.233.215'
   
 # REFERENCES
 # 

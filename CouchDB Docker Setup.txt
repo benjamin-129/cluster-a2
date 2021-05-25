@@ -1,1 +1,0 @@
-docker run -d --name couch1 -p 5984:5984 -e COUCHDB_SECRET='secret1' -e NODENAME='couchnode1' -v /couchdb/etc:/opt/couchdb/etc/local.d -v /couchdb/data:/opt/couchdb/data couchdb
