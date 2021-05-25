@@ -18,6 +18,8 @@ The goal of our study was to determine whether a correlation exists between weal
 Instructions to run:
 
 Go to the ansible directory, make sure MRC key is in same directory.
+Ensure than your openrc.sh file is in the ansible directory.
+
 Place <<KEY_NAME>>.pem in the ansible directory and navigate to ansible/variables/hosts/hosts.yaml and replace benKP with <<KEY_NAME>>.
 
 Ensure path to python interpreter is appropriate for your system. This can be changed in ansible/comp90024-a2.yaml
