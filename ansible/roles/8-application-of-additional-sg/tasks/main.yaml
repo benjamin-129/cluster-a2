@@ -1,7 +1,7 @@
 # Team-42: James Sammut (502030) Andrzej Poniatowski (1048535) 
 # Matthew Lim (895507) Benjamin Tam (889835) Xinyue Hu (1147042) 
 
-# Refresh CouchDB Instance 0 on MRC with new Security Groups (Pan 2021).
+# Refresh CouchDB Instance 0 on MRC with new Security Groups (Ansible 2021) (Pan 2021).
 - name: Create CouchDB instances
   os_server:
     name: '{{ item.name }}'
@@ -20,7 +20,7 @@
   loop: '{{ couchdb_instance_0 }}'
   register: os_instance
 
-# Refresh CouchDB Instance 1 on MRC with new Security Groups (Pan 2021).
+# Refresh CouchDB Instance 1 on MRC with new Security Groups (Ansible 2021) (Pan 2021).
 - name: Create CouchDB instances
   os_server:
     name: '{{ item.name }}'
@@ -39,7 +39,7 @@
   loop: '{{ couchdb_instance_1 }}'
   register: os_instance
 
-# Refresh CouchDB Instance 2 on MRC with new Security Groups (Pan 2021).
+# Refresh CouchDB Instance 2 on MRC with new Security Groups (Ansible 2021) (Pan 2021).
 - name: Create CouchDB instances
   os_server:
     name: '{{ item.name }}'
@@ -58,7 +58,7 @@
   loop: '{{ couchdb_instance_2 }}'
   register: os_instance
 
-# Refresh Webserver on MRC with new Security Groups (Pan 2021).
+# Refresh Webserver on MRC with new Security Groups (Ansible 2021) (Pan 2021).
 - name: Create Web Front-End Instance
   os_server:
     name: '{{ item.name }}'

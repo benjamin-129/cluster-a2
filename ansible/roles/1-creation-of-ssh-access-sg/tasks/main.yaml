@@ -1,7 +1,7 @@
 # Team-42: James Sammut (502030) Andrzej Poniatowski (1048535) 
 # Matthew Lim (895507) Benjamin Tam (889835) Xinyue Hu (1147042) 
 
-# Creating SSH access from all security group (Pan 2021).
+# Creating SSH access from all security group (Ansible 2021) (Pan 2021).
 - name: Creating 'SSH access from all' Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -9,7 +9,7 @@
     state: present
   loop: '{{ ssh_ingress_security_group }}'
 
-# Applying security group rules to SSH access from all (Pan 2021).
+# Applying security group rules to SSH access from all (Ansible 2021) (Pan 2021).
 - name: Creating SSH ingress port rule (22) for 'SSH access from all'
   os_security_group_rule:
     security_group: '{{ item.name }}'
@@ -21,7 +21,7 @@
     state: present
   loop: '{{ ssh_ingress_security_group }}'
 
-# Setting fact for initial SSH Access Security Group (Pan 2021).
+# Setting fact for initial SSH Access Security Group (Ansible 2021) (Pan 2021).
 - name: Create a ssh_access list fact (for initial isntance application)
   set_fact:
     ssh_access: ["SSH access from all"]

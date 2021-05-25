@@ -1,7 +1,7 @@
 # Team-42: James Sammut (502030) Andrzej Poniatowski (1048535) 
 # Matthew Lim (895507) Benjamin Tam (889835) Xinyue Hu (1147042) 
 
-# CDB1 CouchDB and Internet Security Group/Role (Pan 2021).
+# CDB1 CouchDB and Internet Security Group/Role (Ansible 2021) (Pan 2021).
 - name: Creating "CDB1 CouchDB and Internet" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -20,7 +20,7 @@
     state: present
   loop: '{{ cdb1_internet_security_group_roles }}'
 
-# CDB1 CouchDB Ingress/Egress to/from CDB0 Security Group/Role (Pan 2021).
+# CDB1 CouchDB Ingress/Egress to/from CDB0 Security Group/Role (Ansible 2021) (Pan 2021).
 - name: Creating "CDB1 CouchDB Ingress/Egress to/from CDB0" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -39,7 +39,7 @@
     state: present
   loop: '{{ cdb1_cdb0_couch_security_group_roles }}'
 
-# CDB1 CouchDB Ingress/Egress to/from CDB2 Security Group/Role (Pan 2021).
+# CDB1 CouchDB Ingress/Egress to/from CDB2 Security Group/Role (Ansible 2021) (Pan 2021).
 - name: Creating "CDB1 CouchDB Ingress/Egress to/from CDB2" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -58,7 +58,7 @@
     state: present
   loop: '{{ cdb1_cdb2_couch_security_group_roles }}'
 
-# CDB1 CouchDB Ingress/Egress to/from Web Server Security Group/Role (Pan 2021).
+# CDB1 CouchDB Ingress/Egress to/from Web Server Security Group/Role (Ansible 2021) (Pan 2021).
 - name: Creating "CDB1 CouchDB Ingress/Egress to/from Web Server" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -77,7 +77,7 @@
     state: present
   loop: '{{ cdb1_webserver_couch_security_group_roles }}'
 
-# CDB1 HTTP/S Egress to Web Server Security Group/Role (Pan 2021).
+# CDB1 HTTP/S Egress to Web Server Security Group/Role (Ansible 2021) (Pan 2021).
 - name: Creating "CDB1 HTTP/S Egress to Web Server" Security Group
   os_security_group:
     name: '{{ item.name }}'
@@ -96,7 +96,7 @@
     state: present
   loop: '{{ cdb1_webserver_https_security_group_roles }}'
 
-# Setting additional Security Group list for CouchDB1 (Pan 2021).
+# Setting additional Security Group list for CouchDB1 (Ansible 2021) (Pan 2021).
 - name: Setting additional CouchDB1 instance rules list
   set_fact:
     couchdb1_sg: ["SSH access from all", 

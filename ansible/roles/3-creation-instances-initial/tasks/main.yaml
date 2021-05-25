@@ -1,7 +1,7 @@
 # Team-42: James Sammut (502030) Andrzej Poniatowski (1048535) 
 # Matthew Lim (895507) Benjamin Tam (889835) Xinyue Hu (1147042) 
 
-# Create CouchDB Instance 0 on MRC (Pan 2021).
+# Create CouchDB Instance 0 on MRC (Ansible 2021) (Pan 2021).
 - name: Create CouchDB instances
   os_server:
     name: '{{ item.name }}'
@@ -20,14 +20,14 @@
   loop: '{{ couchdb_instance_0 }}'
   register: os_instance
 
-# Settig CouchDB instance 0 fac (Pan 2021).
+# Settig CouchDB instance 0 fac (Ansible 2021) (Pan 2021).
 - name: Setting couchdb_instance_0_ip fact
   set_fact:
     couchdb_instance_0_ip: "{{ item.openstack.public_v4 }}"
   loop: '{{ os_instance.results }}'  
   when: item.openstack is defined
 
-# Create CouchDB Instance 1 on MRC (Pan 2021).
+# Create CouchDB Instance 1 on MRC (Ansible 2021) (Pan 2021).
 - name: Create CouchDB instances
   os_server:
     name: '{{ item.name }}'
@@ -46,14 +46,14 @@
   loop: '{{ couchdb_instance_1 }}'
   register: os_instance
 
-# Settig CouchDB instance 1 fact (Pan 2021).
+# Settig CouchDB instance 1 fact (Ansible 2021) (Pan 2021).
 - name: Setting couchdb_instance_1_ip fact
   set_fact:
     couchdb_instance_1_ip: "{{ item.openstack.public_v4 }}"
   loop: '{{ os_instance.results }}'  
   when: item.openstack is defined
 
-# Create CouchDB Instance 2 on MRC (Pan 2021).
+# Create CouchDB Instance 2 on MRC (Ansible 2021) (Pan 2021).
 - name: Create CouchDB instances
   os_server:
     name: '{{ item.name }}'
@@ -72,14 +72,14 @@
   loop: '{{ couchdb_instance_2 }}'
   register: os_instance
 
-# Settig CouchDB Instance 2 IP fact (Pan 2021).
+# Settig CouchDB Instance 2 IP fact (Ansible 2021) (Pan 2021).
 - name: Setting couchdb_instance_1_ip fact
   set_fact:
     couchdb_instance_2_ip: "{{ item.openstack.public_v4 }}"
   loop: '{{ os_instance.results }}'  
   when: item.openstack is defined
 
-# Create Web Front End Instance (Pan 2021).
+# Create Web Front End Instance (Ansible 2021) (Pan 2021).
 - name: Create Web Front-End Instance
   os_server:
     name: '{{ item.name }}'
@@ -97,7 +97,7 @@
   loop: '{{ web_front_end_instance }}'
   register: os_instance 
 
-# Settig Web front end ip IP fact (Pan 2021).
+# Settig Web front end ip IP fact (Ansible 2021) (Pan 2021).
 - name: Setting web front end ip fact
   set_fact:
     web_front_end_ip: "{{ item.openstack.public_v4 }}"

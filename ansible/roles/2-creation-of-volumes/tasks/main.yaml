@@ -1,7 +1,7 @@
 # Team-42: James Sammut (502030) Andrzej Poniatowski (1048535) 
 # Matthew Lim (895507) Benjamin Tam (889835) Xinyue Hu (1147042) 
 
-# Create CouchDB Instance 0 volume on MRC (Pan 2021).
+# Create CouchDB Instance 0 volume on MRC (Ansible 2021) (Pan 2021)..
 - name: Create volume for CouchDB0 instance
   os_volume:
     display_name: '{{ item.name }}'
@@ -13,13 +13,13 @@
   loop: '{{ couchdb0_volumes }}'
   register: os_vol
 
-  # Set couchdb0_vols list (Pan 2021).
+  # Set couchdb0_vols list (Ansible 2021) (Pan 2021)..
 - name: Set couchdb0_vols fact 
   set_fact:
     couchdb0_vols: [ item.id ] 
   loop: '{{ os_vol.results }}'
 
-# Create CouchDB Instance 1 volume on MRC (Pan 2021).
+# Create CouchDB Instance 1 volume on MRC (Ansible 2021) (Pan 2021)..
 - name: Create volume for CouchDB1 instance
   os_volume:
     display_name: '{{ item.name }}'
@@ -31,13 +31,13 @@
   loop: '{{ couchdb1_volumes }}'
   register: os_vol
 
-# Set couchdb1_vols list (Pan 2021).
+# Set couchdb1_vols list (Ansible 2021) (Pan 2021).
 - name: Set couchdb1_vols fact 
   set_fact:
     couchdb1_vols: [ item.id ] 
   loop: '{{ os_vol.results }}'
 
-# Create CouchDB Instance 2 volume on MRC (Pan 2021).
+# Create CouchDB Instance 2 volume on MRC (Ansible 2021) (Pan 2021).
 - name: Create volume for CouchDB2 instance
   os_volume:
     display_name: '{{ item.name }}'
@@ -49,7 +49,7 @@
   loop: '{{ couchdb2_volumes }}'
   register: os_vol
 
-# Set couchdb2_vols list (Pan 2021).
+# Set couchdb2_vols list (Ansible 2021) (Pan 2021).
 - name: Set couchdb2_vols fact 
   set_fact:
     couchdb2_vols: [ item.id ] 
